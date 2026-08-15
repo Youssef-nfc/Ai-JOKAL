@@ -1,0 +1,2358 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0,
+               viewport-fit=cover">
+
+<meta name="theme-color" content="#07070a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<title>JOKAL — مساعدك الذكي</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"
+      rel="stylesheet">
+
+<style>
+
+/* =========================================================
+   JOKAL MOBILE INTELLIGENCE
+   Arabic Mobile-first Interface
+========================================================= */
+
+:root {
+
+    --void: #060609;
+    --deep: #0b0b10;
+    --surface: #111118;
+    --surface-2: #17171f;
+    --surface-3: #1d1d27;
+
+    --border: rgba(255,255,255,.07);
+    --border-strong: rgba(255,255,255,.12);
+
+    --accent: #8b9cf6;
+    --accent-soft: rgba(139,156,246,.14);
+    --accent-glow: rgba(139,156,246,.30);
+
+    --success: #4fd1c5;
+    --warning: #f6ad55;
+
+    --white: #fff;
+    --text: rgba(255,255,255,.92);
+    --text-2: rgba(255,255,255,.62);
+    --text-3: rgba(255,255,255,.38);
+    --text-4: rgba(255,255,255,.20);
+
+    --font:
+        "Noto Sans Arabic",
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    --header: 64px;
+    --input-height: 78px;
+
+    --radius-sm: 10px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 26px;
+
+    --ease: cubic-bezier(.2,.8,.2,1);
+}
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    background: var(--void);
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    width: 100%;
+    min-height: 100%;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(139,156,246,.10),
+            transparent 35%
+        ),
+        var(--void);
+
+    color: var(--text);
+    font-family: var(--font);
+
+    overflow: hidden;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+button,
+textarea,
+input {
+    font-family: inherit;
+}
+
+button {
+    border: 0;
+}
+
+::selection {
+    background: var(--accent-soft);
+    color: white;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    position: relative;
+
+    width: 100%;
+    height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.topbar {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: calc(
+        var(--header) +
+        env(safe-area-inset-top)
+    );
+
+    padding:
+        env(safe-area-inset-top)
+        14px
+        0
+        14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(6,6,9,.98),
+            rgba(6,6,9,.86),
+            transparent
+        );
+
+    backdrop-filter: blur(14px);
+
+    z-index: 100;
+}
+
+/* =========================================================
+   MENU BUTTON
+========================================================= */
+
+.menu-button {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.045);
+    border: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transition:
+        transform .2s var(--ease),
+        background .2s,
+        border-color .2s;
+}
+
+.menu-button:active {
+    transform: scale(.92);
+}
+
+.menu-button:hover {
+    background: rgba(255,255,255,.08);
+    border-color: var(--border-strong);
+}
+
+.hamburger {
+
+    width: 19px;
+    height: 14px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.hamburger span {
+
+    width: 100%;
+    height: 1.5px;
+
+    background: rgba(255,255,255,.8);
+
+    border-radius: 10px;
+}
+
+/* =========================================================
+   BRAND
+========================================================= */
+
+.brand {
+
+    position: absolute;
+
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    direction: ltr;
+}
+
+.brand-core {
+
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #b7c1ff,
+            #7184ef 50%,
+            #414fc0
+        );
+
+    box-shadow:
+        0 0 18px rgba(139,156,246,.35);
+
+    position: relative;
+}
+
+.brand-core::before,
+.brand-core::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -5px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(139,156,246,.18);
+}
+
+.brand-core::after {
+    inset: -9px;
+    border-color: rgba(139,156,246,.08);
+}
+
+.brand-name {
+
+    font-family: Inter, sans-serif;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: .12em;
+
+    color: white;
+}
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    font-size: 9px;
+
+    color: var(--text-3);
+
+    letter-spacing: .08em;
+
+    direction: ltr;
+}
+
+.status-dot {
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: var(--success);
+
+    box-shadow:
+        0 0 10px rgba(79,209,197,.7);
+
+    animation: pulse 2s infinite;
+}
+
+.status.thinking .status-dot {
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+}
+
+.status.listening .status-dot {
+    background: var(--warning);
+}
+
+@keyframes pulse {
+
+    0%,100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: .45;
+        transform: scale(.75);
+    }
+}
+
+/* =========================================================
+   CHAT
+========================================================= */
+
+.chat {
+
+    flex: 1;
+
+    width: 100%;
+
+    padding:
+
+        calc(
+            var(--header) +
+            env(safe-area-inset-top) +
+            15px
+        )
+
+        14px
+
+        calc(
+            var(--input-height) +
+            env(safe-area-inset-bottom) +
+            25px
+        );
+
+    overflow-y: auto;
+
+    overscroll-behavior: contain;
+
+    scroll-behavior: smooth;
+}
+
+/* scrollbar */
+
+.chat::-webkit-scrollbar {
+    width: 3px;
+}
+
+.chat::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.08);
+    border-radius: 10px;
+}
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome {
+
+    min-height: 55vh;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 30px 20px;
+
+    animation: welcomeIn .7s var(--ease);
+}
+
+@keyframes welcomeIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.welcome-core {
+
+    width: 82px;
+    height: 82px;
+
+    border-radius: 50%;
+
+    position: relative;
+
+    margin-bottom: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-core::before,
+.welcome-core::after {
+
+    content: "";
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(139,156,246,.15);
+}
+
+.welcome-core::before {
+    inset: -12px;
+}
+
+.welcome-core::after {
+    inset: -23px;
+    border-color: rgba(139,156,246,.07);
+}
+
+.core-ball {
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #c2caff,
+            #8092f5 50%,
+            #4858c9
+        );
+
+    box-shadow:
+        0 0 35px rgba(139,156,246,.35);
+
+    animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+
+    0%,100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+.welcome-title {
+
+    font-size: 27px;
+
+    font-weight: 700;
+
+    margin-bottom: 9px;
+}
+
+.welcome-description {
+
+    max-width: 310px;
+
+    color: var(--text-2);
+
+    font-size: 14px;
+
+    line-height: 1.9;
+}
+
+.welcome-hint {
+
+    margin-top: 22px;
+
+    font-size: 11px;
+
+    color: var(--text-4);
+}
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.messages {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+/* row */
+
+.message {
+
+    display: flex;
+
+    width: 100%;
+
+    animation: messageIn .35s var(--ease);
+
+}
+
+@keyframes messageIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* user */
+
+.message.user {
+    justify-content: flex-start;
+}
+
+.message.user .bubble {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,156,246,.20),
+            rgba(139,156,246,.10)
+        );
+
+    border: 1px solid rgba(139,156,246,.17);
+
+    border-radius:
+        18px
+        18px
+        5px
+        18px;
+
+    color: white;
+
+    max-width: 82%;
+}
+
+/* AI */
+
+.message.ai {
+    justify-content: flex-end;
+
+    align-items: flex-start;
+
+    gap: 10px;
+}
+
+.message.ai .bubble {
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid var(--border);
+
+    border-radius:
+        18px
+        18px
+        18px
+        5px;
+
+    max-width: 88%;
+
+    color: var(--text);
+}
+
+/* avatar */
+
+.ai-avatar {
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    border-radius: 10px;
+
+    background: var(--accent-soft);
+
+    border: 1px solid rgba(139,156,246,.18);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: Inter, sans-serif;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    color: var(--accent);
+}
+
+/* bubble */
+
+.bubble {
+
+    padding: 12px 14px;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    word-break: break-word;
+}
+
+.message-meta {
+
+    margin-top: 5px;
+
+    font-size: 9px;
+
+    color: var(--text-4);
+
+    direction: ltr;
+}
+
+/* =========================================================
+   THINKING
+========================================================= */
+
+.typing {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 14px 16px;
+}
+
+.typing span {
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    opacity: .4;
+
+    animation: typing 1.2s infinite;
+}
+
+.typing span:nth-child(2) {
+    animation-delay: .15s;
+}
+
+.typing span:nth-child(3) {
+    animation-delay: .3s;
+}
+
+@keyframes typing {
+
+    0%,60%,100% {
+        opacity: .25;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-4px);
+    }
+}
+
+/* =========================================================
+   BOTTOM INPUT
+========================================================= */
+
+.input-area {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding:
+        8px
+        12px
+        calc(
+            10px +
+            env(safe-area-inset-bottom)
+        );
+
+    z-index: 90;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(6,6,9,.99) 50%,
+            rgba(6,6,9,.80),
+            transparent
+        );
+}
+
+.input-wrapper {
+
+    max-width: 680px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 8px;
+
+    padding: 8px;
+
+    background:
+        rgba(20,20,28,.92);
+
+    border:
+        1px solid var(--border);
+
+    border-radius: 21px;
+
+    box-shadow:
+        0 -5px 30px rgba(0,0,0,.25);
+
+    backdrop-filter: blur(18px);
+
+    transition:
+        border-color .2s,
+        box-shadow .2s;
+}
+
+.input-wrapper:focus-within {
+
+    border-color:
+        rgba(139,156,246,.30);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(139,156,246,.05),
+        0 -5px 35px
+        rgba(0,0,0,.35);
+}
+
+.command-input {
+
+    flex: 1;
+
+    min-width: 0;
+
+    max-height: 120px;
+
+    min-height: 40px;
+
+    resize: none;
+
+    border: 0;
+    outline: 0;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    padding:
+        9px
+        7px;
+}
+
+.command-input::placeholder {
+    color: var(--text-4);
+}
+
+/* send */
+
+.send {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    border-radius: 13px;
+
+    background: var(--accent-soft);
+
+    border: 1px solid rgba(139,156,246,.18);
+
+    color: var(--accent);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    opacity: .45;
+
+    transition:
+        all .2s var(--ease);
+}
+
+.send.active {
+    opacity: 1;
+}
+
+.send.active:active {
+    transform: scale(.9);
+}
+
+.send svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* =========================================================
+   SIDE MENU
+========================================================= */
+
+.menu-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,.65);
+
+    backdrop-filter: blur(4px);
+
+    z-index: 200;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition: opacity .3s;
+}
+
+.menu-overlay.open {
+
+    opacity: 1;
+
+    pointer-events: auto;
+}
+
+.menu-panel {
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: min(88vw, 360px);
+
+    height: 100%;
+
+    padding:
+        calc(
+            20px +
+            env(safe-area-inset-top)
+        )
+        16px
+        calc(
+            20px +
+            env(safe-area-inset-bottom)
+        );
+
+    background:
+        linear-gradient(
+            160deg,
+            #111118,
+            #09090d
+        );
+
+    border-left: 1px solid var(--border);
+
+    transform: translateX(100%);
+
+    transition:
+        transform .35s var(--ease);
+
+    overflow-y: auto;
+}
+
+.menu-overlay.open .menu-panel {
+    transform: translateX(0);
+}
+
+/* menu header */
+
+.menu-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+.menu-title {
+
+    font-size: 18px;
+
+    font-weight: 700;
+}
+
+.close-menu {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,.05);
+
+    color: var(--text-2);
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+/* menu group */
+
+.menu-group {
+
+    margin-bottom: 24px;
+}
+
+.menu-label {
+
+    font-size: 10px;
+
+    color: var(--text-4);
+
+    letter-spacing: .1em;
+
+    margin-bottom: 9px;
+
+    padding-right: 5px;
+}
+
+.menu-item {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 13px 12px;
+
+    margin-bottom: 5px;
+
+    border-radius: 14px;
+
+    background: transparent;
+
+    color: var(--text-2);
+
+    text-align: right;
+
+    cursor: pointer;
+
+    transition:
+        background .2s,
+        color .2s,
+        transform .2s;
+}
+
+.menu-item:hover,
+.menu-item:active {
+
+    background: rgba(255,255,255,.055);
+
+    color: white;
+}
+
+.menu-icon {
+
+    width: 36px;
+    height: 36px;
+
+    flex-shrink: 0;
+
+    border-radius: 11px;
+
+    background: var(--surface-2);
+
+    border: 1px solid var(--border);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--accent);
+}
+
+.menu-icon svg {
+
+    width: 18px;
+    height: 18px;
+}
+
+.menu-item-text {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+
+    flex: 1;
+}
+
+.menu-item-title {
+
+    font-size: 13px;
+
+    color: var(--text);
+
+    font-weight: 600;
+}
+
+.menu-item-description {
+
+    font-size: 10px;
+
+    color: var(--text-4);
+}
+
+/* =========================================================
+   DESKTOP
+   Still behaves like phone/app rather than dashboard
+========================================================= */
+
+@media (min-width: 700px) {
+
+    .app {
+
+        max-width: 680px;
+
+        margin: 0 auto;
+
+        border-left: 1px solid rgba(255,255,255,.025);
+        border-right: 1px solid rgba(255,255,255,.025);
+
+        background:
+            rgba(6,6,9,.45);
+
+        box-shadow:
+            0 0 100px rgba(0,0,0,.35);
+    }
+
+    .topbar {
+        max-width: 680px;
+        margin: auto;
+    }
+
+    .input-area {
+        max-width: 680px;
+        margin: auto;
+    }
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible,
+textarea:focus-visible {
+
+    outline:
+        2px solid var(--accent);
+
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         TOP BAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+        <button
+            class="menu-button"
+            id="openMenu"
+            aria-label="فتح القائمة">
+
+            <span class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
+        </button>
+
+        <div class="brand">
+
+            <div class="brand-core"></div>
+
+            <div class="brand-name">
+                JOKAL
+            </div>
+
+        </div>
+
+        <div
+            class="status"
+            id="status">
+
+            <span
+                class="status-dot"
+                id="statusDot">
+            </span>
+
+            <span id="statusText">
+                جاهز
+            </span>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CHAT
+    ====================================================== -->
+
+    <main
+        class="chat"
+        id="chat">
+
+        <!-- Welcome -->
+
+        <section
+            class="welcome"
+            id="welcome">
+
+            <div class="welcome-core">
+
+                <div class="core-ball"></div>
+
+            </div>
+
+            <h1 class="welcome-title">
+                مرحباً، أنا JOKAL
+            </h1>
+
+            <p class="welcome-description">
+
+                مساعدك الذكي الخاص.
+                اكتب لي فقط ماذا تريد أن تحقق،
+                وسأساعدك على تحويل فكرتك إلى خطوات واضحة.
+
+            </p>
+
+            <p class="welcome-hint">
+
+                يمكنك أن تسألني، تخطط، تبحث، تبني أو تنشئ.
+
+            </p>
+
+        </section>
+
+
+        <!-- Messages -->
+
+        <div
+            class="messages"
+            id="messages">
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         BOTTOM COMMAND BAR
+    ====================================================== -->
+
+    <div class="input-area">
+
+        <div class="input-wrapper">
+
+            <textarea
+                id="commandInput"
+                class="command-input"
+                rows="1"
+                placeholder="اكتب ما تريد فعله..."
+                autocomplete="off"
+                spellcheck="false">
+            </textarea>
+
+            <button
+                class="send"
+                id="sendButton"
+                aria-label="إرسال">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round">
+
+                    <line
+                        x1="22"
+                        y1="2"
+                        x2="11"
+                        y2="13">
+                    </line>
+
+                    <polygon
+                        points="22 2 15 22 11 13 2 9 22 2">
+                    </polygon>
+
+                </svg>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         MENU
+    ====================================================== -->
+
+    <div
+        class="menu-overlay"
+        id="menuOverlay">
+
+        <aside class="menu-panel">
+
+            <div class="menu-header">
+
+                <h2 class="menu-title">
+                    قائمة JOKAL
+                </h2>
+
+                <button
+                    class="close-menu"
+                    id="closeMenu"
+                    aria-label="إغلاق">
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- Capabilities -->
+
+            <div class="menu-group">
+
+                <div class="menu-label">
+                    القدرات
+                </div>
+
+
+                <button
+                    class="menu-item"
+                    data-command="think">
+
+                    <div class="menu-icon">🧠</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            التفكير
+                        </span>
+
+                        <span class="menu-item-description">
+                            تحليل المشاكل بعمق
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-command="build">
+
+                    <div class="menu-icon">🏗️</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            البناء
+                        </span>
+
+                        <span class="menu-item-description">
+                            إنشاء الأنظمة والمشاريع
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-command="find">
+
+                    <div class="menu-icon">⌕</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            البحث
+                        </span>
+
+                        <span class="menu-item-description">
+                            العثور على المعلومات
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-command="plan">
+
+                    <div class="menu-icon">◫</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            التخطيط
+                        </span>
+
+                        <span class="menu-item-description">
+                            تنظيم الأفكار والخطوات
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-command="create">
+
+                    <div class="menu-icon">✦</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            الإنشاء
+                        </span>
+
+                        <span class="menu-item-description">
+                            إنشاء وتصميم المحتوى
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-command="learn">
+
+                    <div class="menu-icon">⌘</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            التعلم
+                        </span>
+
+                        <span class="menu-item-description">
+                            التعلم من المحادثات
+                        </span>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <!-- Personal -->
+
+            <div class="menu-group">
+
+                <div class="menu-label">
+                    مساحتك
+                </div>
+
+
+                <button
+                    class="menu-item"
+                    data-action="memory">
+
+                    <div class="menu-icon">◉</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            الذاكرة
+                        </span>
+
+                        <span class="menu-item-description">
+                            معلوماتك وتفضيلاتك
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-action="tasks">
+
+                    <div class="menu-icon">✓</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            مهام اليوم
+                        </span>
+
+                        <span class="menu-item-description">
+                            خططك ومهامك الحالية
+                        </span>
+
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="menu-item"
+                    data-action="new">
+
+                    <div class="menu-icon">＋</div>
+
+                    <div class="menu-item-text">
+
+                        <span class="menu-item-title">
+                            محادثة جديدة
+                        </span>
+
+                        <span class="menu-item-description">
+                            بدء جلسة جديدة
+                        </span>
+
+                    </div>
+
+                </button>
+
+            </div>
+
+
+            <div
+                style="
+                    margin-top:35px;
+                    padding:15px;
+                    border:1px solid rgba(255,255,255,.06);
+                    border-radius:16px;
+                    color:rgba(255,255,255,.25);
+                    font-size:10px;
+                    text-align:center;
+                ">
+
+                JOKAL<br>
+                Private Intelligence Interface
+
+            </div>
+
+        </aside>
+
+    </div>
+
+</div>
+
+
+<script>
+
+"use strict";
+
+/* =========================================================
+   JOKAL MOBILE CHAT ENGINE
+========================================================= */
+
+const state = {
+
+    status: "ready",
+
+    responses: {
+
+        hello:
+        "مرحباً بك 👋 أنا JOKAL، مساعدك الذكي الخاص. قل لي فقط ماذا تريد أن تفعل.",
+
+        help:
+        "تقدر تستعمل JOKAL باش تفكر، تخطط، تبحث، تبني، تنشئ وتتعلم. ما تحتاجش تعرف الأوامر؛ كتب لي طلبك بطريقة عادية.",
+
+        think:
+        "🧠 تم تفعيل وضع التفكير. سأقوم بتحليل المشكلة، فهم القيود، ثم ترتيب الحل بطريقة واضحة.",
+
+        build:
+        "🏗️ تم تفعيل وضع البناء. أعطني الفكرة أو المشروع وسأساعدك في تحويلها إلى بنية عملية.",
+
+        find:
+        "🔎 تم تفعيل البحث. أخبرني بالشيء الذي تريد العثور عليه وسأحدد لك أفضل طريقة للوصول إليه.",
+
+        plan:
+        "📋 تم تفعيل التخطيط. أعطني الهدف وسأقسمه إلى مراحل وخطوات قابلة للتنفيذ.",
+
+        create:
+        "✦ تم تفعيل الإنشاء. أعطني ما تريد تصميمه أو كتابته وسأبدأ من فكرتك.",
+
+        learn:
+        "📚 تم تفعيل التعلم. سأركز على فهم السياق والمعلومات التي تقدمها لي داخل هذه الجلسة.",
+
+        default:
+        "فهمت طلبك. أعطني المزيد من التفاصيل وسأساعدك في تحويله إلى نتيجة عملية."
+    }
+
+};
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const chat =
+    document.getElementById("chat");
+
+const messages =
+    document.getElementById("messages");
+
+const welcome =
+    document.getElementById("welcome");
+
+const input =
+    document.getElementById("commandInput");
+
+const send =
+    document.getElementById("sendButton");
+
+const status =
+    document.getElementById("status");
+
+const statusText =
+    document.getElementById("statusText");
+
+const menu =
+    document.getElementById("menuOverlay");
+
+const openMenu =
+    document.getElementById("openMenu");
+
+const closeMenu =
+    document.getElementById("closeMenu");
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(value) {
+
+    state.status = value;
+
+    status.classList.remove(
+        "thinking",
+        "listening"
+    );
+
+    if (value === "thinking") {
+
+        status.classList.add("thinking");
+
+        statusText.textContent =
+            "يفكر...";
+
+    }
+
+    else if (value === "listening") {
+
+        status.classList.add("listening");
+
+        statusText.textContent =
+            "يستمع...";
+
+    }
+
+    else {
+
+        statusText.textContent =
+            "جاهز";
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+input.addEventListener(
+    "input",
+    () => {
+
+        input.style.height = "auto";
+
+        input.style.height =
+            Math.min(
+                input.scrollHeight,
+                120
+            ) + "px";
+
+
+        if (input.value.trim()) {
+
+            send.classList.add("active");
+
+            if (state.status === "ready") {
+
+                setStatus("listening");
+
+            }
+
+        }
+
+        else {
+
+            send.classList.remove("active");
+
+            setStatus("ready");
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ENTER
+========================================================= */
+
+input.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SEND BUTTON
+========================================================= */
+
+send.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+function sendMessage() {
+
+    const text =
+        input.value.trim();
+
+    if (!text) return;
+
+
+    if (welcome) {
+
+        welcome.style.display =
+            "none";
+
+    }
+
+
+    addMessage(
+        text,
+        "user"
+    );
+
+
+    input.value = "";
+
+    input.style.height =
+        "auto";
+
+    send.classList.remove(
+        "active"
+    );
+
+
+    setStatus("thinking");
+
+
+    showTyping();
+
+
+    setTimeout(
+        () => {
+
+            removeTyping();
+
+            const response =
+                generateResponse(text);
+
+            addMessage(
+                response,
+                "ai"
+            );
+
+            setStatus("ready");
+
+        },
+
+        700 +
+        Math.random() * 900
+    );
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    text,
+    type
+) {
+
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "message " + type;
+
+
+    if (type === "ai") {
+
+        const avatar =
+            document.createElement("div");
+
+        avatar.className =
+            "ai-avatar";
+
+        avatar.textContent =
+            "J";
+
+        row.appendChild(
+            avatar
+        );
+
+    }
+
+
+    const content =
+        document.createElement("div");
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        text;
+
+
+    const meta =
+        document.createElement("div");
+
+    meta.className =
+        "message-meta";
+
+    meta.textContent =
+        getTime();
+
+
+    content.appendChild(
+        bubble
+    );
+
+    content.appendChild(
+        meta
+    );
+
+
+    row.appendChild(
+        content
+    );
+
+
+    messages.appendChild(
+        row
+    );
+
+
+    scrollToBottom();
+
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+function showTyping() {
+
+    const row =
+        document.createElement("div");
+
+    row.className =
+        "message ai";
+
+    row.id =
+        "typingMessage";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "ai-avatar";
+
+    avatar.textContent =
+        "J";
+
+
+    const box =
+        document.createElement("div");
+
+    box.className =
+        "bubble typing";
+
+
+    box.innerHTML =
+        "<span></span><span></span><span></span>";
+
+
+    row.appendChild(
+        avatar
+    );
+
+    row.appendChild(
+        box
+    );
+
+
+    messages.appendChild(
+        row
+    );
+
+
+    scrollToBottom();
+
+}
+
+
+function removeTyping() {
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+    if (typing) {
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   RESPONSE
+========================================================= */
+
+function generateResponse(
+    text
+) {
+
+    const value =
+        text.toLowerCase();
+
+
+    if (
+        value.includes("سلام") ||
+        value.includes("مرحبا") ||
+        value.includes("hello") ||
+        value.includes("hi")
+    ) {
+
+        return state.responses.hello;
+
+    }
+
+
+    if (
+        value.includes("مساعدة") ||
+        value.includes("help") ||
+        value.includes("شنو تقدر")
+    ) {
+
+        return state.responses.help;
+
+    }
+
+
+    if (
+        value.includes("فكر") ||
+        value.includes("think")
+    ) {
+
+        return state.responses.think;
+
+    }
+
+
+    if (
+        value.includes("بني") ||
+        value.includes("build") ||
+        value.includes("برمج")
+    ) {
+
+        return state.responses.build;
+
+    }
+
+
+    if (
+        value.includes("بحث") ||
+        value.includes("find")
+    ) {
+
+        return state.responses.find;
+
+    }
+
+
+    if (
+        value.includes("خطط") ||
+        value.includes("plan")
+    ) {
+
+        return state.responses.plan;
+
+    }
+
+
+    if (
+        value.includes("صمم") ||
+        value.includes("create") ||
+        value.includes("أنشئ")
+    ) {
+
+        return state.responses.create;
+
+    }
+
+
+    if (
+        value.includes("تعلم") ||
+        value.includes("learn")
+    ) {
+
+        return state.responses.learn;
+
+    }
+
+
+    return state.responses.default;
+
+}
+
+
+/* =========================================================
+   TIME
+========================================================= */
+
+function getTime() {
+
+    return new Date()
+        .toLocaleTimeString(
+            "ar-MA",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   SCROLL
+========================================================= */
+
+function scrollToBottom() {
+
+    requestAnimationFrame(
+        () => {
+
+            chat.scrollTo({
+
+                top:
+                    chat.scrollHeight,
+
+                behavior:
+                    "smooth"
+
+            });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MENU
+========================================================= */
+
+openMenu.addEventListener(
+    "click",
+    () => {
+
+        menu.classList.add(
+            "open"
+        );
+
+    }
+);
+
+
+closeMenu.addEventListener(
+    "click",
+    closeMenuPanel
+);
+
+
+menu.addEventListener(
+    "click",
+    event => {
+
+        if (
+            event.target === menu
+        ) {
+
+            closeMenuPanel();
+
+        }
+
+    }
+);
+
+
+function closeMenuPanel() {
+
+    menu.classList.remove(
+        "open"
+    );
+
+}
+
+
+/* =========================================================
+   MENU COMMANDS
+========================================================= */
+
+document
+    .querySelectorAll(
+        ".menu-item[data-command]"
+    )
+    .forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const command =
+                        item.dataset.command;
+
+                    closeMenuPanel();
+
+                    if (welcome) {
+
+                        welcome.style.display =
+                            "none";
+
+                    }
+
+                    addMessage(
+                        item
+                            .querySelector(
+                                ".menu-item-title"
+                            )
+                            .textContent,
+                        "user"
+                    );
+
+
+                    setStatus(
+                        "thinking"
+                    );
+
+                    showTyping();
+
+
+                    setTimeout(
+                        () => {
+
+                            removeTyping();
+
+                            addMessage(
+                                state.responses[
+                                    command
+                                ],
+                                "ai"
+                            );
+
+                            setStatus(
+                                "ready"
+                            );
+
+                        },
+                        600
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+document
+    .querySelector(
+        '[data-action="new"]'
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            messages.innerHTML =
+                "";
+
+            welcome.style.display =
+                "flex";
+
+            closeMenuPanel();
+
+            input.focus();
+
+        }
+    );
+
+
+/* =========================================================
+   MEMORY / TASKS
+========================================================= */
+
+document
+    .querySelector(
+        '[data-action="memory"]'
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            closeMenuPanel();
+
+            addMessage(
+                "الذاكرة",
+                "user"
+            );
+
+            setTimeout(
+                () => {
+
+                    addMessage(
+                        "هنا يمكن لاحقاً ربط نظام ذاكرة حقيقي لحفظ المعلومات المهمة عنك، تفضيلاتك، مشاريعك وسياق محادثاتك.",
+                        "ai"
+                    );
+
+                },
+                400
+            );
+
+        }
+    );
+
+
+document
+    .querySelector(
+        '[data-action="tasks"]'
+    )
+    .addEventListener(
+        "click",
+        () => {
+
+            closeMenuPanel();
+
+            addMessage(
+                "مهام اليوم",
+                "user"
+            );
+
+            setTimeout(
+                () => {
+
+                    addMessage(
+                        "يمكننا هنا إضافة نظام مهام حقيقي: إنشاء المهام، تحديد الأولوية، إنجازها وتتبع التقدم.",
+                        "ai"
+                    );
+
+                },
+                400
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   INITIAL
+========================================================= */
+
+setStatus("ready");
+
+</script>
+
+</body>
+</html>
