@@ -15,430 +15,246 @@
 
 <style>
 :root {
-    --void: #060609;
-    --deep: #0b0b10;
-    --surface: #111118;
-    --surface-2: #17171f;
-    --surface-3: #1d1d27;
-    --border: rgba(255,255,255,.07);
-    --border-strong: rgba(255,255,255,.12);
-    --accent: #8b9cf6;
-    --accent-soft: rgba(139,156,246,.14);
-    --accent-glow: rgba(139,156,246,.30);
-    --success: #4fd1c5;
-    --warning: #f6ad55;
-    --white: #fff;
-    --text: rgba(255,255,255,.92);
-    --text-2: rgba(255,255,255,.62);
-    --text-3: rgba(255,255,255,.38);
-    --text-4: rgba(255,255,255,.20);
+    --void: #060609; --deep: #0b0b10; --surface: #111118; --surface-2: #17171f;
+    --border: rgba(255,255,255,.07); --border-strong: rgba(255,255,255,.12);
+    --accent: #8b9cf6; --accent-soft: rgba(139,156,246,.14); --accent-glow: rgba(139,156,246,.30);
+    --success: #4fd1c5; --warning: #f6ad55; --error: #f66b6b;
+    --text: rgba(255,255,255,.92); --text-2: rgba(255,255,255,.62); --text-3: rgba(255,255,255,.38); --text-4: rgba(255,255,255,.20);
     --font: "Noto Sans Arabic", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --header: 64px;
-    --input-height: 78px;
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --radius-xl: 26px;
-    --ease: cubic-bezier(.2,.8,.2,1);
+    --header: 64px; --input-height: 78px; --ease: cubic-bezier(.2,.8,.2,1);
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html { width: 100%; height: 100%; background: var(--void); -webkit-font-smoothing: antialiased; }
-body {
-    width: 100%; min-height: 100%;
-    background: radial-gradient(circle at 50% -10%, rgba(139,156,246,.10), transparent 35%), var(--void);
-    color: var(--text); font-family: var(--font);
-    overflow: hidden; -webkit-tap-highlight-color: transparent;
-}
+body { width: 100%; min-height: 100%; background: radial-gradient(circle at 50% -10%, rgba(139,156,246,.10), transparent 35%), var(--void); color: var(--text); font-family: var(--font); overflow: hidden; -webkit-tap-highlight-color: transparent; }
 button, textarea, input { font-family: inherit; }
-button { border: 0; }
+button { border: 0; background: none; cursor: pointer; }
 ::selection { background: var(--accent-soft); color: white; }
 
 .app { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 
-.topbar {
-    position: fixed; top: 0; left: 0; right: 0;
-    height: calc(var(--header) + env(safe-area-inset-top));
-    padding: env(safe-area-inset-top) 14px 0 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(6,6,9,.98), rgba(6,6,9,.86), transparent);
-    backdrop-filter: blur(14px); z-index: 100;
-}
-
-.menu-button, .auth-button {
-    width: 42px; height: 42px; border-radius: 13px;
-    background: rgba(255,255,255,.045); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-2);
-    transition: transform .2s var(--ease), background .2s, border-color .2s;
-}
+/* Top Bar */
+.topbar { position: fixed; top: 0; left: 0; right: 0; height: calc(var(--header) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 14px 0 14px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(6,6,9,.98), rgba(6,6,9,.86), transparent); backdrop-filter: blur(14px); z-index: 100; }
+.menu-button, .auth-button { width: 42px; height: 42px; border-radius: 13px; background: rgba(255,255,255,.045); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); transition: all .2s var(--ease); }
 .menu-button:active, .auth-button:active { transform: scale(.92); }
 .menu-button:hover, .auth-button:hover { background: rgba(255,255,255,.08); border-color: var(--border-strong); color: white; }
-
 .hamburger { width: 19px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
 .hamburger span { width: 100%; height: 1.5px; background: rgba(255,255,255,.8); border-radius: 10px; }
-
 .brand { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; direction: ltr; }
-.brand-core {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0);
-    box-shadow: 0 0 18px rgba(139,156,246,.35); position: relative;
-}
-.brand-core::before, .brand-core::after {
-    content: ""; position: absolute; inset: -5px; border-radius: 50%;
-    border: 1px solid rgba(139,156,246,.18);
-}
+.brand-core { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0); box-shadow: 0 0 18px rgba(139,156,246,.35); position: relative; }
+.brand-core::before, .brand-core::after { content: ""; position: absolute; inset: -5px; border-radius: 50%; border: 1px solid rgba(139,156,246,.18); }
 .brand-core::after { inset: -9px; border-color: rgba(139,156,246,.08); }
 .brand-name { font-family: Inter, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .12em; color: white; }
-
 .status { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--text-3); letter-spacing: .08em; direction: ltr; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 10px rgba(79,209,197,.7); animation: pulse 2s infinite; }
 .status.thinking .status-dot { background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
 .status.listening .status-dot { background: var(--warning); }
+.status.speaking .status-dot { background: var(--accent); animation: pulse .5s infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.75); } }
 
-.chat {
-    flex: 1; width: 100%;
-    padding: calc(var(--header) + env(safe-area-inset-top) + 15px) 14px calc(var(--input-height) + env(safe-area-inset-bottom) + 25px);
-    overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth;
-}
+/* Chat */
+.chat { flex: 1; width: 100%; padding: calc(var(--header) + env(safe-area-inset-top) + 15px) 14px calc(var(--input-height) + env(safe-area-inset-bottom) + 25px); overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth; }
 .chat::-webkit-scrollbar { width: 3px; }
 .chat::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 10px; }
 
-.welcome {
-    min-height: 55vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; text-align: center;
-    padding: 30px 20px; animation: welcomeIn .7s var(--ease);
-}
+/* Welcome */
+.welcome { min-height: 55vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px 20px; animation: welcomeIn .7s var(--ease); }
 @keyframes welcomeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
 .welcome-core { width: 82px; height: 82px; border-radius: 50%; position: relative; margin-bottom: 26px; display: flex; align-items: center; justify-content: center; }
 .welcome-core::before, .welcome-core::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(139,156,246,.15); }
 .welcome-core::before { inset: -12px; }
 .welcome-core::after { inset: -23px; border-color: rgba(139,156,246,.07); }
-
-.core-ball {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #c2caff, #8092f5 50%, #4858c9);
-    box-shadow: 0 0 35px rgba(139,156,246,.35);
-    animation: breathe 3s ease-in-out infinite;
-}
+.core-ball { width: 48px; height: 48px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #c2caff, #8092f5 50%, #4858c9); box-shadow: 0 0 35px rgba(139,156,246,.35); animation: breathe 3s ease-in-out infinite; }
 @keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-
 .welcome-title { font-size: 27px; font-weight: 700; margin-bottom: 9px; }
 .welcome-description { max-width: 310px; color: var(--text-2); font-size: 14px; line-height: 1.9; }
 .welcome-hint { margin-top: 22px; font-size: 11px; color: var(--text-4); }
 
+/* Messages */
 .messages { display: flex; flex-direction: column; gap: 18px; }
-
 .message { display: flex; width: 100%; animation: messageIn .35s var(--ease); }
 @keyframes messageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
 .message.user { justify-content: flex-start; }
-.message.user .bubble {
-    background: linear-gradient(135deg, rgba(139,156,246,.20), rgba(139,156,246,.10));
-    border: 1px solid rgba(139,156,246,.17);
-    border-radius: 18px 18px 5px 18px; color: white; max-width: 82%;
-}
-
+.message.user .bubble { background: linear-gradient(135deg, rgba(139,156,246,.20), rgba(139,156,246,.10)); border: 1px solid rgba(139,156,246,.17); border-radius: 18px 18px 5px 18px; color: white; max-width: 82%; }
 .message.ai { justify-content: flex-end; align-items: flex-start; gap: 10px; }
-.message.ai .bubble {
-    background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
-    border: 1px solid var(--border);
-    border-radius: 18px 18px 18px 5px; max-width: 88%; color: var(--text);
-}
-
-.ai-avatar {
-    width: 30px; height: 30px; flex-shrink: 0; border-radius: 10px;
-    background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18);
-    display: flex; align-items: center; justify-content: center;
-    font-family: Inter, sans-serif; font-size: 12px; font-weight: 700; color: var(--accent);
-}
-
+.message.ai .bubble { background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.025)); border: 1px solid var(--border); border-radius: 18px 18px 18px 5px; max-width: 88%; color: var(--text); }
+.ai-avatar { width: 30px; height: 30px; flex-shrink: 0; border-radius: 10px; background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18); display: flex; align-items: center; justify-content: center; font-family: Inter, sans-serif; font-size: 12px; font-weight: 700; color: var(--accent); }
 .bubble { padding: 12px 14px; font-size: 14px; line-height: 1.8; word-break: break-word; }
-.message-meta { margin-top: 5px; font-size: 9px; color: var(--text-4); direction: ltr; }
+.message-meta { margin-top: 5px; font-size: 9px; color: var(--text-4); direction: ltr; display: flex; align-items: center; gap: 8px; }
 
-/* Markdown in bubbles */
+/* Speak button */
+.speak-btn { width: 20px; height: 20px; border-radius: 5px; background: rgba(255,255,255,.05); border: 1px solid var(--border); display: inline-flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 10px; cursor: pointer; transition: all .2s; margin-right: 4px; }
+.speak-btn:hover { background: var(--accent-soft); color: var(--accent); border-color: rgba(139,156,246,.3); }
+.speak-btn.speaking { background: var(--accent-soft); color: var(--accent); animation: pulse 1s infinite; }
+
+/* Markdown */
 .bubble h1, .bubble h2, .bubble h3 { font-size: 15px; margin: 8px 0 4px; color: var(--accent); }
 .bubble p { margin: 6px 0; }
 .bubble ul, .bubble ol { margin: 6px 0; padding-right: 18px; }
 .bubble li { margin: 3px 0; }
-.bubble code {
-    background: rgba(139,156,246,.15); padding: 2px 6px; border-radius: 5px;
-    font-family: monospace; font-size: 12px;
-}
+.bubble code { background: rgba(139,156,246,.15); padding: 2px 6px; border-radius: 5px; font-family: monospace; font-size: 12px; }
 .bubble pre { background: var(--surface-2); padding: 10px; border-radius: 10px; overflow-x: auto; margin: 8px 0; }
 .bubble pre code { background: none; padding: 0; }
 .bubble strong { color: white; }
 .bubble blockquote { border-right: 3px solid var(--accent); padding-right: 10px; margin: 8px 0; color: var(--text-2); }
 .bubble a { color: var(--accent); text-decoration: none; }
-.bubble a:hover { text-decoration: underline; }
 
+/* Typing */
 .typing { display: flex; align-items: center; gap: 4px; padding: 14px 16px; }
 .typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: .4; animation: typing 1.2s infinite; }
 .typing span:nth-child(2) { animation-delay: .15s; }
 .typing span:nth-child(3) { animation-delay: .3s; }
 @keyframes typing { 0%,60%,100% { opacity: .25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
 
-.input-area {
-    position: fixed; left: 0; right: 0; bottom: 0;
-    padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
-    z-index: 90;
-    background: linear-gradient(to top, rgba(6,6,9,.99) 50%, rgba(6,6,9,.80), transparent);
-}
-
-.input-wrapper {
-    max-width: 680px; margin: auto; display: flex; align-items: flex-end; gap: 8px;
-    padding: 8px; background: rgba(20,20,28,.92); border: 1px solid var(--border);
-    border-radius: 21px; box-shadow: 0 -5px 30px rgba(0,0,0,.25);
-    backdrop-filter: blur(18px);
-    transition: border-color .2s, box-shadow .2s;
-}
-.input-wrapper:focus-within {
-    border-color: rgba(139,156,246,.30);
-    box-shadow: 0 0 0 3px rgba(139,156,246,.05), 0 -5px 35px rgba(0,0,0,.35);
-}
-
-.command-input {
-    flex: 1; min-width: 0; max-height: 120px; min-height: 40px;
-    resize: none; border: 0; outline: 0; background: transparent;
-    color: white; font-size: 14px; line-height: 1.6; padding: 9px 7px;
-}
+/* Input */
+.input-area { position: fixed; left: 0; right: 0; bottom: 0; padding: 8px 12px calc(10px + env(safe-area-inset-bottom)); z-index: 90; background: linear-gradient(to top, rgba(6,6,9,.99) 50%, rgba(6,6,9,.80), transparent); }
+.input-wrapper { max-width: 680px; margin: auto; display: flex; align-items: flex-end; gap: 8px; padding: 8px; background: rgba(20,20,28,.92); border: 1px solid var(--border); border-radius: 21px; box-shadow: 0 -5px 30px rgba(0,0,0,.25); backdrop-filter: blur(18px); transition: all .2s; }
+.input-wrapper:focus-within { border-color: rgba(139,156,246,.30); box-shadow: 0 0 0 3px rgba(139,156,246,.05), 0 -5px 35px rgba(0,0,0,.35); }
+.command-input { flex: 1; min-width: 0; max-height: 120px; min-height: 40px; resize: none; border: 0; outline: 0; background: transparent; color: white; font-size: 14px; line-height: 1.6; padding: 9px 7px; }
 .command-input::placeholder { color: var(--text-4); }
 
-.send {
-    width: 40px; height: 40px; flex-shrink: 0; border-radius: 13px;
-    background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18);
-    color: var(--accent); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; opacity: .45; transition: all .2s var(--ease);
-}
+.mic-btn { width: 40px; height: 40px; flex-shrink: 0; border-radius: 13px; background: rgba(255,255,255,.05); border: 1px solid var(--border); color: var(--text-3); display: flex; align-items: center; justify-content: center; transition: all .2s; font-size: 16px; }
+.mic-btn:hover { background: rgba(255,255,255,.08); color: var(--text); }
+.mic-btn.recording { background: rgba(246,107,107,.15); border-color: rgba(246,107,107,.3); color: var(--error); animation: pulse 1s infinite; }
+.mic-btn.disabled { opacity: .3; cursor: not-allowed; }
+
+.send { width: 40px; height: 40px; flex-shrink: 0; border-radius: 13px; background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18); color: var(--accent); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: .45; transition: all .2s; }
 .send.active { opacity: 1; }
 .send.active:active { transform: scale(.9); }
 .send svg { width: 18px; height: 18px; }
 
-.menu-overlay, .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.65);
-    backdrop-filter: blur(4px); z-index: 200; opacity: 0;
-    pointer-events: none; transition: opacity .3s;
-}
+/* Menu & Modal */
+.menu-overlay, .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.65); backdrop-filter: blur(4px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s; }
 .menu-overlay.open, .modal-overlay.open { opacity: 1; pointer-events: auto; }
-
-.menu-panel {
-    position: absolute; top: 0; right: 0;
-    width: min(88vw, 360px); height: 100%;
-    padding: calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
-    background: linear-gradient(160deg, #111118, #09090d);
-    border-left: 1px solid var(--border);
-    transform: translateX(100%); transition: transform .35s var(--ease);
-    overflow-y: auto;
-}
+.menu-panel { position: absolute; top: 0; right: 0; width: min(88vw, 360px); height: 100%; padding: calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom)); background: linear-gradient(160deg, #111118, #09090d); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform .35s var(--ease); overflow-y: auto; }
 .menu-overlay.open .menu-panel { transform: translateX(0); }
-
 .menu-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
 .menu-title { font-size: 18px; font-weight: 700; }
-.close-menu { width: 38px; height: 38px; border-radius: 12px; background: rgba(255,255,255,.05); color: var(--text-2); cursor: pointer; font-size: 20px; }
-
+.close-menu { width: 38px; height: 38px; border-radius: 12px; background: rgba(255,255,255,.05); color: var(--text-2); font-size: 20px; display: flex; align-items: center; justify-content: center; }
 .menu-group { margin-bottom: 24px; }
 .menu-label { font-size: 10px; color: var(--text-4); letter-spacing: .1em; margin-bottom: 9px; padding-right: 5px; }
-.menu-item {
-    width: 100%; display: flex; align-items: center; gap: 13px;
-    padding: 13px 12px; margin-bottom: 5px; border-radius: 14px;
-    background: transparent; color: var(--text-2); text-align: right;
-    cursor: pointer; transition: background .2s, color .2s, transform .2s;
-}
+.menu-item { width: 100%; display: flex; align-items: center; gap: 13px; padding: 13px 12px; margin-bottom: 5px; border-radius: 14px; background: transparent; color: var(--text-2); text-align: right; cursor: pointer; transition: all .2s; }
 .menu-item:hover, .menu-item:active { background: rgba(255,255,255,.055); color: white; }
-.menu-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 11px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); }
-.menu-icon svg { width: 18px; height: 18px; }
+.menu-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 11px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 16px; }
 .menu-item-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .menu-item-title { font-size: 13px; color: var(--text); font-weight: 600; }
 .menu-item-description { font-size: 10px; color: var(--text-4); }
 
-.error-bubble { border-color: rgba(246, 107, 107, 0.3) !important; background: linear-gradient(135deg, rgba(246,107,107,.10), rgba(246,107,107,.05)) !important; }
+/* Conversation List */
+.convo-item { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; margin-bottom: 5px; border-radius: 12px; background: transparent; color: var(--text-2); text-align: right; cursor: pointer; transition: all .2s; border: 1px solid transparent; }
+.convo-item:hover, .convo-item.active { background: rgba(255,255,255,.055); color: white; border-color: var(--border); }
+.convo-item span { font-size: 12px; font-weight: 500; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-left: 8px; direction: rtl; }
+.convo-item small { font-size: 9px; color: var(--text-4); direction: ltr; flex-shrink: 0; }
+.convo-delete { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--text-4); font-size: 14px; margin-right: 6px; flex-shrink: 0; }
+.convo-delete:hover { background: rgba(246,107,107,.15); color: var(--error); }
 
-/* Modal Authentication Box */
-.modal-box {
-    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: min(90vw, 380px); background: #111118; border: 1px solid var(--border-strong);
-    border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,.5);
-}
+/* Toggle */
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 5px; }
+.toggle-label { font-size: 12px; color: var(--text-2); }
+.toggle-switch { width: 40px; height: 22px; border-radius: 11px; background: var(--surface-2); border: 1px solid var(--border); position: relative; cursor: pointer; transition: background .2s; }
+.toggle-switch.on { background: var(--accent); border-color: var(--accent); }
+.toggle-switch::after { content: ""; position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: transform .2s; box-shadow: 0 1px 3px rgba(0,0,0,.3); }
+.toggle-switch.on::after { transform: translateX(-18px); }
+
+.error-bubble { border-color: rgba(246,107,107,.3) !important; background: linear-gradient(135deg, rgba(246,107,107,.10), rgba(246,107,107,.05)) !important; }
+
+/* Modal */
+.modal-box { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(90vw, 380px); background: #111118; border: 1px solid var(--border-strong); border-radius: 20px; padding: 24px; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
 .modal-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: white; text-align: center; }
 .modal-desc { font-size: 12px; color: var(--text-2); margin-bottom: 20px; text-align: center; line-height: 1.5; }
 .form-group { margin-bottom: 14px; }
 .form-label { font-size: 11px; color: var(--text-3); margin-bottom: 6px; display: block; }
-.form-input {
-    width: 100%; height: 44px; background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    border-radius: 12px; padding: 0 12px; color: white; font-size: 14px; outline: none;
-    transition: border-color .2s;
-}
+.form-input { width: 100%; height: 44px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 12px; padding: 0 12px; color: white; font-size: 14px; outline: none; transition: border-color .2s; }
 .form-input:focus { border-color: var(--accent); }
-.btn-submit {
-    width: 100%; height: 46px; background: var(--accent); color: #000; font-weight: 700;
-    border-radius: 12px; margin-top: 10px; cursor: pointer; transition: opacity .2s;
-}
+.btn-submit { width: 100%; height: 46px; background: var(--accent); color: #000; font-weight: 700; border-radius: 12px; margin-top: 10px; cursor: pointer; transition: opacity .2s; }
 .btn-submit:active { opacity: .85; }
 
-@media (min-width: 700px) {
-    .app { max-width: 680px; margin: 0 auto; border-left: 1px solid rgba(255,255,255,.025); border-right: 1px solid rgba(255,255,255,.025); background: rgba(6,6,9,.45); box-shadow: 0 0 100px rgba(0,0,0,.35); }
-    .topbar { max-width: 680px; margin: auto; }
-    .input-area { max-width: 680px; margin: auto; }
-}
+/* Voice overlay */
+.voice-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.8); backdrop-filter: blur(10px); z-index: 300; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 20px; }
+.voice-overlay.active { display: flex; }
+.voice-pulse { width: 80px; height: 80px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-size: 32px; animation: voicePulse 1.5s infinite; }
+@keyframes voicePulse { 0%,100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.2); opacity: .6; } }
+.voice-text { color: var(--text-2); font-size: 16px; }
+.voice-cancel { padding: 10px 24px; border-radius: 12px; background: var(--surface-2); border: 1px solid var(--border); color: var(--text-2); font-size: 13px; }
 
+@media (min-width: 700px) { .app { max-width: 680px; margin: 0 auto; border-left: 1px solid rgba(255,255,255,.025); border-right: 1px solid rgba(255,255,255,.025); background: rgba(6,6,9,.45); box-shadow: 0 0 100px rgba(0,0,0,.35); } .topbar { max-width: 680px; margin: auto; } .input-area { max-width: 680px; margin: auto; } }
 button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
-}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
 
 <body>
 
 <div class="app">
-
     <header class="topbar">
-        <button class="menu-button" id="openMenu" aria-label="فتح القائمة">
-            <span class="hamburger"><span></span><span></span><span></span></span>
-        </button>
-        <div class="brand">
-            <div class="brand-core"></div>
-            <div class="brand-name">JOKAL</div>
-        </div>
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <button class="auth-button" id="openAuthModal" title="إعدادات الحساب">🔒</button>
-            <div class="status" id="status">
-                <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">جاهز</span>
-            </div>
+        <button class="menu-button" id="openMenu"><span class="hamburger"><span></span><span></span><span></span></span></button>
+        <div class="brand"><div class="brand-core"></div><div class="brand-name">JOKAL</div></div>
+        <div style="display:flex;align-items:center;gap:10px;">
+            <button class="auth-button" id="openAuthModal" title="إعدادات">🔒</button>
+            <div class="status" id="status"><span class="status-dot"></span><span id="statusText">جاهز</span></div>
         </div>
     </header>
 
     <main class="chat" id="chat">
         <section class="welcome" id="welcome">
             <div class="welcome-core"><div class="core-ball"></div></div>
-            <h1 class="welcome-title">مرحباً، أنا JOKAL</h1>
-            <p class="welcome-description">
-                مساعدك الذكي الخاص. اكتب لي فقط ماذا تريد أن تحقق،
-                وسأساعدك على تحويل فكرتك إلى خطوات واضحة.
-            </p>
-            <p class="welcome-hint">يمكنك أن تسألني، تخطط، تبحث، تبني أو تنشئ.</p>
+            <h1 class="welcome-title">مرحباً يا يوسف 👋</h1>
+            <p class="welcome-description">مساعدك الذكي الخاص. اكتب لي أو هدر معايا، ونجاوبك فالحين.</p>
+            <p class="welcome-hint">⚡ سريع | 🎙️ صوتي | 🧠 ذكي</p>
         </section>
         <div class="messages" id="messages"></div>
     </main>
 
     <div class="input-area">
         <div class="input-wrapper">
-            <textarea id="commandInput" class="command-input" rows="1" placeholder="اكتب ما تريد فعله..." autocomplete="off" spellcheck="false"></textarea>
-            <button class="send" id="sendButton" aria-label="إرسال">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="22" y1="2" x2="11" y2="13"></line>
-                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                </svg>
-            </button>
+            <textarea id="commandInput" class="command-input" rows="1" placeholder="اكتب شي حاجة..." autocomplete="off" spellcheck="false"></textarea>
+            <button class="mic-btn" id="micButton" title="تحدث (اضغط مطولاً)">🎙️</button>
+            <button class="send" id="sendButton"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg></button>
         </div>
     </div>
 
+    <!-- Voice Overlay -->
+    <div class="voice-overlay" id="voiceOverlay">
+        <div class="voice-pulse">🎙️</div>
+        <div class="voice-text" id="voiceText">كيسمعك...</div>
+        <button class="voice-cancel" id="voiceCancel">إلغاء</button>
+    </div>
+
+    <!-- Menu -->
     <div class="menu-overlay" id="menuOverlay">
         <aside class="menu-panel">
-            <div class="menu-header">
-                <h2 class="menu-title">قائمة JOKAL</h2>
-                <button class="close-menu" id="closeMenu" aria-label="إغلاق">×</button>
+            <div class="menu-header"><h2 class="menu-title">قائمة JOKAL</h2><button class="close-menu" id="closeMenu">×</button></div>
+            <div class="menu-group"><div class="menu-label">المحادثات</div><div id="conversationList"></div></div>
+            <div class="menu-group"><div class="menu-label">القدرات</div>
+                <button class="menu-item" data-command="think"><div class="menu-icon">🧠</div><div class="menu-item-text"><span class="menu-item-title">التفكير</span><span class="menu-item-description">تحليل المشاكل</span></div></button>
+                <button class="menu-item" data-command="build"><div class="menu-icon">🏗️</div><div class="menu-item-text"><span class="menu-item-title">البناء</span><span class="menu-item-description">برمجة ومشاريع</span></div></button>
+                <button class="menu-item" data-command="find"><div class="menu-icon">🔎</div><div class="menu-item-text"><span class="menu-item-title">البحث</span><span class="menu-item-description">معلومات</span></div></button>
+                <button class="menu-item" data-command="plan"><div class="menu-icon">📋</div><div class="menu-item-text"><span class="menu-item-title">التخطيط</span><span class="menu-item-description">تنظيم الأفكار</span></div></button>
+                <button class="menu-item" data-command="create"><div class="menu-icon">✨</div><div class="menu-item-text"><span class="menu-item-title">الإنشاء</span><span class="menu-item-description">تصميم وكتابة</span></div></button>
+                <button class="menu-item" data-command="learn"><div class="menu-icon">📚</div><div class="menu-item-text"><span class="menu-item-title">التعلم</span><span class="menu-item-description">شرح وتوضيح</span></div></button>
             </div>
-
-            <div class="menu-group">
-                <div class="menu-label">القدرات</div>
-                <button class="menu-item" data-command="think">
-                    <div class="menu-icon">🧠</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التفكير</span>
-                        <span class="menu-item-description">تحليل المشاكل بعمق</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="build">
-                    <div class="menu-icon">🏗️</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">البناء</span>
-                        <span class="menu-item-description">إنشاء الأنظمة والمشاريع</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="find">
-                    <div class="menu-icon">⌕</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">البحث</span>
-                        <span class="menu-item-description">العثور على المعلومات</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="plan">
-                    <div class="menu-icon">◫</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التخطيط</span>
-                        <span class="menu-item-description">تنظيم الأفكار والخطوات</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="create">
-                    <div class="menu-icon">✦</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">الإنشاء</span>
-                        <span class="menu-item-description">إنشاء وتصميم المحتوى</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="learn">
-                    <div class="menu-icon">⌘</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التعلم</span>
-                        <span class="menu-item-description">التعلم من المحادثات</span>
-                    </div>
-                </button>
+            <div class="menu-group"><div class="menu-label">مساحتك</div>
+                <button class="menu-item" data-action="new"><div class="menu-icon">＋</div><div class="menu-item-text"><span class="menu-item-title">محادثة جديدة</span></div></button>
+                <button class="menu-item" data-action="memory"><div class="menu-icon">💾</div><div class="menu-item-text"><span class="menu-item-title">الذاكرة</span></div></button>
             </div>
-
-            <div class="menu-group">
-                <div class="menu-label">مساحتك</div>
-                <button class="menu-item" data-action="memory">
-                    <div class="menu-icon">◉</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">الذاكرة</span>
-                        <span class="menu-item-description">معلوماتك وتفضيلاتك</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="tasks">
-                    <div class="menu-icon">✓</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">مهام اليوم</span>
-                        <span class="menu-item-description">خططك ومهامك الحالية</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="new">
-                    <div class="menu-icon">＋</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">محادثة جديدة</span>
-                        <span class="menu-item-description">بدء جلسة جديدة</span>
-                    </div>
-                </button>
+            <div class="menu-group"><div class="menu-label">الإعدادات</div>
+                <div class="toggle-row"><span class="toggle-label">🔊 قراءة تلقائية</span><div class="toggle-switch" id="autoSpeakToggle"></div></div>
             </div>
-
-            <div style="margin-top:35px; padding:15px; border:1px solid rgba(255,255,255,.06); border-radius:16px; color:rgba(255,255,255,.25); font-size:10px; text-align:center;">
-                JOKAL<br>Private Intelligence Interface
-            </div>
+            <div style="margin-top:30px;padding:12px;border:1px solid rgba(255,255,255,.06);border-radius:14px;color:rgba(255,255,255,.25);font-size:10px;text-align:center;">JOKAL v2.0 — Private AI</div>
         </aside>
     </div>
 
-    <!-- Modal Login Form -->
+    <!-- Auth Modal -->
     <div class="modal-overlay" id="authModal">
         <div class="modal-box">
-            <h3 class="modal-title">تسجيل الدخول لـ JOKAL</h3>
-            <p class="modal-desc">أدخل اسم المستخدم وكلمة السر المعتمدة للوصول إلى الخدمة.</p>
+            <h3 class="modal-title">🔐 تسجيل الدخول</h3>
+            <p class="modal-desc">أدخل بياناتك باش تقدر تستعمل JOKAL</p>
             <form id="authForm">
-                <div class="form-group">
-                    <label class="form-label" for="usernameInput">اسم المستخدم</label>
-                    <input type="text" id="usernameInput" class="form-input" placeholder="youssef_amin778" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label" for="passwordInput">كلمة السر</label>
-                    <input type="password" id="passwordInput" class="form-input" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn-submit">حفظ ودخول</button>
+                <div class="form-group"><label class="form-label">اسم المستخدم</label><input type="text" id="usernameInput" class="form-input" placeholder="youssef" required></div>
+                <div class="form-group"><label class="form-label">كلمة السر</label><input type="password" id="passwordInput" class="form-input" placeholder="••••••" required></div>
+                <button type="submit" class="btn-submit">دخول</button>
             </form>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -446,7 +262,14 @@ button:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent);
 
 /* ========== CONFIG ========== */
 const API_URL = 'https://ai-jokal.vercel.app/api/chat';
+const STORAGE_KEY = 'jokal_conversations';
+const CURRENT_ID_KEY = 'jokal_current_id';
+const SETTINGS_KEY = 'jokal_settings';
+
 let conversationHistory = [];
+let currentConversationId = null;
+let isProcessing = false;
+const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{"autoSpeak":false}');
 
 /* ========== DOM ========== */
 const chat = document.getElementById("chat");
@@ -454,127 +277,272 @@ const messages = document.getElementById("messages");
 const welcome = document.getElementById("welcome");
 const input = document.getElementById("commandInput");
 const sendBtn = document.getElementById("sendButton");
+const micBtn = document.getElementById("micButton");
 const statusEl = document.getElementById("status");
 const statusText = document.getElementById("statusText");
 const menuOverlay = document.getElementById("menuOverlay");
 const openMenuBtn = document.getElementById("openMenu");
 const closeMenuBtn = document.getElementById("closeMenu");
+const conversationList = document.getElementById("conversationList");
+const autoSpeakToggle = document.getElementById("autoSpeakToggle");
+const voiceOverlay = document.getElementById("voiceOverlay");
+const voiceText = document.getElementById("voiceText");
+const voiceCancel = document.getElementById("voiceCancel");
 
-/* Auth Modal DOM */
 const authModal = document.getElementById("authModal");
 const authForm = document.getElementById("authForm");
 const usernameInput = document.getElementById("usernameInput");
 const passwordInput = document.getElementById("passwordInput");
 const openAuthModalBtn = document.getElementById("openAuthModal");
 
-/* ========== AUTHENTICATION ========== */
-function getSavedCredentials() {
-    return {
-        username: localStorage.getItem("jokal_user") || "",
-        password: localStorage.getItem("jokal_pass") || ""
+/* ========== VOICE RECOGNITION ========== */
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = null;
+let isRecording = false;
+
+function initVoice() {
+    if (!SpeechRecognition) {
+        micBtn.classList.add('disabled');
+        micBtn.title = 'المتصفح ما كيدعمش الصوت';
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = 'ar-SA';
+    recognition.continuous = false;
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+        isRecording = true;
+        micBtn.classList.add('recording');
+        voiceOverlay.classList.add('active');
+        voiceText.textContent = 'كيسمعك... تكلم!';
+        setStatus('listening');
+    };
+
+    recognition.onend = () => {
+        isRecording = false;
+        micBtn.classList.remove('recording');
+        voiceOverlay.classList.remove('active');
+        if (!isProcessing) setStatus('ready');
+    };
+
+    recognition.onresult = (e) => {
+        let final = '', interim = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+            const t = e.results[i][0].transcript;
+            if (e.results[i].isFinal) final += t;
+            else interim += t;
+        }
+        if (interim) voiceText.textContent = interim;
+        if (final) {
+            voiceText.textContent = '✓ ' + final;
+            input.value = final;
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+            sendBtn.classList.add('active');
+            setTimeout(() => { recognition.stop(); sendMessage(); }, 600);
+        }
+    };
+
+    recognition.onerror = (e) => {
+        console.error('Voice error:', e.error);
+        isRecording = false;
+        micBtn.classList.remove('recording');
+        voiceOverlay.classList.remove('active');
+        setStatus('ready');
+        let msg = '⚠️ ';
+        switch(e.error) {
+            case 'no-speech': msg += 'ما سمعت والو. جرب تهدر بصوت أعلى.'; break;
+            case 'audio-capture': msg += 'الميكروفون ما كاينش ولا موصولش.'; break;
+            case 'not-allowed': msg += 'الميكروفون ممنوع. روح لإعدادات المتصفح وسمح ليا.'; break;
+            case 'network': msg += 'مشكل فالشبكة.'; break;
+            case 'aborted': return;
+            default: msg += 'خطأ فالتعرف على الصوت. جرب مرة أخرى.';
+        }
+        addMessage(msg, 'ai');
     };
 }
 
-function checkAuth() {
-    const { username, password } = getSavedCredentials();
-    if (!username || !password) {
-        authModal.classList.add("open");
-    } else {
-        usernameInput.value = username;
-        passwordInput.value = password;
+initVoice();
+
+micBtn.addEventListener('click', () => {
+    if (!recognition) {
+        addMessage('⚠️ المتصفح ديالك (Safari/iPhone) ما كيدعمش التعرف على الصوت. جرب Google Chrome.', 'ai');
+        return;
     }
+    if (isRecording) recognition.stop();
+    else { try { recognition.start(); } catch(e) { console.error(e); } }
+});
+
+voiceCancel.addEventListener('click', () => {
+    if (recognition && isRecording) recognition.stop();
+});
+
+/* ========== TEXT TO SPEECH ========== */
+let currentSpeech = null;
+
+function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const clean = text.replace(/[#*`\[\]\(\)]/g, ' ').replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
+    const u = new SpeechSynthesisUtterance(clean);
+    u.lang = 'ar-SA';
+    u.rate = 1.1;
+    u.pitch = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const ar = voices.find(v => v.lang.includes('ar'));
+    if (ar) u.voice = ar;
+    u.onstart = () => setStatus('speaking');
+    u.onend = () => { if (!isProcessing) setStatus('ready'); };
+    currentSpeech = u;
+    window.speechSynthesis.speak(u);
 }
+
+function stopSpeaking() {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+}
+
+function createSpeakBtn(text) {
+    const btn = document.createElement('button');
+    btn.className = 'speak-btn';
+    btn.innerHTML = '🔊';
+    btn.title = 'استمع';
+    btn.onclick = () => { stopSpeaking(); speak(text); };
+    return btn;
+}
+
+/* ========== SETTINGS ========== */
+function updateToggle() { autoSpeakToggle.classList.toggle('on', settings.autoSpeak); }
+updateToggle();
+autoSpeakToggle.addEventListener('click', () => { settings.autoSpeak = !settings.autoSpeak; localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings)); updateToggle(); });
+
+/* ========== MEMORY ========== */
+function getConversations() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch { return []; } }
+function saveConversations(list) { localStorage.setItem(STORAGE_KEY, JSON.stringify(list)); }
+
+function saveCurrentConversation() {
+    if (conversationHistory.length === 0) return;
+    const list = getConversations();
+    const id = currentConversationId || Date.now().toString();
+    currentConversationId = id;
+    localStorage.setItem(CURRENT_ID_KEY, id);
+    const first = conversationHistory.find(m => m.role === 'user');
+    const title = first ? first.content.slice(0, 35) + (first.content.length > 35 ? '...' : '') : 'محادثة جديدة';
+    const idx = list.findIndex(c => c.id === id);
+    const convo = { id, title, messages: [...conversationHistory], updatedAt: Date.now() };
+    if (idx >= 0) list[idx] = convo; else list.unshift(convo);
+    if (list.length > 30) list.pop();
+    saveConversations(list);
+    renderConversationList();
+}
+
+function loadConversation(id) {
+    const list = getConversations();
+    const convo = list.find(c => c.id === id);
+    if (!convo) return;
+    currentConversationId = id;
+    localStorage.setItem(CURRENT_ID_KEY, id);
+    conversationHistory = convo.messages.map(m => ({...m}));
+    messages.innerHTML = '';
+    if (welcome) welcome.style.display = 'none';
+    conversationHistory.forEach(m => addMessage(m.content, m.role === 'user' ? 'user' : 'ai', m.role !== 'user'));
+    renderConversationList();
+    menuOverlay.classList.remove('open');
+    scrollToBottom();
+}
+
+function deleteConversation(id, e) {
+    e.stopPropagation();
+    let list = getConversations().filter(c => c.id !== id);
+    saveConversations(list);
+    if (currentConversationId === id) { currentConversationId = null; conversationHistory = []; messages.innerHTML = ''; if (welcome) welcome.style.display = 'flex'; }
+    renderConversationList();
+}
+
+function renderConversationList() {
+    const list = getConversations();
+    conversationList.innerHTML = '';
+    if (list.length === 0) {
+        conversationList.innerHTML = '<div style="color:var(--text-4);font-size:11px;text-align:center;padding:10px;">ما كاينش محادثات</div>';
+        return;
+    }
+    list.forEach(c => {
+        const div = document.createElement('div');
+        div.className = 'convo-item' + (c.id === currentConversationId ? ' active' : '');
+        const date = new Date(c.updatedAt).toLocaleDateString('ar-MA', { month: 'short', day: 'numeric' });
+        div.innerHTML = '<span>' + escapeHtml(c.title) + '</span><small>' + date + '</small>';
+        const del = document.createElement('button');
+        del.className = 'convo-delete'; del.innerHTML = '🗑'; del.title = 'حذف';
+        del.onclick = (e) => deleteConversation(c.id, e);
+        div.appendChild(del);
+        div.onclick = () => loadConversation(c.id);
+        conversationList.appendChild(div);
+    });
+}
+
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+
+/* ========== AUTH ========== */
+function getCreds() { return { username: localStorage.getItem("jokal_user") || "", password: localStorage.getItem("jokal_pass") || "" }; }
+function checkAuth() { const { username, password } = getCreds(); if (!username || !password) authModal.classList.add("open"); else { usernameInput.value = username; passwordInput.value = password; } }
 
 authForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const user = usernameInput.value.trim();
-    const pass = passwordInput.value.trim();
-    if (user && pass) {
-        localStorage.setItem("jokal_user", user);
-        localStorage.setItem("jokal_pass", pass);
-        authModal.classList.remove("open");
-    }
+    const user = usernameInput.value.trim(), pass = passwordInput.value.trim();
+    if (user && pass) { localStorage.setItem("jokal_user", user); localStorage.setItem("jokal_pass", pass); authModal.classList.remove("open"); }
 });
-
-openAuthModalBtn.addEventListener("click", () => {
-    authModal.classList.add("open");
-});
+openAuthModalBtn.addEventListener("click", () => authModal.classList.add("open"));
 
 /* ========== STATUS ========== */
 function setStatus(value) {
-    statusEl.classList.remove("thinking", "listening");
-    if (value === "thinking") {
-        statusEl.classList.add("thinking");
-        statusText.textContent = "يفكر...";
-    } else if (value === "listening") {
-        statusEl.classList.add("listening");
-        statusText.textContent = "يستمع...";
-    } else {
-        statusText.textContent = "جاهز";
-    }
+    statusEl.classList.remove("thinking", "listening", "speaking");
+    if (value === "thinking") { statusEl.classList.add("thinking"); statusText.textContent = "يفكر..."; }
+    else if (value === "listening") { statusEl.classList.add("listening"); statusText.textContent = "يسمع..."; }
+    else if (value === "speaking") { statusEl.classList.add("speaking"); statusText.textContent = "يهدر..."; }
+    else { statusText.textContent = "جاهز"; }
 }
 
 /* ========== INPUT ========== */
 input.addEventListener("input", () => {
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 120) + "px";
-    if (input.value.trim()) {
-        sendBtn.classList.add("active");
-        if (!statusEl.classList.contains("thinking")) setStatus("listening");
-    } else {
-        sendBtn.classList.remove("active");
-        setStatus("ready");
-    }
+    if (input.value.trim()) { sendBtn.classList.add("active"); if (!isProcessing) setStatus("listening"); }
+    else { sendBtn.classList.remove("active"); setStatus("ready"); }
 });
-
-input.addEventListener("keydown", e => {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-    }
-});
-
+input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
 sendBtn.addEventListener("click", sendMessage);
 
-/* ========== SEND MESSAGE ========== */
+/* ========== SEND MESSAGE — FAST ========== */
 async function sendMessage() {
     const text = input.value.trim();
-    if (!text) return;
+    if (!text || isProcessing) return;
+    const { username, password } = getCreds();
+    if (!username || !password) { authModal.classList.add("open"); return; }
 
-    const { username, password } = getSavedCredentials();
-    if (!username || !password) {
-        authModal.classList.add("open");
-        return;
-    }
-
+    isProcessing = true;
+    stopSpeaking();
     if (welcome) welcome.style.display = "none";
 
     addMessage(text, "user");
     conversationHistory.push({ role: "user", content: text });
+    saveCurrentConversation();
 
-    input.value = "";
-    input.style.height = "auto";
-    sendBtn.classList.remove("active");
-    setStatus("thinking");
-    showTyping();
+    input.value = ""; input.style.height = "auto"; sendBtn.classList.remove("active");
+    setStatus("thinking"); showTyping();
 
     try {
         const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                message: text,
-                history: conversationHistory.slice(0, -1)
-            })
+            method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password, message: text, history: conversationHistory.slice(0, -1) })
         });
 
-        const data = await res.json();
         removeTyping();
+        const data = await res.json();
 
         if (res.status === 401) {
-            addMessage("⚠️ اسم المستخدم أو كلمة السر غير صحيحة. يرجى تعديل البيانات.", "ai", false, true);
+            addMessage("⚠️ اسم المستخدم أو كلمة السر غير صحيحة.", "ai", false, true);
             authModal.classList.add("open");
         } else if (data.error) {
             addMessage("⚠️ " + data.error, "ai", false, true);
@@ -582,13 +550,16 @@ async function sendMessage() {
             const reply = data.response;
             addMessage(reply, "ai", true);
             conversationHistory.push({ role: "model", content: reply });
+            saveCurrentConversation();
+            if (settings.autoSpeak) speak(reply);
         }
     } catch (err) {
         removeTyping();
-        addMessage("⚠️ ما قدرتش نتواصل مع السيرفر. تأكد من إعدادات الشبكة والسيرفر.", "ai", true, true);
+        addMessage("⚠️ ما قدرتش نتواصل مع السيرفر. تأكد من الاتصال وجرب مرة أخرى.", "ai", false, true);
         console.error(err);
     }
 
+    isProcessing = false;
     setStatus("ready");
 }
 
@@ -599,8 +570,7 @@ function addMessage(text, type, isMarkdown = false, isError = false) {
 
     if (type === "ai") {
         const avatar = document.createElement("div");
-        avatar.className = "ai-avatar";
-        avatar.textContent = "J";
+        avatar.className = "ai-avatar"; avatar.textContent = "J";
         row.appendChild(avatar);
     }
 
@@ -609,15 +579,14 @@ function addMessage(text, type, isMarkdown = false, isError = false) {
     bubble.className = "bubble";
     if (isError) bubble.classList.add("error-bubble");
 
-    if (isMarkdown && type === "ai") {
-        bubble.innerHTML = marked.parse(text);
-    } else {
-        bubble.textContent = text;
-    }
+    if (isMarkdown && type === "ai") bubble.innerHTML = marked.parse(text);
+    else bubble.textContent = text;
 
     const meta = document.createElement("div");
     meta.className = "message-meta";
     meta.textContent = new Date().toLocaleTimeString("ar-MA", { hour: "2-digit", minute: "2-digit" });
+
+    if (type === "ai" && !isError) meta.appendChild(createSpeakBtn(text));
 
     content.appendChild(bubble);
     content.appendChild(meta);
@@ -628,38 +597,18 @@ function addMessage(text, type, isMarkdown = false, isError = false) {
 
 /* ========== TYPING ========== */
 function showTyping() {
-    const row = document.createElement("div");
-    row.className = "message ai";
-    row.id = "typingMessage";
-
-    const avatar = document.createElement("div");
-    avatar.className = "ai-avatar";
-    avatar.textContent = "J";
-
-    const box = document.createElement("div");
-    box.className = "bubble typing";
-    box.innerHTML = "<span></span><span></span><span></span>";
-
-    row.appendChild(avatar);
-    row.appendChild(box);
-    messages.appendChild(row);
-    scrollToBottom();
+    const row = document.createElement("div"); row.className = "message ai"; row.id = "typingMessage";
+    const avatar = document.createElement("div"); avatar.className = "ai-avatar"; avatar.textContent = "J";
+    const box = document.createElement("div"); box.className = "bubble typing"; box.innerHTML = "<span></span><span></span><span></span>";
+    row.appendChild(avatar); row.appendChild(box); messages.appendChild(row); scrollToBottom();
 }
-
-function removeTyping() {
-    const t = document.getElementById("typingMessage");
-    if (t) t.remove();
-}
+function removeTyping() { const t = document.getElementById("typingMessage"); if (t) t.remove(); }
 
 /* ========== SCROLL ========== */
-function scrollToBottom() {
-    requestAnimationFrame(() => {
-        chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
-    });
-}
+function scrollToBottom() { requestAnimationFrame(() => { chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" }); }); }
 
 /* ========== MENU ========== */
-openMenuBtn.addEventListener("click", () => menuOverlay.classList.add("open"));
+openMenuBtn.addEventListener("click", () => { renderConversationList(); menuOverlay.classList.add("open"); });
 closeMenuBtn.addEventListener("click", () => menuOverlay.classList.remove("open"));
 menuOverlay.addEventListener("click", e => { if (e.target === menuOverlay) menuOverlay.classList.remove("open"); });
 
@@ -669,53 +618,41 @@ document.querySelectorAll(".menu-item[data-command]").forEach(item => {
         const cmd = item.dataset.command;
         menuOverlay.classList.remove("open");
         if (welcome) welcome.style.display = "none";
-
         const prompts = {
-            think: "🧠 وضع التفكير مفعل. شنو المشكلة لي بغيتي نحللها بعمق؟",
-            build: "🏗️ وضع البناء مفعل. شنو المشروع لي بغيتي نبرمجو أو نبنيه؟",
-            find: "🔎 وضع البحث مفعل. شنو المعلومة لي بغيتي نلقى ليك؟",
-            plan: "📋 وضع التخطيط مفعل. شنو الهدف ديالك ونقسملك الخطوات؟",
-            create: "✦ وضع الإنشاء مفعل. شنو بغيتي نصمم أو نكتب ليك؟",
-            learn: "📚 وضع التعلم مفعل. شنو الموضوع لي بغيتي نشرح ليك؟"
+            think: "🧠 وضع التفكير مفعل. شنو المشكلة لي بغيتي نحللها؟",
+            build: "🏗️ وضع البناء مفعل. شنو المشروع لي بغيتي نبرمجو؟",
+            find: "🔎 وضع البحث مفعل. شنو بغيتي نلقى ليك؟",
+            plan: "📋 وضع التخطيط مفعل. شنو الهدف ديالك؟",
+            create: "✨ وضع الإنشاء مفعل. شنو بغيتي نصمم؟",
+            learn: "📚 وضع التعلم مفعل. شنو بغيتي نشرح ليك؟"
         };
-
         addMessage(item.querySelector(".menu-item-title").textContent, "user");
-        setStatus("thinking");
-        showTyping();
-
-        setTimeout(() => {
-            removeTyping();
-            addMessage(prompts[cmd] || "فهمتك. كيفاش نقدر نساعدك؟", "ai");
-            setStatus("ready");
-        }, 600);
+        setStatus("thinking"); showTyping();
+        setTimeout(() => { removeTyping(); addMessage(prompts[cmd] || "فهمتك. كيفاش نقدر نساعدك؟", "ai"); setStatus("ready"); }, 600);
     });
 });
 
-/* ========== NEW CHAT ========== */
 document.querySelector('[data-action="new"]').addEventListener("click", () => {
-    messages.innerHTML = "";
-    conversationHistory = [];
+    messages.innerHTML = ""; conversationHistory = []; currentConversationId = null;
+    localStorage.removeItem(CURRENT_ID_KEY);
     if (welcome) welcome.style.display = "flex";
-    menuOverlay.classList.remove("open");
-    input.focus();
+    menuOverlay.classList.remove("open"); input.focus();
 });
 
-/* ========== MEMORY / TASKS ========== */
 document.querySelector('[data-action="memory"]').addEventListener("click", () => {
     menuOverlay.classList.remove("open");
+    const list = getConversations();
+    const info = "💾 **الذاكرة**\n\n" + (list.length ? "عندك " + list.length + " محادثة محفوظة.\nآخر تحديث: " + new Date(list[0].updatedAt).toLocaleString('ar-MA') : "ما كاينش محادثات.") + "\n\nالمحادثات كتحفظ فهاد الجهاز فقط.";
     addMessage("الذاكرة", "user");
-    setTimeout(() => addMessage("💾 الذاكرة ديالك كتحفظ فهاد الجلسة فقط. ملي تبدل صفحة، كتمحى.\n\nبغيتي نزيد **تخزين دائم** فـ Firebase ولا LocalStorage؟", "ai", true), 400);
-});
-
-document.querySelector('[data-action="tasks"]').addEventListener("click", () => {
-    menuOverlay.classList.remove("open");
-    addMessage("مهام اليوم", "user");
-    setTimeout(() => addMessage("📋 يمكن نزيد نظام مهام حقيقي:\n- إضافة مهام\n- تحديد الأولوية\n- تتبع التقدم\n\nبغيتي نبرمجو؟", "ai", true), 400);
+    setTimeout(() => addMessage(info, "ai", true), 400);
 });
 
 /* ========== INIT ========== */
 setStatus("ready");
 checkAuth();
+renderConversationList();
+const lastId = localStorage.getItem(CURRENT_ID_KEY);
+if (lastId) { const list = getConversations(); if (list.find(c => c.id === lastId)) loadConversation(lastId); }
 input.focus();
 </script>
 
