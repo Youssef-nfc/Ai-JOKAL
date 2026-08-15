@@ -7,7 +7,13 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
   try {
-    const { message, history = [] } = req.body;
+    const { message, history = [], username, password } = req.body;
+
+    // التحقق من اسم المستخدم وكلمة السر باستخدام المتغيرات البيئية
+    if (username !== process.env.ADMIN_USER || password !== process.env.ADMIN_PASS) {
+      return res.status(401).json({ error: 'اسم المستخدم أو كلمة السر غير صحيحة' });
+    }
+
     if (!message) return res.status(400).json({ error: 'Message required' });
 
     const API_KEY = process.env.GEMINI_API_KEY;
