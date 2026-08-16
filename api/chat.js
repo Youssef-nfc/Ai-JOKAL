@@ -8,10 +8,7 @@ export default async function handler(req, res) {
 
   try {
     const { message, history = [], username, password, memory = [], screenContext = null, screenImage = null, image = null, file = null } = req.body;
-    
-    if (!message && !screenImage && !image && !file) {
-      return res.status(400).json({ error: 'Message or image required' });
-    }
+    if (!message && !screenImage && !image && !file) return res.status(400).json({ error: 'Message required' });
 
     const API_KEY = process.env.GEMINI_API_KEY;
     if (!API_KEY) return res.status(500).json({ error: 'API key missing' });
@@ -66,12 +63,13 @@ export default async function handler(req, res) {
       });
     });
 
-    // الرسالة الحالية مع دعم الصور (لقطة شاشة أو ملف مرفق)
+    // الرسالة الحالية مع دعم الصورة
     const currentParts = [];
     if (message) {
       currentParts.push({ text: message });
     }
 
+    // التقاط البيانات ديال الصورة من أي خيار مرسول
     const rawImage = screenImage || image || file;
     if (rawImage && typeof rawImage === 'string' && rawImage.includes('base64')) {
       const base64Data = rawImage.split(',')[1];
@@ -89,9 +87,9 @@ export default async function handler(req, res) {
 
     contents.push({ role: 'user', parts: currentParts });
 
-    // رابط الـ API الشغال والسبق للصور والنصوص
+    // نفس الموديل ديالك 3.6
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
