@@ -227,6 +227,7 @@ input:focus-visible{
         );
 
     border:1px solid rgba(139,156,246,.25);
+    cursor:pointer;
 }
 
 .login-error{
@@ -434,7 +435,7 @@ input:focus-visible{
 }
 
 .workspace-header{
-    display:none;
+    display:flex;
 
     align-items:center;
     gap:10px;
@@ -452,6 +453,7 @@ input:focus-visible{
     border:1px solid var(--border);
 
     color:var(--text2);
+    cursor:pointer;
 }
 
 .workspace-title{
@@ -784,8 +786,6 @@ input:focus-visible{
     gap:7px;
 }
 
-/* PLUS OUTSIDE */
-
 .plus-button{
     width:44px;
     height:44px;
@@ -816,8 +816,6 @@ input:focus-visible{
     background:var(--accentSoft);
     color:var(--accent);
 }
-
-/* INPUT */
 
 .input-wrapper{
     flex:1;
@@ -872,8 +870,6 @@ input:focus-visible{
 .command-input::placeholder{
     color:var(--text4);
 }
-
-/* MIC INSIDE */
 
 .inner-actions{
     display:flex;
@@ -1128,6 +1124,7 @@ input:focus-visible{
     color:var(--text2);
 
     font-size:20px;
+    cursor:pointer;
 }
 
 .panel-user{
@@ -1347,6 +1344,8 @@ input:focus-visible{
     color:var(--text3);
 
     font-size:13px;
+    background:transparent;
+    cursor:pointer;
 }
 
 .conversation:hover .conversation-delete{
@@ -1407,6 +1406,12 @@ input:focus-visible{
         );
 
     border:1px solid var(--border);
+    cursor:pointer;
+    transition:background .2s;
+}
+
+.page-card:hover{
+    background:rgba(255,255,255,.08);
 }
 
 .page-card-icon{
@@ -1487,6 +1492,7 @@ input:focus-visible{
     color:var(--danger);
 
     font-size:10px;
+    cursor:pointer;
 }
 
 /* =========================================================
@@ -2242,6 +2248,9 @@ const workspacePage =
 const chatWorkspace =
     document.getElementById("chatWorkspace");
 
+const workspaceBack =
+    document.getElementById("workspaceBack");
+
 const pageTitle =
     document.getElementById("pageTitle");
 
@@ -2327,13 +2336,6 @@ function login(){
 
         return;
     }
-
-    /*
-      ملاحظة:
-      هاد التخزين مؤقت للـ prototype.
-      من بعد غادي نحيدو password من localStorage
-      ونربطو authentication بالـ backend.
-    */
 
     currentUser = {
         username,
@@ -2868,10 +2870,6 @@ async function sendMessage(){
 
     try{
 
-        /*
-          نفس Backend الحالي ديالك.
-        */
-
         const history =
             conversation.messages
                 .slice(0,-1)
@@ -2890,12 +2888,6 @@ async function sendMessage(){
                 currentUser
                 ? currentUser.username
                 : null,
-
-            /*
-              password موجود مؤقتاً فقط
-              باش ما نكسرش API الحالي.
-              المرحلة القادمة نحيدوه.
-            */
 
             password:
                 currentUser
@@ -3883,8 +3875,7 @@ const pageData = {
             [
                 "◎",
                 "الذاكرة الشخصية",
-                userMemory.length +
-                " معلومة محفوظة."
+                "معلوماتك المحفوظة."
             ],
             [
                 "＋",
@@ -3963,7 +3954,8 @@ const pageData = {
             [
                 "↪",
                 "تسجيل الخروج",
-                "الخروج من الحساب."
+                "اضغط هنا لتسجيل الخروج.",
+                "action_logout"
             ]
         ]
 
@@ -4016,12 +4008,18 @@ function openPage(name){
     pageSubtitle.textContent =
         page.subtitle;
 
+    if(name === "memory"){
+        page.cards[0][2] = userMemory.length + " معلومة محفوظة.";
+    }
+
     pageGrid.innerHTML =
         page.cards.map(
             card => {
 
+                const isLogout = card[3] === "action_logout" ? 'onclick="logout()"' : '';
+
                 return `
-                <div class="page-card">
+                <div class="page-card" ${isLogout}>
 
                     <div class="page-card-icon">
                         ${card[0]}
@@ -4048,19 +4046,19 @@ function openPage(name){
    BACK TO CHAT
 ========================================================= */
 
+function backToChat(){
+    workspacePage.classList.remove("active");
+    chatWorkspace.style.display = "block";
+}
+
+workspaceBack.addEventListener("click", backToChat);
+
 document.addEventListener(
     "keydown",
     e => {
 
         if(e.key === "Escape"){
-
-            workspacePage.classList.remove(
-                "active"
-            );
-
-            chatWorkspace.style.display =
-                "block";
-
+            backToChat();
         }
 
     }
