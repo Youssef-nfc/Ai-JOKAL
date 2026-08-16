@@ -240,7 +240,7 @@ button { border: 0; }
     font-size: 10px; color: var(--text-4); cursor: pointer;
     padding: 2px 6px; border-radius: 4px;
     background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    transition: all .2s;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 3px;
 }
 .tts-btn:hover { color: var(--accent); border-color: rgba(139,156,246,.3); }
 
@@ -353,6 +353,21 @@ button { border: 0; }
 .menu-item-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
 .menu-item-title { font-size: 13px; color: var(--text); font-weight: 600; }
 .menu-item-description { font-size: 10px; color: var(--text-4); }
+
+.voice-selector {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; margin-bottom: 12px;
+    background: rgba(255,255,255,.03); border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+.voice-selector label { font-size: 11px; color: var(--text-3); }
+.voice-selector select {
+    flex: 1; padding: 8px 10px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: white; font-size: 12px;
+    outline: none; cursor: pointer;
+}
+.voice-selector select:focus { border-color: var(--accent); }
 
 .memory-list {
     max-height: 200px; overflow-y: auto;
@@ -468,6 +483,20 @@ button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px
                 <div class="user-badge-info">
                     <div class="user-badge-name" id="userBadgeName">مستخدم</div>
                     <div class="user-badge-status">متصل</div>
+                </div>
+            </div>
+
+            <div class="menu-group">
+                <div class="menu-label">إعدادات الصوت</div>
+                <div class="voice-selector">
+                    <label>🎙️ الصوت:</label>
+                    <select id="voiceSelect">
+                        <option value="female">👩 أنثى (Neural2)</option>
+                        <option value="male">👨 ذكر (Neural2)</option>
+                    </select>
+                </div>
+                <div style="padding: 0 5px; font-size: 10px; color: var(--text-4); margin-bottom: 8px;">
+                    Google Cloud Neural2 — صوت بشري واضح
                 </div>
             </div>
 
@@ -618,15 +647,18 @@ if ('serviceWorker' in navigator) {
 
 /* ========== CONFIG ========== */
 const API_URL = 'https://ai-jokal.vercel.app/api/chat';
+const TTS_URL = 'https://ai-jokal.vercel.app/api/tts';
 let conversationHistory = [];
 let currentUser = null;
 let userMemory = [];
 let ttsEnabled = false;
+let ttsVoice = 'female';
 let liveSession = null;
 let liveStream = null;
 let liveInterval = null;
 let lastScreenCapture = null;
 let recognition = null;
+let currentAudio = null;
 
 /* ========== DOM ========== */
 const loginOverlay = document.getElementById("loginOverlay");
@@ -650,6 +682,7 @@ const ttsToggle = document.getElementById("ttsToggle");
 const liveScreenBtn = document.getElementById("liveScreenBtn");
 const memoryList = document.getElementById("memoryList");
 const userBadgeName = document.getElementById("userBadgeName");
+const voiceSelect = document.getElementById("voiceSelect");
 
 /* ========== LOGIN SYSTEM ========== */
 function initLogin() {
@@ -673,6 +706,7 @@ function showApp() {
     appEl.style.display = 'flex';
     userBadgeName.textContent = currentUser.username;
     loadUserMemory();
+    loadVoiceSetting();
     input.focus();
 }
 
@@ -704,6 +738,23 @@ function logout() {
     loginUsername.value = '';
     loginPassword.value = '';
     stopLiveSession();
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+}
+
+/* ========== VOICE SETTINGS ========== */
+function loadVoiceSetting() {
+    const saved = localStorage.getItem('jokal_voice');
+    if (saved) {
+        ttsVoice = saved;
+        if (voiceSelect) voiceSelect.value = saved;
+    }
+}
+
+if (voiceSelect) {
+    voiceSelect.addEventListener('change', () => {
+        ttsVoice = voiceSelect.value;
+        localStorage.setItem('jokal_voice', ttsVoice);
+    });
 }
 
 /* ========== MEMORY SYSTEM ========== */
@@ -801,26 +852,58 @@ micBtn.addEventListener('click', () => {
     }
 });
 
-/* ========== VOICE OUTPUT (TTS) ========== */
-function speak(text) {
+/* ========== VOICE OUTPUT (Google Cloud TTS) ========== */
+async function speak(text) {
+    if (currentAudio) {
+        currentAudio.pause();
+        currentAudio = null;
+    }
+    
+    try {
+        const res = await fetch(TTS_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: text, voice: ttsVoice })
+        });
+        
+        const data = await res.json();
+        if (data.error || !data.audioContent) {
+            fallbackSpeak(text);
+            return;
+        }
+        
+        const audioBlob = new Blob([Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0))], { type: 'audio/mp3' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        currentAudio = new Audio(audioUrl);
+        currentAudio.play();
+        
+        currentAudio.onended = () => {
+            URL.revokeObjectURL(audioUrl);
+            currentAudio = null;
+        };
+    } catch (err) {
+        fallbackSpeak(text);
+    }
+}
+
+/* ========== FALLBACK TTS (Browser) ========== */
+function fallbackSpeak(text) {
     if (!window.speechSynthesis) return;
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.lang = 'ar-MA';
     utter.rate = 1;
     utter.pitch = 1;
-    
     const voices = window.speechSynthesis.getVoices();
     const arVoice = voices.find(v => v.lang.includes('ar') || v.lang.includes('MA'));
     if (arVoice) utter.voice = arVoice;
-    
     window.speechSynthesis.speak(utter);
 }
 
 ttsToggle.addEventListener('click', () => {
     ttsEnabled = !ttsEnabled;
     ttsToggle.classList.toggle('active', ttsEnabled);
-    ttsToggle.title = ttsEnabled ? 'الصوت التلقائي مفعل' : 'تشغيل الصوت التلقائي';
+    ttsToggle.title = ttsEnabled ? 'الصوت التلقائي مفعل (Neural2)' : 'تشغيل الصوت التلقائي';
 });
 
 /* ========== LIVE SCREEN SESSION ========== */
@@ -925,7 +1008,6 @@ async function sendMessage() {
     let text = input.value.trim();
     if (!text) return;
 
-    // فحص الأمر الصريح للذاكرة
     const memoryCheck = checkExplicitMemory(text);
     if (memoryCheck.isMemory) {
         addMessage(text, "user");
@@ -956,7 +1038,6 @@ async function sendMessage() {
             memory: userMemory
         };
         
-        // إرسال لقطة الشاشة إذا كانت الجلسة نشطة
         if (lastScreenCapture) {
             payload.screenImage = lastScreenCapture;
         }
@@ -977,7 +1058,6 @@ async function sendMessage() {
             addMessage(reply, "ai", true);
             conversationHistory.push({ role: "model", content: reply });
             
-            // TTS تلقائي إذا مفعل
             if (ttsEnabled) {
                 speak(reply);
             }
@@ -1018,11 +1098,10 @@ function addMessage(text, type, isMarkdown = false, isError = false) {
     meta.className = "message-meta";
     meta.textContent = new Date().toLocaleTimeString("ar-MA", { hour: "2-digit", minute: "2-digit" });
     
-    // زر استماع للرسائل AI
-    if (type === "ai" && window.speechSynthesis) {
+    if (type === "ai") {
         const listenBtn = document.createElement("span");
         listenBtn.className = "tts-btn";
-        listenBtn.textContent = "▶ استمع";
+        listenBtn.innerHTML = (ttsVoice === 'male' ? '👨' : '👩') + ' استمع';
         listenBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             speak(text);
@@ -1158,7 +1237,7 @@ function exportUserData() {
         user: { username: currentUser.username },
         memory: userMemory,
         conversationHistory: conversationHistory,
-        settings: { ttsEnabled: ttsEnabled }
+        settings: { ttsEnabled: ttsEnabled, ttsVoice: ttsVoice }
     };
     const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
