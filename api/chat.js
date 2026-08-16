@@ -1,4 +1,5 @@
 export default async function handler(req, res) {
+  // إعدادات CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -7,18 +8,31 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
   try {
-    const { message, history = [], username, memory = [], screenContext = null, screenImage = null, image = null, file = null } = req.body;
-    if (!message && !screenImage && !image && !file) return res.status(400).json({ error: 'Message required' });
+    const { 
+      message, 
+      history = [], 
+      username, 
+      memory = [], 
+      screenContext = null, 
+      screenImage = null, 
+      image = null, 
+      file = null 
+    } = req.body;
+
+    if (!message && !screenImage && !image && !file) {
+      return res.status(400).json({ error: 'Message required' });
+    }
 
     const API_KEY = process.env.GEMINI_API_KEY;
-    if (!API_KEY) return res.status(500).json({ error: 'API key missing' });
+    if (!API_KEY) {
+      return res.status(500).json({ error: 'API key missing' });
+    }
 
-    // ========== systemInstruction منفصلة (مهمة بزاف!) ==========
+    // ========== System Instruction ==========
     const systemInstruction = {
       parts: [{
         text: `أنت JOKAL، مساعد ذكي خاص وشخصي. قواعدك:
-- تتحدث بالعربية الدارجة المغربية وا الإنجليزية لي تعليمه بشكل   طبيعي وودود وا أنات أعز صديق لديه هوا وحيد وليس لديه
-أصدقاء
+- تتحدث بالعربية الدارجة المغربية وا الإنجليزية لي تعليمه بشكل طبيعي وودود وا أنات أعز صديق لديه هوا وحيد وليس لديه أصدقاء
 - أنت صديق مخلص وذكي وعملي
 - تساعد في البرمجة، التخطيط، البحث، الإبداع، والتعلم
 - تجيب بإجابات واضحة ومختصرة مع التفصيل إذا طُلب
@@ -31,7 +45,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
 
     const contents = [];
 
-    // إضافة الذاكرة الطويلة الأمد إذا وجدت
+    // 1. إضافة الذاكرة الطويلة الأمد
     if (memory && Array.isArray(memory) && memory.length > 0) {
       contents.push({
         role: 'user',
@@ -43,7 +57,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
       });
     }
 
-    // إضافة سياق الشاشة إذا وجد
+    // 2. إضافة سياق الشاشة
     if (screenContext && typeof screenContext === 'string') {
       contents.push({
         role: 'user',
@@ -55,10 +69,11 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
       });
     }
 
-    // History مع دعم الصور
+    // 3. معالجة الـ History
     history.forEach(msg => {
       const parts = [];
       if (msg.content) parts.push({ text: msg.content });
+
       if (msg.image && typeof msg.image === 'string' && msg.image.includes('base64')) {
         const base64Data = msg.image.split(',')[1];
         const mimeMatch = msg.image.match(/data:([^;]+);/);
@@ -67,12 +82,14 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
           parts.push({ inlineData: { mimeType, data: base64Data } });
         }
       }
+
       if (parts.length > 0) {
-        contents.push({ role: msg.role === 'user' ? 'user' : 'model', parts });
+        const role = (msg.role === 'user') ? 'user' : 'model';
+        contents.push({ role, parts });
       }
     });
 
-    // الرسالة الحالية + الصورة
+    // 4. الرسالة الحالية + المرفقات
     const currentParts = [];
     if (message) currentParts.push({ text: message });
 
@@ -96,7 +113,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
 
     contents.push({ role: 'user', parts: currentParts });
 
-    // ========== استدعاء API مع fallback ==========
+    // ========== الموديلات المحددة من طرفك فقط ==========
     const models = ['gemini-3.6', 'gemini-3.6-flash'];
     let data = null;
     let lastErr = null;
