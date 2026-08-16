@@ -22,75 +22,99 @@
     --header: 64px; --input-height: 78px; --ease: cubic-bezier(.2,.8,.2,1);
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; height: 100%; background: var(--void); color: var(--text); font-family: var(--font); overflow: hidden; }
+html { width: 100%; height: 100%; background: var(--void); -webkit-font-smoothing: antialiased; }
+body { width: 100%; min-height: 100%; background: radial-gradient(circle at 50% -10%, rgba(139,156,246,.10), transparent 35%), var(--void); color: var(--text); font-family: var(--font); overflow: hidden; }
+button, textarea, input { font-family: inherit; border: 0; background: none; }
 
-/* Auth Overlay */
-.auth-overlay { position: fixed; inset: 0; background: rgba(6,6,9,.95); backdrop-filter: blur(16px); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; transition: opacity .3s ease; }
-.auth-card { width: 100%; max-width: 380px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 24px; padding: 28px 22px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,.6); }
-.auth-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+/* Auth Overlay Screen */
+.auth-overlay { position: fixed; inset: 0; background: rgba(6,6,9,.96); backdrop-filter: blur(20px); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px; transition: opacity .3s var(--ease); }
+.auth-card { width: 100%; max-width: 400px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: 28px; padding: 32px 24px; text-align: center; box-shadow: 0 25px 60px rgba(0,0,0,.7); }
+.auth-brand { width: 42px; height: 42px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0); box-shadow: 0 0 25px rgba(139,156,246,.4); margin: 0 auto 18px; }
+.auth-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: white; }
 .auth-subtitle { font-size: 13px; color: var(--text-2); margin-bottom: 24px; line-height: 1.6; }
-.auth-input { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; color: white; font-size: 14px; margin-bottom: 12px; outline: none; }
+.auth-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+.auth-input { width: 100%; background: var(--surface-2); border: 1px solid var(--border); border-radius: 14px; padding: 14px; color: white; font-size: 14px; outline: none; transition: border-color .2s; }
 .auth-input:focus { border-color: var(--accent); }
-.auth-btn { width: 100%; padding: 12px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; }
-.auth-btn-primary { background: var(--accent); color: #000; margin-bottom: 10px; }
-.auth-btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
-.auth-btn:active { transform: scale(.98); }
+.auth-btn { width: 100%; padding: 14px; border-radius: 14px; font-size: 14px; font-weight: 600; cursor: pointer; transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+.btn-primary { background: var(--accent); color: #000; }
+.btn-google { background: rgba(255,255,255,.06); border: 1px solid var(--border-strong); color: white; }
+.btn-google:hover { background: rgba(255,255,255,.1); }
+.btn-guest { background: transparent; border: 1px solid var(--border); color: var(--text-2); }
+.auth-divider { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--text-4); font-size: 11px; }
+.auth-divider::before, .auth-divider::after { content: ""; flex: 1; height: 1px; background: var(--border); }
 
 /* Main App */
 .app { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
 .topbar { position: fixed; top: 0; left: 0; right: 0; height: calc(var(--header) + env(safe-area-inset-top)); padding: env(safe-area-inset-top) 14px 0 14px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(6,6,9,.98), rgba(6,6,9,.86), transparent); backdrop-filter: blur(14px); z-index: 100; }
-.menu-button { width: 42px; height: 42px; border-radius: 13px; background: rgba(255,255,255,.045); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); }
+.menu-button { width: 42px; height: 42px; border-radius: 13px; background: rgba(255,255,255,.045); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--text-2); cursor: pointer; }
 .brand { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; direction: ltr; }
 .brand-core { width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0); box-shadow: 0 0 18px rgba(139,156,246,.35); }
-.brand-name { font-family: Inter, sans-serif; font-size: 15px; font-weight: 700; color: white; }
-
+.brand-name { font-family: Inter, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .12em; color: white; }
 .status { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--text-3); direction: ltr; }
 .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); }
 
-/* Chat */
-.chat { flex: 1; width: 100%; padding: calc(var(--header) + 15px) 14px calc(var(--input-height) + 25px); overflow-y: auto; }
-.welcome { min-height: 50vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-.welcome-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; }
-.welcome-description { font-size: 13px; color: var(--text-2); }
+/* Chat Container */
+.chat { flex: 1; width: 100%; padding: calc(var(--header) + env(safe-area-inset-top) + 15px) 14px calc(var(--input-height) + env(safe-area-inset-bottom) + 25px); overflow-y: auto; scroll-behavior: smooth; }
+.welcome { min-height: 55vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.welcome-title { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.welcome-description { max-width: 300px; color: var(--text-2); font-size: 14px; line-height: 1.8; }
 
-.messages { display: flex; flex-direction: column; gap: 16px; }
+.messages { display: flex; flex-direction: column; gap: 18px; }
 .message { display: flex; width: 100%; }
 .message.user { justify-content: flex-start; }
-.message.user .bubble { background: var(--accent-soft); border: 1px solid rgba(139,156,246,.2); border-radius: 16px 16px 4px 16px; max-width: 82%; }
-.message.ai { justify-content: flex-end; gap: 8px; }
-.message.ai .bubble { background: var(--surface); border: 1px solid var(--border); border-radius: 16px 16px 16px 4px; max-width: 88%; }
-.bubble { padding: 12px 14px; font-size: 14px; line-height: 1.7; word-break: break-word; }
+.message.user .bubble { background: linear-gradient(135deg, rgba(139,156,246,.20), rgba(139,156,246,.10)); border: 1px solid rgba(139,156,246,.17); border-radius: 18px 18px 5px 18px; color: white; max-width: 82%; }
+.message.ai { justify-content: flex-end; gap: 10px; }
+.message.ai .bubble { background: var(--surface-2); border: 1px solid var(--border); border-radius: 18px 18px 18px 5px; max-width: 88%; color: var(--text); }
+.ai-avatar { width: 30px; height: 30px; border-radius: 10px; background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); }
+.bubble { padding: 12px 14px; font-size: 14px; line-height: 1.8; word-break: break-word; }
+.message-meta { margin-top: 5px; font-size: 9px; color: var(--text-4); direction: ltr; display: flex; align-items: center; gap: 6px; }
 
 /* Input */
-.input-area { position: fixed; left: 0; right: 0; bottom: 0; padding: 8px 12px calc(10px + env(safe-area-inset-bottom)); background: var(--void); }
-.input-wrapper { max-width: 680px; margin: auto; display: flex; align-items: center; gap: 8px; padding: 6px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; }
-.command-input { flex: 1; border: 0; outline: 0; background: transparent; color: white; font-size: 14px; padding: 8px; resize: none; }
-.send { width: 38px; height: 38px; border-radius: 12px; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+.input-area { position: fixed; left: 0; right: 0; bottom: 0; padding: 8px 12px calc(10px + env(safe-area-inset-bottom)); z-index: 90; background: linear-gradient(to top, rgba(6,6,9,.99) 50%, rgba(6,6,9,.80), transparent); }
+.input-wrapper { max-width: 680px; margin: auto; display: flex; align-items: flex-end; gap: 8px; padding: 8px; background: rgba(20,20,28,.92); border: 1px solid var(--border); border-radius: 21px; backdrop-filter: blur(18px); }
+.command-input { flex: 1; max-height: 120px; min-height: 40px; resize: none; border: 0; outline: 0; background: transparent; color: white; font-size: 14px; padding: 9px; }
+.mic-btn, .send { width: 40px; height: 40px; border-radius: 13px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.mic-btn { background: rgba(255,255,255,.05); border: 1px solid var(--border); color: var(--text-3); }
+.send { background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18); color: var(--accent); }
 
-/* Menu */
-.menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s; }
+/* Menu Overlay */
+.menu-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.7); backdrop-filter: blur(4px); z-index: 200; opacity: 0; pointer-events: none; transition: opacity .3s; }
 .menu-overlay.open { opacity: 1; pointer-events: auto; }
-.menu-panel { position: absolute; top: 0; right: 0; width: 300px; height: 100%; background: var(--surface); padding: 20px; display: flex; flex-direction: column; gap: 20px; }
-.user-profile-box { padding: 12px; background: var(--surface-2); border-radius: 14px; border: 1px solid var(--border); }
-.user-profile-name { font-weight: bold; font-size: 14px; color: white; }
-.user-profile-email { font-size: 11px; color: var(--text-3); }
+.menu-panel { position: absolute; top: 0; right: 0; width: min(85vw, 340px); height: 100%; padding: 24px 18px; background: var(--surface); border-left: 1px solid var(--border); transform: translateX(100%); transition: transform .35s var(--ease); display: flex; flex-direction: column; gap: 20px; }
+.menu-overlay.open .menu-panel { transform: translateX(0); }
+.user-card { padding: 14px; background: var(--surface-2); border-radius: 16px; border: 1px solid var(--border); }
+.user-card-name { font-weight: 700; font-size: 15px; color: white; }
+.user-card-email { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+
+@media (min-width: 700px) { .app { max-width: 680px; margin: 0 auto; border-left: 1px solid var(--border); border-right: 1px solid var(--border); } }
 </style>
 </head>
 
 <body>
 
-<!-- Modal Auth Screen -->
+<!-- Auth Screen (Google / Email / Guest) -->
 <div class="auth-overlay" id="authModal">
     <div class="auth-card">
-        <div class="brand-core" style="margin: 0 auto 16px;"></div>
+        <div class="auth-brand"></div>
         <h2 class="auth-title">مرحباً بك في JOKAL</h2>
-        <p class="auth-subtitle">ادخل اسمك وإيميلك للمتابعة وحفظ محادثاتك وذاكرتك الخاصة.</p>
+        <p class="auth-subtitle">قم بتسجيل الدخول لحفظ محادثاتك وذاكرة الحساب الخاصة بك.</p>
         
-        <input type="text" id="authName" class="auth-input" placeholder="الاسم (مثال: يوسف)">
-        <input type="email" id="authEmail" class="auth-input" placeholder="البريد الإلكتروني (اختياري)">
-        
-        <button class="auth-btn auth-btn-primary" id="loginBtn">دخول / إنشاء حساب</button>
-        <button class="auth-btn auth-btn-secondary" id="guestBtn">المتابعة كضيف 👻</button>
+        <div class="auth-group">
+            <button class="auth-btn btn-google" id="googleAuthBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                متابعة باستخدام Google
+            </button>
+        </div>
+
+        <div class="auth-divider">أو عبر البريد الإلكتروني</div>
+
+        <div class="auth-group">
+            <input type="text" id="authName" class="auth-input" placeholder="الاسم الشخصي">
+            <input type="email" id="authEmail" class="auth-input" placeholder="البريد الإلكتروني (Gmail)">
+            <button class="auth-btn btn-primary" id="loginEmailBtn">دخول / إنشاء حساب</button>
+        </div>
+
+        <button class="auth-btn btn-guest" id="guestAuthBtn">المتابعة كضيف 👻</button>
     </div>
 </div>
 
@@ -104,7 +128,7 @@ html, body { width: 100%; height: 100%; background: var(--void); color: var(--te
     <main class="chat" id="chat">
         <section class="welcome" id="welcome">
             <h1 class="welcome-title" id="welcomeUserText">مرحباً 👋</h1>
-            <p class="welcome-description">مساعدك الذكي الشخصي والخاص.</p>
+            <p class="welcome-description">مساعدك الذكي الخاص. اكتب لي أو تحدث معي بكل أريحية.</p>
         </section>
         <div class="messages" id="messages"></div>
     </main>
@@ -112,17 +136,19 @@ html, body { width: 100%; height: 100%; background: var(--void); color: var(--te
     <div class="input-area">
         <div class="input-wrapper">
             <textarea id="commandInput" class="command-input" rows="1" placeholder="اكتب شي حاجة..."></textarea>
-            <button class="send" id="sendButton">➤</button>
+            <button class="mic-btn" id="micBtn" title="تحدث">🎙️</button>
+            <button class="send" id="sendBtn">➤</button>
         </div>
     </div>
 
     <div class="menu-overlay" id="menuOverlay">
         <aside class="menu-panel">
-            <div class="user-profile-box">
-                <div class="user-profile-name" id="menuProfileName">مستخدم</div>
-                <div class="user-profile-email" id="menuProfileEmail">guest@jokal.ai</div>
+            <div class="user-card">
+                <div class="user-card-name" id="menuProfileName">مستخدم</div>
+                <div class="user-card-email" id="menuProfileEmail">guest@jokal.ai</div>
             </div>
-            <button class="auth-btn auth-btn-secondary" id="logoutBtn" style="color:var(--error); border-color:rgba(246,107,107,.2)">تسجيل الخروج</button>
+            <button class="auth-btn btn-guest" id="newChatBtn">＋ محادثة جديدة</button>
+            <button class="auth-btn btn-guest" id="logoutBtn" style="color:var(--error); border-color:rgba(246,107,107,.2); margin-top: auto;">تسجيل الخروج</button>
         </aside>
     </div>
 </div>
@@ -135,63 +161,86 @@ const USER_KEY = 'jokal_user_session';
 
 let currentUser = JSON.parse(localStorage.getItem(USER_KEY) || 'null');
 let conversationHistory = [];
+let isProcessing = false;
 
 const authModal = document.getElementById("authModal");
 const authName = document.getElementById("authName");
 const authEmail = document.getElementById("authEmail");
-const loginBtn = document.getElementById("loginBtn");
-const guestBtn = document.getElementById("guestBtn");
-const welcomeUserText = document.getElementById("welcomeUserText");
-
 const input = document.getElementById("commandInput");
-const sendBtn = document.getElementById("sendButton");
+const sendBtn = document.getElementById("sendBtn");
 const messages = document.getElementById("messages");
 const menuOverlay = document.getElementById("menuOverlay");
 
-// Init Auth
+// Auth Controller
 function checkAuth() {
     if (currentUser) {
-        authModal.style.display = 'none';
-        welcomeUserText.textContent = `مرحباً ${currentUser.name} 👋`;
+        authModal.style.opacity = '0';
+        setTimeout(() => authModal.style.display = 'none', 300);
+        document.getElementById("welcomeUserText").textContent = `مرحباً ${currentUser.name} 👋`;
         document.getElementById("menuProfileName").textContent = currentUser.name;
         document.getElementById("menuProfileEmail").textContent = currentUser.email || 'حساب ضيف';
     } else {
         authModal.style.display = 'flex';
+        authModal.style.opacity = '1';
     }
 }
 
-loginBtn.addEventListener('click', () => {
-    const name = authName.value.trim() || 'مستخدم';
-    const email = authEmail.value.trim() || `${Date.now()}@jokal.local`;
-    currentUser = { id: 'usr_' + Date.now(), name, email, isGuest: false };
+document.getElementById("googleAuthBtn").onclick = () => {
+    const mockEmail = "user." + Math.floor(Math.random() * 1000) + "@gmail.com";
+    currentUser = { id: 'goog_' + Date.now(), name: 'مستخدم Google', email: mockEmail };
     localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
     checkAuth();
-});
+};
 
-guestBtn.addEventListener('click', () => {
-    currentUser = { id: 'guest_' + Date.now(), name: 'زائر', email: 'ضيف', isGuest: true };
+document.getElementById("loginEmailBtn").onclick = () => {
+    const name = authName.value.trim() || 'مستخدم JOKAL';
+    const email = authEmail.value.trim() || 'user@gmail.com';
+    currentUser = { id: 'usr_' + Date.now(), name, email };
     localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
     checkAuth();
-});
+};
 
-document.getElementById("logoutBtn").addEventListener('click', () => {
+document.getElementById("guestAuthBtn").onclick = () => {
+    currentUser = { id: 'guest_' + Date.now(), name: 'زائر', email: 'حساب ضيف' };
+    localStorage.setItem(USER_KEY, JSON.stringify(currentUser));
+    checkAuth();
+};
+
+document.getElementById("logoutBtn").onclick = () => {
     localStorage.removeItem(USER_KEY);
     currentUser = null;
     location.reload();
-});
+};
 
 document.getElementById("openMenu").onclick = () => menuOverlay.classList.add("open");
-menuOverlay.onclick = (e) => { if(e.target === menuOverlay) menuOverlay.classList.remove("open"); };
+menuOverlay.onclick = (e) => { if (e.target === menuOverlay) menuOverlay.classList.remove("open"); };
+document.getElementById("newChatBtn").onclick = () => {
+    messages.innerHTML = '';
+    conversationHistory = [];
+    document.getElementById("welcome").style.display = 'flex';
+    menuOverlay.classList.remove("open");
+};
 
-// Send Message
+// Messaging Engine with Stream Reader
 async function sendMessage() {
     const text = input.value.trim();
-    if (!text || !currentUser) return;
+    if (!text || isProcessing || !currentUser) return;
 
+    isProcessing = true;
     document.getElementById("welcome").style.display = "none";
     addMessage(text, "user");
     conversationHistory.push({ role: "user", content: text });
+    
     input.value = "";
+    input.style.height = "auto";
+
+    // AI Message Placeholder
+    const row = document.createElement("div"); row.className = "message ai";
+    const avatar = document.createElement("div"); avatar.className = "ai-avatar"; avatar.textContent = "J";
+    const content = document.createElement("div");
+    const bubble = document.createElement("div"); bubble.className = "bubble"; bubble.innerHTML = "...";
+    content.appendChild(bubble); row.appendChild(avatar); row.appendChild(content); messages.appendChild(row);
+    scrollToBottom();
 
     try {
         const res = await fetch(API_URL, {
@@ -207,39 +256,62 @@ async function sendMessage() {
             })
         });
 
-        if (!res.ok) throw new Error("مشكل فالسيرفر");
+        if (!res.ok) throw new Error("Server Error");
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
-        let reply = "";
-        const aiBubble = addMessage("...", "ai");
+        let fullReply = "";
+        let buffer = "";
 
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-            const chunk = decoder.decode(value);
-            reply += chunk;
-            aiBubble.innerHTML = marked.parse(reply);
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop();
+
+            for (const line of lines) {
+                if (line.startsWith('data:')) {
+                    try {
+                        const json = JSON.parse(line.slice(5));
+                        const chunk = json.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                        if (chunk) {
+                            fullReply += chunk;
+                            bubble.innerHTML = marked.parse(fullReply);
+                            scrollToBottom();
+                        }
+                    } catch(e) {}
+                }
+            }
         }
-        conversationHistory.push({ role: "model", content: reply });
+
+        if (fullReply) {
+            conversationHistory.push({ role: "model", content: fullReply });
+        } else {
+            bubble.textContent = "⚠️ لم يتم الاستجابة، يرجى المحاولة لاحقاً.";
+        }
 
     } catch (err) {
-        addMessage("⚠️ تعذر الحصول على إجابة، حاول لاحقاً.", "ai");
+        bubble.textContent = "⚠️ تعذر الاتصال بالسيرفر. تأكد من إعدادات Vercel و Gemini API Key.";
     }
+
+    isProcessing = false;
 }
 
 function addMessage(text, type) {
-    const row = document.createElement("div"); 
-    row.className = "message " + type;
-    const bubble = document.createElement("div"); 
-    bubble.className = "bubble";
+    const row = document.createElement("div"); row.className = "message " + type;
+    const bubble = document.createElement("div"); bubble.className = "bubble";
     bubble.innerHTML = type === 'ai' ? marked.parse(text) : text;
-    row.appendChild(bubble); 
-    messages.appendChild(row);
-    return bubble;
+    row.appendChild(bubble); messages.appendChild(row);
+    scrollToBottom();
 }
 
-sendBtn.addEventListener("click", sendMessage);
+function scrollToBottom() { document.getElementById("chat").scrollTop = document.getElementById("chat").scrollHeight; }
+
+input.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+sendBtn.onclick = sendMessage;
+
 checkAuth();
 </script>
 
