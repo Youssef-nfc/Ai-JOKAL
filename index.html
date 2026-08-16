@@ -2,1180 +2,4182 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#07070a">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+      maximum-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#060609">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="JOKAL">
-<meta name="description" content="JOKAL - مساعدك الذكي الخاص">
-<title>JOKAL — مساعدك الذكي</title>
+
+<title>JOKAL — Private Intelligence</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
-:root {
-    --void: #060609;
-    --deep: #0b0b10;
-    --surface: #111118;
-    --surface-2: #17171f;
-    --surface-3: #1d1d27;
-    --border: rgba(255,255,255,.07);
-    --border-strong: rgba(255,255,255,.12);
-    --accent: #8b9cf6;
-    --accent-soft: rgba(139,156,246,.14);
-    --accent-glow: rgba(139,156,246,.30);
-    --success: #4fd1c5;
-    --warning: #f6ad55;
-    --danger: #f66b6b;
-    --white: #fff;
-    --text: rgba(255,255,255,.92);
-    --text-2: rgba(255,255,255,.62);
-    --text-3: rgba(255,255,255,.38);
-    --text-4: rgba(255,255,255,.20);
-    --font: "Noto Sans Arabic", Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    --header: 64px;
-    --input-height: 78px;
-    --radius-sm: 10px;
-    --radius-md: 14px;
-    --radius-lg: 20px;
-    --radius-xl: 26px;
-    --ease: cubic-bezier(.2,.8,.2,1);
+:root{
+    --void:#060609;
+    --deep:#0b0b10;
+    --surface:#111118;
+    --surface2:#17171f;
+    --surface3:#1d1d27;
+
+    --border:rgba(255,255,255,.07);
+    --border2:rgba(255,255,255,.12);
+
+    --accent:#8b9cf6;
+    --accent2:#6578e8;
+    --accentSoft:rgba(139,156,246,.13);
+
+    --success:#4fd1c5;
+    --warning:#f6ad55;
+    --danger:#f66b6b;
+
+    --text:rgba(255,255,255,.94);
+    --text2:rgba(255,255,255,.62);
+    --text3:rgba(255,255,255,.38);
+    --text4:rgba(255,255,255,.20);
+
+    --font:"Noto Sans Arabic",Inter,sans-serif;
+
+    --header:64px;
+    --input:82px;
+
+    --ease:cubic-bezier(.2,.8,.2,1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { width: 100%; height: 100%; background: var(--void); -webkit-font-smoothing: antialiased; }
-body {
-    width: 100%; min-height: 100%;
-    background: radial-gradient(circle at 50% -10%, rgba(139,156,246,.10), transparent 35%), var(--void);
-    color: var(--text); font-family: var(--font);
-    overflow: hidden; -webkit-tap-highlight-color: transparent;
-}
-button, textarea, input { font-family: inherit; }
-button { border: 0; }
-::selection { background: var(--accent-soft); color: white; }
-
-/* ========== LOGIN OVERLAY ========== */
-.login-overlay {
-    position: fixed; inset: 0; z-index: 1000;
-    background: var(--void);
-    display: flex; align-items: center; justify-content: center;
-    padding: 20px;
-}
-.login-box {
-    width: 100%; max-width: 360px;
-    background: linear-gradient(160deg, var(--surface), var(--deep));
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    padding: 32px 24px;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
-}
-.login-brand {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    margin-bottom: 28px; direction: ltr;
-}
-.login-brand-core {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0);
-    box-shadow: 0 0 20px rgba(139,156,246,.4);
-}
-.login-brand-name { font-family: Inter, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: .12em; color: white; }
-.login-title { text-align: center; font-size: 15px; color: var(--text-2); margin-bottom: 24px; }
-.login-field { margin-bottom: 14px; }
-.login-field label { display: block; font-size: 11px; color: var(--text-3); margin-bottom: 6px; padding-right: 4px; }
-.login-field input {
-    width: 100%; padding: 12px 14px;
-    background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    border-radius: var(--radius-md); color: white; font-size: 14px; outline: none;
-    transition: border-color .2s, box-shadow .2s;
-}
-.login-field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(139,156,246,.08); }
-.login-btn {
-    width: 100%; padding: 13px;
-    background: linear-gradient(135deg, rgba(139,156,246,.25), rgba(139,156,246,.12));
-    border: 1px solid rgba(139,156,246,.25);
-    border-radius: var(--radius-md); color: white; font-size: 14px; font-weight: 600;
-    cursor: pointer; margin-top: 8px; transition: all .2s;
-}
-.login-btn:active { transform: scale(.98); }
-.login-error { color: var(--danger); font-size: 12px; text-align: center; margin-top: 10px; min-height: 18px; }
-
-.app { position: relative; width: 100%; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-
-.topbar {
-    position: fixed; top: 0; left: 0; right: 0;
-    height: calc(var(--header) + env(safe-area-inset-top));
-    padding: env(safe-area-inset-top) 14px 0 14px;
-    display: flex; align-items: center; justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(6,6,9,.98), rgba(6,6,9,.86), transparent);
-    backdrop-filter: blur(14px); z-index: 100;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-.menu-button {
-    width: 42px; height: 42px; border-radius: 13px;
-    background: rgba(255,255,255,.045); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: transform .2s var(--ease), background .2s, border-color .2s;
-}
-.menu-button:active { transform: scale(.92); }
-.menu-button:hover { background: rgba(255,255,255,.08); border-color: var(--border-strong); }
-
-.hamburger { width: 19px; height: 14px; display: flex; flex-direction: column; justify-content: space-between; }
-.hamburger span { width: 100%; height: 1.5px; background: rgba(255,255,255,.8); border-radius: 10px; }
-
-.brand { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; direction: ltr; }
-.brand-core {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #b7c1ff, #7184ef 50%, #414fc0);
-    box-shadow: 0 0 18px rgba(139,156,246,.35); position: relative;
-}
-.brand-core::before, .brand-core::after {
-    content: ""; position: absolute; inset: -5px; border-radius: 50%;
-    border: 1px solid rgba(139,156,246,.18);
-}
-.brand-core::after { inset: -9px; border-color: rgba(139,156,246,.08); }
-.brand-name { font-family: Inter, sans-serif; font-size: 15px; font-weight: 700; letter-spacing: .12em; color: white; }
-
-.status { display: flex; align-items: center; gap: 6px; font-size: 9px; color: var(--text-3); letter-spacing: .08em; direction: ltr; }
-.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--success); box-shadow: 0 0 10px rgba(79,209,197,.7); animation: pulse 2s infinite; }
-.status.thinking .status-dot { background: var(--accent); box-shadow: 0 0 10px var(--accent-glow); }
-.status.listening .status-dot { background: var(--warning); }
-.status.live .status-dot { background: var(--danger); box-shadow: 0 0 10px rgba(246,107,107,.6); animation: pulse 1s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .45; transform: scale(.75); } }
-
-.top-actions { display: flex; align-items: center; gap: 6px; }
-
-.icon-btn {
-    width: 36px; height: 36px; border-radius: 11px;
-    background: rgba(255,255,255,.045); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-2); font-size: 16px;
-    transition: all .2s;
-}
-.icon-btn:hover { background: rgba(255,255,255,.08); color: white; }
-.icon-btn.active { background: rgba(246,107,107,.15); border-color: rgba(246,107,107,.3); color: var(--danger); }
-
-.chat {
-    flex: 1; width: 100%;
-    padding: calc(var(--header) + env(safe-area-inset-top) + 15px) 14px calc(var(--input-height) + env(safe-area-inset-bottom) + 25px);
-    overflow-y: auto; overscroll-behavior: contain; scroll-behavior: smooth;
-}
-.chat::-webkit-scrollbar { width: 3px; }
-.chat::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 10px; }
-
-.welcome {
-    min-height: 55vh; display: flex; flex-direction: column;
-    align-items: center; justify-content: center; text-align: center;
-    padding: 30px 20px; animation: welcomeIn .7s var(--ease);
-}
-@keyframes welcomeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-.welcome-core { width: 82px; height: 82px; border-radius: 50%; position: relative; margin-bottom: 26px; display: flex; align-items: center; justify-content: center; }
-.welcome-core::before, .welcome-core::after { content: ""; position: absolute; border-radius: 50%; border: 1px solid rgba(139,156,246,.15); }
-.welcome-core::before { inset: -12px; }
-.welcome-core::after { inset: -23px; border-color: rgba(139,156,246,.07); }
-
-.core-ball {
-    width: 48px; height: 48px; border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #c2caff, #8092f5 50%, #4858c9);
-    box-shadow: 0 0 35px rgba(139,156,246,.35);
-    animation: breathe 3s ease-in-out infinite;
-}
-@keyframes breathe { 0%,100% { transform: scale(1); } 50% { transform: scale(1.08); } }
-
-.welcome-title { font-size: 27px; font-weight: 700; margin-bottom: 9px; }
-.welcome-description { max-width: 310px; color: var(--text-2); font-size: 14px; line-height: 1.9; }
-.welcome-hint { margin-top: 22px; font-size: 11px; color: var(--text-4); }
-
-.messages { display: flex; flex-direction: column; gap: 18px; }
-
-.message { display: flex; width: 100%; animation: messageIn .35s var(--ease); }
-@keyframes messageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.message.user { justify-content: flex-start; }
-.message.user .bubble {
-    background: linear-gradient(135deg, rgba(139,156,246,.20), rgba(139,156,246,.10));
-    border: 1px solid rgba(139,156,246,.17);
-    border-radius: 18px 18px 5px 18px; color: white; max-width: 82%;
+html,body{
+    width:100%;
+    height:100%;
+    background:var(--void);
 }
 
-.message.ai { justify-content: flex-end; align-items: flex-start; gap: 10px; }
-.message.ai .bubble {
-    background: linear-gradient(135deg, rgba(255,255,255,.055), rgba(255,255,255,.025));
-    border: 1px solid var(--border);
-    border-radius: 18px 18px 18px 5px; max-width: 88%; color: var(--text);
+body{
+    color:var(--text);
+    font-family:var(--font);
+    overflow:hidden;
+    -webkit-tap-highlight-color:transparent;
 }
 
-.ai-avatar {
-    width: 30px; height: 30px; flex-shrink: 0; border-radius: 10px;
-    background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18);
-    display: flex; align-items: center; justify-content: center;
-    font-family: Inter, sans-serif; font-size: 12px; font-weight: 700; color: var(--accent);
+button,
+textarea,
+input{
+    font-family:inherit;
 }
 
-.bubble { padding: 12px 14px; font-size: 14px; line-height: 1.8; word-break: break-word; position: relative; }
-.message-meta { margin-top: 5px; font-size: 9px; color: var(--text-4); direction: ltr; display: flex; align-items: center; gap: 8px; }
-
-/* Markdown in bubbles */
-.bubble h1, .bubble h2, .bubble h3 { font-size: 15px; margin: 8px 0 4px; color: var(--accent); }
-.bubble p { margin: 6px 0; }
-.bubble ul, .bubble ol { margin: 6px 0; padding-right: 18px; }
-.bubble li { margin: 3px 0; }
-.bubble code {
-    background: rgba(139,156,246,.15); padding: 2px 6px; border-radius: 5px;
-    font-family: monospace; font-size: 12px;
-}
-.bubble pre { background: var(--surface-2); padding: 10px; border-radius: 10px; overflow-x: auto; margin: 8px 0; }
-.bubble pre code { background: none; padding: 0; }
-.bubble strong { color: white; }
-.bubble blockquote { border-right: 3px solid var(--accent); padding-right: 10px; margin: 8px 0; color: var(--text-2); }
-.bubble a { color: var(--accent); text-decoration: none; }
-.bubble a:hover { text-decoration: underline; }
-
-.tts-btn {
-    font-size: 10px; color: var(--text-4); cursor: pointer;
-    padding: 2px 6px; border-radius: 4px;
-    background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    transition: all .2s;
-}
-.tts-btn:hover { color: var(--accent); border-color: rgba(139,156,246,.3); }
-
-.typing { display: flex; align-items: center; gap: 4px; padding: 14px 16px; }
-.typing span { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); opacity: .4; animation: typing 1.2s infinite; }
-.typing span:nth-child(2) { animation-delay: .15s; }
-.typing span:nth-child(3) { animation-delay: .3s; }
-@keyframes typing { 0%,60%,100% { opacity: .25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
-
-.input-area {
-    position: fixed; left: 0; right: 0; bottom: 0;
-    padding: 8px 12px calc(10px + env(safe-area-inset-bottom));
-    z-index: 90;
-    background: linear-gradient(to top, rgba(6,6,9,.99) 50%, rgba(6,6,9,.80), transparent);
+button{
+    border:0;
 }
 
-.input-wrapper {
-    max-width: 680px; margin: auto; display: flex; align-items: flex-end; gap: 8px;
-    padding: 8px; background: rgba(20,20,28,.92); border: 1px solid var(--border);
-    border-radius: 21px; box-shadow: 0 -5px 30px rgba(0,0,0,.25);
-    backdrop-filter: blur(18px);
-    transition: border-color .2s, box-shadow .2s;
-}
-.input-wrapper:focus-within {
-    border-color: rgba(139,156,246,.30);
-    box-shadow: 0 0 0 3px rgba(139,156,246,.05), 0 -5px 35px rgba(0,0,0,.35);
+button:focus-visible,
+textarea:focus-visible,
+input:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:2px;
 }
 
-.command-input {
-    flex: 1; min-width: 0; max-height: 120px; min-height: 40px;
-    resize: none; border: 0; outline: 0; background: transparent;
-    color: white; font-size: 14px; line-height: 1.6; padding: 9px 7px;
-}
-.command-input::placeholder { color: var(--text-4); }
+/* =========================================================
+   LOGIN
+========================================================= */
 
-.input-actions {
-    display: flex; align-items: center; gap: 4px;
-}
+.login-overlay{
+    position:fixed;
+    inset:0;
+    z-index:1000;
 
-.mic-btn, .tts-toggle {
-    width: 36px; height: 36px; border-radius: 11px;
-    background: rgba(255,255,255,.04); border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer; color: var(--text-3); font-size: 16px;
-    transition: all .2s; flex-shrink: 0;
-}
-.mic-btn:hover, .tts-toggle:hover { background: rgba(255,255,255,.08); color: white; }
-.mic-btn.recording { background: rgba(246,107,107,.15); border-color: rgba(246,107,107,.3); color: var(--danger); animation: pulse 1.5s infinite; }
-.tts-toggle.active { background: rgba(139,156,246,.15); border-color: rgba(139,156,246,.3); color: var(--accent); }
+    display:flex;
+    align-items:center;
+    justify-content:center;
 
-.send {
-    width: 40px; height: 40px; flex-shrink: 0; border-radius: 13px;
-    background: var(--accent-soft); border: 1px solid rgba(139,156,246,.18);
-    color: var(--accent); display: flex; align-items: center; justify-content: center;
-    cursor: pointer; opacity: .45; transition: all .2s var(--ease);
-}
-.send.active { opacity: 1; }
-.send.active:active { transform: scale(.9); }
-.send svg { width: 18px; height: 18px; }
+    padding:20px;
 
-.menu-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,.65);
-    backdrop-filter: blur(4px); z-index: 200; opacity: 0;
-    pointer-events: none; transition: opacity .3s;
-}
-.menu-overlay.open { opacity: 1; pointer-events: auto; }
-
-.menu-panel {
-    position: absolute; top: 0; right: 0;
-    width: min(88vw, 360px); height: 100%;
-    padding: calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));
-    background: linear-gradient(160deg, #111118, #09090d);
-    border-left: 1px solid var(--border);
-    transform: translateX(100%); transition: transform .35s var(--ease);
-    overflow-y: auto;
-}
-.menu-overlay.open .menu-panel { transform: translateX(0); }
-
-.menu-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 25px; }
-.menu-title { font-size: 18px; font-weight: 700; }
-.close-menu { width: 38px; height: 38px; border-radius: 12px; background: rgba(255,255,255,.05); color: var(--text-2); cursor: pointer; font-size: 20px; }
-
-.user-badge {
-    display: flex; align-items: center; gap: 10px;
-    padding: 12px; margin-bottom: 20px;
-    background: rgba(255,255,255,.03); border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-}
-.user-badge-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--accent-soft); border: 1px solid rgba(139,156,246,.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-}
-.user-badge-info { flex: 1; }
-.user-badge-name { font-size: 13px; font-weight: 600; color: var(--text); }
-.user-badge-status { font-size: 10px; color: var(--text-3); }
-
-.menu-group { margin-bottom: 24px; }
-.menu-label { font-size: 10px; color: var(--text-4); letter-spacing: .1em; margin-bottom: 9px; padding-right: 5px; }
-.menu-item {
-    width: 100%; display: flex; align-items: center; gap: 13px;
-    padding: 13px 12px; margin-bottom: 5px; border-radius: 14px;
-    background: transparent; color: var(--text-2); text-align: right;
-    cursor: pointer; transition: background .2s, color .2s, transform .2s;
-}
-.menu-item:hover, .menu-item:active { background: rgba(255,255,255,.055); color: white; }
-.menu-icon { width: 36px; height: 36px; flex-shrink: 0; border-radius: 11px; background: var(--surface-2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; color: var(--accent); }
-.menu-icon svg { width: 18px; height: 18px; }
-.menu-item-text { display: flex; flex-direction: column; gap: 2px; flex: 1; }
-.menu-item-title { font-size: 13px; color: var(--text); font-weight: 600; }
-.menu-item-description { font-size: 10px; color: var(--text-4); }
-
-.memory-list {
-    max-height: 200px; overflow-y: auto;
-    margin: 8px 0; padding: 8px;
-    background: rgba(0,0,0,.2); border-radius: var(--radius-md);
-    border: 1px solid var(--border);
-}
-.memory-item {
-    padding: 8px 10px; margin-bottom: 6px;
-    background: rgba(139,156,246,.06); border-radius: var(--radius-sm);
-    border-right: 2px solid var(--accent);
-    font-size: 12px; color: var(--text-2); line-height: 1.6;
-}
-.memory-item:last-child { margin-bottom: 0; }
-.memory-empty { text-align: center; color: var(--text-4); font-size: 11px; padding: 12px; }
-
-.error-bubble { border-color: rgba(246, 107, 107, 0.3) !important; background: linear-gradient(135deg, rgba(246,107,107,.10), rgba(246,107,107,.05)) !important; }
-
-@media (min-width: 700px) {
-    .app { max-width: 680px; margin: 0 auto; border-left: 1px solid rgba(255,255,255,.025); border-right: 1px solid rgba(255,255,255,.025); background: rgba(6,6,9,.45); box-shadow: 0 0 100px rgba(0,0,0,.35); }
-    .topbar { max-width: 680px; margin: auto; }
-    .input-area { max-width: 680px; margin: auto; }
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(139,156,246,.12),
+            transparent 35%
+        ),
+        var(--void);
 }
 
-button:focus-visible, textarea:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+.login-box{
+    width:100%;
+    max-width:370px;
+
+    padding:32px 24px;
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(20,20,28,.96),
+            rgba(8,8,12,.98)
+        );
+
+    border:1px solid var(--border);
+    border-radius:26px;
+
+    box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+}
+
+.login-brand{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+
+    direction:ltr;
+
+    margin-bottom:26px;
+}
+
+.login-core,
+.brand-core{
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #c4cbff,
+            #7b8df3 48%,
+            #4454c7
+        );
+
+    box-shadow:
+        0 0 30px rgba(139,156,246,.4);
+}
+
+.login-core{
+    width:38px;
+    height:38px;
+}
+
+.login-name{
+    font-family:Inter,sans-serif;
+    font-size:19px;
+    font-weight:700;
+    letter-spacing:.13em;
+}
+
+.login-title{
+    text-align:center;
+    color:var(--text2);
+    font-size:14px;
+    margin-bottom:25px;
+}
+
+.login-field{
+    margin-bottom:14px;
+}
+
+.login-field label{
+    display:block;
+    color:var(--text3);
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.login-field input{
+    width:100%;
+
+    padding:13px 14px;
+
+    background:rgba(255,255,255,.035);
+    border:1px solid var(--border);
+
+    border-radius:14px;
+
+    color:white;
+    outline:none;
+}
+
+.login-field input:focus{
+    border-color:rgba(139,156,246,.45);
+}
+
+.login-btn{
+    width:100%;
+
+    padding:14px;
+
+    margin-top:8px;
+
+    border-radius:14px;
+
+    color:white;
+    font-weight:600;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,156,246,.28),
+            rgba(139,156,246,.12)
+        );
+
+    border:1px solid rgba(139,156,246,.25);
+}
+
+.login-error{
+    min-height:18px;
+
+    margin-top:10px;
+
+    text-align:center;
+
+    color:var(--danger);
+    font-size:11px;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    width:100%;
+    height:100dvh;
+
+    display:flex;
+    flex-direction:column;
+
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(139,156,246,.09),
+            transparent 34%
+        ),
+        var(--void);
+
+    overflow:hidden;
+}
+
+/* =========================================================
+   TOPBAR
+========================================================= */
+
+.topbar{
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:calc(var(--header) + env(safe-area-inset-top));
+
+    padding:
+        env(safe-area-inset-top)
+        14px
+        0;
+
+    z-index:100;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(6,6,9,.98),
+            rgba(6,6,9,.82),
+            transparent
+        );
+
+    backdrop-filter:blur(16px);
+}
+
+.top-button{
+    width:42px;
+    height:42px;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,.045);
+    border:1px solid var(--border);
+
+    color:var(--text2);
+
+    cursor:pointer;
+}
+
+.top-button:active{
+    transform:scale(.94);
+}
+
+.hamburger{
+    width:19px;
+    height:15px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.hamburger span{
+    height:1.5px;
+    width:100%;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.8);
+}
+
+.brand{
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    direction:ltr;
+}
+
+.brand-core{
+    width:28px;
+    height:28px;
+
+    position:relative;
+}
+
+.brand-core::before{
+    content:"";
+
+    position:absolute;
+
+    inset:-7px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(139,156,246,.13);
+}
+
+.brand-name{
+    font-family:Inter,sans-serif;
+
+    font-size:15px;
+    font-weight:700;
+
+    letter-spacing:.13em;
+}
+
+.status{
+    display:flex;
+    align-items:center;
+    gap:6px;
+
+    font-size:9px;
+    color:var(--text3);
+}
+
+.status-dot{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:var(--success);
+
+    box-shadow:0 0 10px rgba(79,209,197,.7);
+}
+
+/* =========================================================
+   MAIN CHAT
+========================================================= */
+
+.chat{
+    flex:1;
+
+    width:100%;
+
+    padding:
+        calc(var(--header) + env(safe-area-inset-top) + 10px)
+        14px
+        calc(var(--input) + env(safe-area-inset-bottom) + 25px);
+
+    overflow-y:auto;
+
+    scroll-behavior:smooth;
+}
+
+.chat::-webkit-scrollbar{
+    width:3px;
+}
+
+.chat::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.08);
+}
+
+/* =========================================================
+   WORKSPACE
+========================================================= */
+
+.workspace{
+    width:100%;
+}
+
+.workspace-header{
+    display:none;
+
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:16px;
+}
+
+.workspace-back{
+    width:36px;
+    height:36px;
+
+    border-radius:11px;
+
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+
+    color:var(--text2);
+}
+
+.workspace-title{
+    font-size:16px;
+    font-weight:700;
+}
+
+.workspace-subtitle{
+    font-size:10px;
+    color:var(--text3);
+}
+
+/* =========================================================
+   WELCOME
+========================================================= */
+
+.welcome{
+    min-height:65vh;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:30px 20px;
+}
+
+.welcome-core{
+    width:82px;
+    height:82px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+
+    margin-bottom:25px;
+}
+
+.welcome-core::before,
+.welcome-core::after{
+    content:"";
+
+    position:absolute;
+
+    border-radius:50%;
+
+    border:1px solid rgba(139,156,246,.14);
+}
+
+.welcome-core::before{
+    inset:-12px;
+}
+
+.welcome-core::after{
+    inset:-24px;
+
+    border-color:rgba(139,156,246,.06);
+}
+
+.core-ball{
+    width:48px;
+    height:48px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 30%,
+            #c6cdff,
+            #8294f6 50%,
+            #4757c9
+        );
+
+    box-shadow:
+        0 0 40px rgba(139,156,246,.4);
+
+    animation:breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.08)}
+}
+
+.welcome-title{
+    font-size:27px;
+    font-weight:700;
+
+    margin-bottom:8px;
+}
+
+.welcome-description{
+    max-width:330px;
+
+    color:var(--text2);
+
+    font-size:14px;
+    line-height:1.9;
+}
+
+.welcome-hint{
+    margin-top:20px;
+
+    color:var(--text4);
+
+    font-size:10px;
+}
+
+/* =========================================================
+   MESSAGES
+========================================================= */
+
+.messages{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+.message{
+    display:flex;
+    width:100%;
+
+    animation:messageIn .3s var(--ease);
+}
+
+@keyframes messageIn{
+    from{
+        opacity:0;
+        transform:translateY(8px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.message.user{
+    justify-content:flex-start;
+}
+
+.message.ai{
+    justify-content:flex-end;
+    align-items:flex-start;
+    gap:9px;
+}
+
+.message.user .bubble{
+    max-width:84%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(139,156,246,.20),
+            rgba(139,156,246,.09)
+        );
+
+    border:1px solid rgba(139,156,246,.16);
+
+    border-radius:18px 18px 5px 18px;
+}
+
+.message.ai .bubble{
+    max-width:90%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid var(--border);
+
+    border-radius:18px 18px 18px 5px;
+}
+
+.ai-avatar{
+    width:30px;
+    height:30px;
+
+    flex-shrink:0;
+
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--accentSoft);
+
+    border:1px solid rgba(139,156,246,.18);
+
+    color:var(--accent);
+
+    font-family:Inter,sans-serif;
+    font-size:11px;
+    font-weight:700;
+}
+
+.bubble{
+    padding:12px 14px;
+
+    color:var(--text);
+
+    font-size:14px;
+    line-height:1.8;
+
+    word-break:break-word;
+}
+
+.bubble h1,
+.bubble h2,
+.bubble h3{
+    color:var(--accent);
+    font-size:15px;
+    margin:8px 0 4px;
+}
+
+.bubble p{
+    margin:6px 0;
+}
+
+.bubble ul,
+.bubble ol{
+    margin:6px 0;
+    padding-right:18px;
+}
+
+.bubble code{
+    background:rgba(139,156,246,.14);
+    padding:2px 6px;
+    border-radius:5px;
+}
+
+.bubble pre{
+    overflow-x:auto;
+
+    padding:10px;
+
+    border-radius:10px;
+
+    background:var(--surface2);
+}
+
+.message-meta{
+    margin-top:4px;
+
+    color:var(--text4);
+
+    font-size:8px;
+}
+
+.typing{
+    display:flex;
+    align-items:center;
+    gap:4px;
+}
+
+.typing span{
+    width:5px;
+    height:5px;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    animation:typing 1.1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+    0%,100%{
+        opacity:.25;
+        transform:translateY(0);
+    }
+
+    40%{
+        opacity:1;
+        transform:translateY(-4px);
+    }
+}
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.input-area{
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    z-index:90;
+
+    padding:
+        8px
+        12px
+        calc(10px + env(safe-area-inset-bottom));
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(6,6,9,.99) 50%,
+            rgba(6,6,9,.82),
+            transparent
+        );
+}
+
+.input-container{
+    max-width:700px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:flex-end;
+
+    gap:7px;
+}
+
+/* PLUS OUTSIDE */
+
+.plus-button{
+    width:44px;
+    height:44px;
+
+    flex-shrink:0;
+
+    border-radius:14px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:rgba(255,255,255,.055);
+
+    border:1px solid var(--border);
+
+    color:var(--text2);
+
+    font-size:24px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.plus-button.active{
+    transform:rotate(45deg);
+    background:var(--accentSoft);
+    color:var(--accent);
+}
+
+/* INPUT */
+
+.input-wrapper{
+    flex:1;
+
+    min-width:0;
+
+    display:flex;
+    align-items:flex-end;
+
+    padding:7px;
+
+    background:rgba(20,20,28,.94);
+
+    border:1px solid var(--border);
+
+    border-radius:22px;
+
+    box-shadow:
+        0 -5px 35px rgba(0,0,0,.3);
+
+    backdrop-filter:blur(18px);
+
+    transition:.2s;
+}
+
+.input-wrapper:focus-within{
+    border-color:rgba(139,156,246,.3);
+}
+
+.command-input{
+    flex:1;
+
+    min-width:0;
+    min-height:40px;
+    max-height:120px;
+
+    resize:none;
+
+    padding:9px 8px;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:white;
+
+    font-size:14px;
+    line-height:1.6;
+}
+
+.command-input::placeholder{
+    color:var(--text4);
+}
+
+/* MIC INSIDE */
+
+.inner-actions{
+    display:flex;
+    align-items:flex-end;
+    gap:4px;
+}
+
+.mic-btn,
+.send-btn{
+    width:38px;
+    height:38px;
+
+    flex-shrink:0;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.mic-btn{
+    background:rgba(255,255,255,.04);
+
+    border:1px solid var(--border);
+
+    color:var(--text3);
+
+    font-size:18px;
+}
+
+.mic-btn.recording{
+    color:var(--danger);
+
+    background:rgba(246,107,107,.14);
+
+    border-color:rgba(246,107,107,.3);
+
+    animation:pulse 1.4s infinite;
+}
+
+.send-btn{
+    background:var(--accentSoft);
+
+    border:1px solid rgba(139,156,246,.2);
+
+    color:var(--accent);
+
+    opacity:.35;
+}
+
+.send-btn.active{
+    opacity:1;
+}
+
+.send-btn svg{
+    width:18px;
+}
+
+/* =========================================================
+   ACTION DOCK
+========================================================= */
+
+.action-dock{
+    position:fixed;
+
+    bottom:calc(var(--input) + env(safe-area-inset-bottom) + 7px);
+    left:12px;
+
+    z-index:95;
+
+    width:230px;
+
+    padding:8px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            160deg,
+            rgba(25,25,34,.98),
+            rgba(10,10,14,.98)
+        );
+
+    border:1px solid var(--border2);
+
+    box-shadow:
+        0 20px 70px rgba(0,0,0,.6);
+
+    backdrop-filter:blur(20px);
+
+    opacity:0;
+    transform:translateY(12px) scale(.96);
+
+    pointer-events:none;
+
+    transition:.25s var(--ease);
+}
+
+.action-dock.open{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    pointer-events:auto;
+}
+
+.action-item{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+    gap:11px;
+
+    padding:11px;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    color:var(--text2);
+
+    text-align:right;
+
+    cursor:pointer;
+}
+
+.action-item:hover{
+    background:rgba(255,255,255,.055);
+    color:white;
+}
+
+.action-icon{
+    width:34px;
+    height:34px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:10px;
+
+    background:var(--surface2);
+
+    border:1px solid var(--border);
+
+    color:var(--accent);
+
+    font-size:15px;
+}
+
+.action-text{
+    display:flex;
+    flex-direction:column;
+    gap:1px;
+}
+
+.action-title{
+    color:var(--text);
+    font-size:12px;
+    font-weight:600;
+}
+
+.action-desc{
+    color:var(--text4);
+    font-size:9px;
+}
+
+/* =========================================================
+   SIDE WORKSPACE PANEL
+========================================================= */
+
+.panel-overlay{
+    position:fixed;
+
+    inset:0;
+
+    z-index:300;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(5px);
+
+    opacity:0;
+    pointer-events:none;
+
+    transition:.3s;
+}
+
+.panel-overlay.open{
+    opacity:1;
+    pointer-events:auto;
+}
+
+.side-panel{
+    position:absolute;
+
+    top:0;
+    right:0;
+
+    width:min(90vw,380px);
+    height:100%;
+
+    padding:
+        calc(18px + env(safe-area-inset-top))
+        14px
+        calc(18px + env(safe-area-inset-bottom));
+
+    background:
+        linear-gradient(
+            160deg,
+            #111118,
+            #08080c
+        );
+
+    border-left:1px solid var(--border);
+
+    transform:translateX(100%);
+
+    transition:transform .35s var(--ease);
+
+    overflow-y:auto;
+}
+
+.panel-overlay.open .side-panel{
+    transform:translateX(0);
+}
+
+.panel-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:18px;
+}
+
+.panel-title{
+    font-size:18px;
+    font-weight:700;
+}
+
+.close-panel{
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.05);
+
+    color:var(--text2);
+
+    font-size:20px;
+}
+
+.panel-user{
+    padding:13px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:16px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+}
+
+.user-icon{
+    width:38px;
+    height:38px;
+
+    border-radius:50%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:var(--accentSoft);
+
+    color:var(--accent);
+}
+
+.user-info{
+    flex:1;
+}
+
+.user-name{
+    font-size:13px;
+    font-weight:600;
+}
+
+.user-status{
+    font-size:9px;
+    color:var(--text3);
+}
+
+.panel-search{
+    width:100%;
+
+    padding:12px 13px;
+
+    margin-bottom:15px;
+
+    border-radius:13px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid var(--border);
+
+    color:white;
+
+    outline:none;
+}
+
+.panel-section-title{
+    color:var(--text4);
+
+    font-size:9px;
+
+    margin:
+        17px
+        5px
+        8px;
+}
+
+.panel-item{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:11px;
+
+    padding:11px;
+
+    margin-bottom:4px;
+
+    border-radius:13px;
+
+    background:transparent;
+
+    color:var(--text2);
+
+    text-align:right;
+
+    cursor:pointer;
+}
+
+.panel-item:hover,
+.panel-item.active{
+    background:rgba(255,255,255,.055);
+    color:white;
+}
+
+.panel-item-icon{
+    width:36px;
+    height:36px;
+
+    flex-shrink:0;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    border-radius:11px;
+
+    background:var(--surface2);
+
+    border:1px solid var(--border);
+
+    color:var(--accent);
+}
+
+.panel-item-info{
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+}
+
+.panel-item-title{
+    font-size:12px;
+    font-weight:600;
+}
+
+.panel-item-desc{
+    font-size:9px;
+    color:var(--text4);
+}
+
+/* =========================================================
+   CONVERSATION LIST
+========================================================= */
+
+.conversation-list{
+    margin-top:5px;
+}
+
+.conversation{
+    width:100%;
+
+    display:flex;
+    align-items:center;
+
+    gap:9px;
+
+    padding:10px;
+
+    margin-bottom:4px;
+
+    border-radius:12px;
+
+    background:transparent;
+
+    cursor:pointer;
+}
+
+.conversation:hover,
+.conversation.active{
+    background:rgba(139,156,246,.08);
+}
+
+.conversation-dot{
+    width:7px;
+    height:7px;
+
+    flex-shrink:0;
+
+    border-radius:50%;
+
+    background:var(--accent);
+
+    box-shadow:0 0 8px rgba(139,156,246,.4);
+}
+
+.conversation-info{
+    flex:1;
+
+    min-width:0;
+}
+
+.conversation-title{
+    overflow:hidden;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+    color:var(--text);
+
+    font-size:11px;
+}
+
+.conversation-date{
+    color:var(--text4);
+
+    font-size:8px;
+
+    margin-top:2px;
+}
+
+.conversation-delete{
+    opacity:.3;
+
+    color:var(--text3);
+
+    font-size:13px;
+}
+
+.conversation:hover .conversation-delete{
+    opacity:1;
+}
+
+/* =========================================================
+   INTERNAL WORKSPACE PAGE
+========================================================= */
+
+.page{
+    display:none;
+
+    min-height:65vh;
+
+    padding-top:15px;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    font-size:23px;
+    font-weight:700;
+
+    margin-bottom:5px;
+}
+
+.page-subtitle{
+    color:var(--text3);
+
+    font-size:11px;
+
+    margin-bottom:20px;
+}
+
+.page-grid{
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:10px;
+}
+
+.page-card{
+    min-height:110px;
+
+    padding:15px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.018)
+        );
+
+    border:1px solid var(--border);
+}
+
+.page-card-icon{
+    font-size:20px;
+
+    color:var(--accent);
+
+    margin-bottom:15px;
+}
+
+.page-card-title{
+    font-size:12px;
+    font-weight:600;
+}
+
+.page-card-desc{
+    margin-top:4px;
+
+    color:var(--text4);
+
+    font-size:9px;
+
+    line-height:1.5;
+}
+
+/* =========================================================
+   SCREEN PREVIEW
+========================================================= */
+
+.screen-preview{
+    display:none;
+
+    position:fixed;
+
+    left:12px;
+    right:12px;
+
+    top:calc(var(--header) + env(safe-area-inset-top) + 10px);
+
+    z-index:150;
+
+    padding:12px;
+
+    border-radius:16px;
+
+    background:rgba(15,15,22,.96);
+
+    border:1px solid var(--border);
+
+    box-shadow:0 20px 70px rgba(0,0,0,.6);
+}
+
+.screen-preview.active{
+    display:block;
+}
+
+.screen-preview-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:8px;
+}
+
+.screen-live{
+    color:var(--danger);
+
+    font-size:10px;
+}
+
+.stop-screen{
+    padding:7px 10px;
+
+    border-radius:9px;
+
+    background:rgba(246,107,107,.1);
+
+    color:var(--danger);
+
+    font-size:10px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(min-width:700px){
+
+    .app{
+        max-width:700px;
+
+        margin:auto;
+
+        border-left:1px solid rgba(255,255,255,.025);
+        border-right:1px solid rgba(255,255,255,.025);
+    }
+
+    .topbar{
+        max-width:700px;
+        margin:auto;
+    }
+
+    .input-area{
+        max-width:700px;
+        margin:auto;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms!important;
+        transition-duration:.01ms!important;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- ========== LOGIN OVERLAY ========== -->
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
 <div class="login-overlay" id="loginOverlay">
+
     <div class="login-box">
+
         <div class="login-brand">
-            <div class="login-brand-core"></div>
-            <div class="login-brand-name">JOKAL</div>
+            <div class="login-core"></div>
+            <div class="login-name">JOKAL</div>
         </div>
-        <div class="login-title">سجّل الدخول باش تفتح مساعدك الذكي</div>
+
+        <div class="login-title">
+            سجّل الدخول باش تفتح مساعدك الذكي
+        </div>
+
         <div class="login-field">
             <label>اسم المستخدم</label>
-            <input type="text" id="loginUsername" placeholder="مثلاً: youssef" autocomplete="off">
+            <input
+                id="loginUsername"
+                type="text"
+                placeholder="مثلاً: youssef"
+                autocomplete="off">
         </div>
+
         <div class="login-field">
             <label>الرمز السري</label>
-            <input type="password" id="loginPassword" placeholder="••••••••">
+            <input
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••">
         </div>
-        <button class="login-btn" id="loginButton">دخول</button>
+
+        <button class="login-btn" id="loginButton">
+            دخول
+        </button>
+
         <div class="login-error" id="loginError"></div>
+
     </div>
 </div>
 
-<!-- ========== APP ========== -->
+
+<!-- =========================================================
+     APP
+========================================================= -->
+
 <div class="app" id="app" style="display:none;">
 
+    <!-- TOPBAR -->
+
     <header class="topbar">
-        <button class="menu-button" id="openMenu" aria-label="فتح القائمة">
-            <span class="hamburger"><span></span><span></span><span></span></span>
+
+        <button class="top-button" id="openPanel">
+
+            <span class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+
         </button>
+
         <div class="brand">
+
             <div class="brand-core"></div>
-            <div class="brand-name">JOKAL</div>
-        </div>
-        <div class="top-actions">
-            <button class="icon-btn" id="liveScreenBtn" title="بث الشاشة المباشر">📺</button>
-            <div class="status" id="status">
-                <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">جاهز</span>
+
+            <div class="brand-name">
+                JOKAL
             </div>
+
         </div>
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            <span id="statusText">
+                جاهز
+            </span>
+
+        </div>
+
     </header>
 
+
+    <!-- CHAT -->
+
     <main class="chat" id="chat">
-        <section class="welcome" id="welcome">
-            <div class="welcome-core"><div class="core-ball"></div></div>
-            <h1 class="welcome-title">مرحباً، أنا JOKAL</h1>
-            <p class="welcome-description">
-                مساعدك الذكي الخاص. اكتب لي فقط ماذا تريد أن تحقق،
-                وسأساعدك على تحويل فكرتك إلى خطوات واضحة.
-            </p>
-            <p class="welcome-hint">يمكنك أن تسألني، تخطط، تبحث، تبني أو تنشئ.</p>
+
+        <!-- CHAT WORKSPACE -->
+
+        <section class="workspace" id="chatWorkspace">
+
+            <div class="welcome" id="welcome">
+
+                <div class="welcome-core">
+                    <div class="core-ball"></div>
+                </div>
+
+                <h1 class="welcome-title">
+                    مرحباً، أنا JOKAL
+                </h1>
+
+                <p class="welcome-description">
+                    مساعدك الذكي الخاص.
+                    قول ليا شنو بغيتي تدير وأنا نعاونك
+                    تحول الفكرة ديالك لنتيجة.
+                </p>
+
+                <p class="welcome-hint">
+                    اسأل · خطط · ابحث · ابنِ · أنشئ
+                </p>
+
+            </div>
+
+            <div class="messages" id="messages"></div>
+
         </section>
-        <div class="messages" id="messages"></div>
+
+
+        <!-- INTERNAL PAGE -->
+
+        <section class="page" id="workspacePage">
+
+            <div class="workspace-header" id="workspaceHeader">
+
+                <button
+                    class="workspace-back"
+                    id="workspaceBack">
+                    ←
+                </button>
+
+                <div>
+                    <div class="workspace-title" id="workspaceTitle">
+                        مساحة JOKAL
+                    </div>
+
+                    <div class="workspace-subtitle">
+                        Private Workspace
+                    </div>
+                </div>
+
+            </div>
+
+            <h1 class="page-title" id="pageTitle">
+                مساحة JOKAL
+            </h1>
+
+            <p class="page-subtitle" id="pageSubtitle">
+                الأدوات والمساحات الخاصة بك
+            </p>
+
+            <div class="page-grid" id="pageGrid"></div>
+
+        </section>
+
     </main>
 
-    <div class="input-area">
-        <div class="input-wrapper">
-            <textarea id="commandInput" class="command-input" rows="1" placeholder="اكتب ما تريد فعله..." autocomplete="off" spellcheck="false"></textarea>
-            <div class="input-actions">
-                <button class="mic-btn" id="micBtn" title="التحدث بالصوت">🎤</button>
-                <button class="tts-toggle" id="ttsToggle" title="تشغيل الصوت التلقائي">🔊</button>
-                <button class="send" id="sendButton" aria-label="إرسال">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"></line>
-                        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                    </svg>
-                </button>
+
+    <!-- ACTION DOCK -->
+
+    <div class="action-dock" id="actionDock">
+
+        <button class="action-item" data-action="image">
+
+            <div class="action-icon">✦</div>
+
+            <div class="action-text">
+
+                <span class="action-title">
+                    صورة
+                </span>
+
+                <span class="action-desc">
+                    أضف أو أنشئ صورة
+                </span>
+
             </div>
-        </div>
+
+        </button>
+
+
+        <button class="action-item" data-action="file">
+
+            <div class="action-icon">⌁</div>
+
+            <div class="action-text">
+
+                <span class="action-title">
+                    ملف
+                </span>
+
+                <span class="action-desc">
+                    PDF أو مستند أو كود
+                </span>
+
+            </div>
+
+        </button>
+
+
+        <button class="action-item" data-action="screen">
+
+            <div class="action-icon">▣</div>
+
+            <div class="action-text">
+
+                <span class="action-title">
+                    مشاركة الشاشة
+                </span>
+
+                <span class="action-desc">
+                    خلي JOKAL يشوف شاشتك
+                </span>
+
+            </div>
+
+        </button>
+
+
+        <button class="action-item" data-action="camera">
+
+            <div class="action-icon">◉</div>
+
+            <div class="action-text">
+
+                <span class="action-title">
+                    الكاميرا
+                </span>
+
+                <span class="action-desc">
+                    أضف صورة من الكاميرا
+                </span>
+
+            </div>
+
+        </button>
+
     </div>
 
-    <div class="menu-overlay" id="menuOverlay">
-        <aside class="menu-panel">
-            <div class="menu-header">
-                <h2 class="menu-title">قائمة JOKAL</h2>
-                <button class="close-menu" id="closeMenu" aria-label="إغلاق">×</button>
-            </div>
 
-            <div class="user-badge" id="userBadge">
-                <div class="user-badge-icon">👤</div>
-                <div class="user-badge-info">
-                    <div class="user-badge-name" id="userBadgeName">مستخدم</div>
-                    <div class="user-badge-status">متصل</div>
+    <!-- INPUT -->
+
+    <div class="input-area">
+
+        <div class="input-container">
+
+            <!-- OUTSIDE PLUS -->
+
+            <button
+                class="plus-button"
+                id="plusButton">
+                +
+            </button>
+
+
+            <!-- WRAPPER -->
+
+            <div class="input-wrapper">
+
+                <textarea
+                    id="commandInput"
+                    class="command-input"
+                    rows="1"
+                    placeholder="اكتب لـ JOKAL..."
+                    autocomplete="off"
+                    spellcheck="false"></textarea>
+
+                <div class="inner-actions">
+
+                    <!-- MIC INSIDE -->
+
+                    <button
+                        class="mic-btn"
+                        id="micBtn"
+                        title="التحدث">
+                        🎙
+                    </button>
+
+                    <!-- SEND -->
+
+                    <button
+                        class="send-btn"
+                        id="sendButton"
+                        aria-label="إرسال">
+
+                        <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round">
+
+                            <line
+                                x1="22"
+                                y1="2"
+                                x2="11"
+                                y2="13"></line>
+
+                            <polygon
+                                points="22 2 15 22 11 13 2 9 22 2">
+                            </polygon>
+
+                        </svg>
+
+                    </button>
+
                 </div>
+
             </div>
 
-            <div class="menu-group">
-                <div class="menu-label">القدرات</div>
-                <button class="menu-item" data-command="think">
-                    <div class="menu-icon">🧠</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التفكير</span>
-                        <span class="menu-item-description">تحليل المشاكل بعمق</span>
-                    </div>
+        </div>
+
+    </div>
+
+
+    <!-- SCREEN -->
+
+    <div class="screen-preview" id="screenPreview">
+
+        <div class="screen-preview-header">
+
+            <span class="screen-live">
+                ● JOKAL يرى الشاشة
+            </span>
+
+            <button
+                class="stop-screen"
+                id="stopScreen">
+                إيقاف
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- SIDE PANEL -->
+
+    <div class="panel-overlay" id="panelOverlay">
+
+        <aside class="side-panel">
+
+            <div class="panel-top">
+
+                <h2 class="panel-title">
+                    JOKAL
+                </h2>
+
+                <button
+                    class="close-panel"
+                    id="closePanel">
+                    ×
                 </button>
-                <button class="menu-item" data-command="build">
-                    <div class="menu-icon">🏗️</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">البناء</span>
-                        <span class="menu-item-description">إنشاء الأنظمة والمشاريع</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="find">
-                    <div class="menu-icon">⌕</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">البحث</span>
-                        <span class="menu-item-description">العثور على المعلومات</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="plan">
-                    <div class="menu-icon">◫</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التخطيط</span>
-                        <span class="menu-item-description">تنظيم الأفكار والخطوات</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="create">
-                    <div class="menu-icon">✦</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">الإنشاء</span>
-                        <span class="menu-item-description">إنشاء وتصميم المحتوى</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-command="learn">
-                    <div class="menu-icon">⌘</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">التعلم</span>
-                        <span class="menu-item-description">التعلم من المحادثات</span>
-                    </div>
-                </button>
+
             </div>
 
-            <div class="menu-group">
-                <div class="menu-label">الذاكرة الشخصية</div>
-                <div class="memory-list" id="memoryList">
-                    <div class="memory-empty">ما كاين والو فالذاكرة دابا</div>
+
+            <!-- USER -->
+
+            <div class="panel-user">
+
+                <div class="user-icon">
+                    ◉
                 </div>
-                <button class="menu-item" data-action="clearMemory">
-                    <div class="menu-icon">🗑️</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">مسح الذاكرة</span>
-                        <span class="menu-item-description">حذف جميع المعلومات المحفوظة</span>
+
+                <div class="user-info">
+
+                    <div
+                        class="user-name"
+                        id="userName">
+                        مستخدم
                     </div>
-                </button>
+
+                    <div class="user-status">
+                        Private Workspace
+                    </div>
+
+                </div>
+
             </div>
 
-            <div class="menu-group">
-                <div class="menu-label">مساحتك</div>
-                <button class="menu-item" data-action="memory">
-                    <div class="menu-icon">◉</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">الذاكرة</span>
-                        <span class="menu-item-description">معلوماتك وتفضيلاتك</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="tasks">
-                    <div class="menu-icon">✓</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">مهام اليوم</span>
-                        <span class="menu-item-description">خططك ومهامك الحالية</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="export">
-                    <div class="menu-icon">⬇️</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">تصدير البيانات</span>
-                        <span class="menu-item-description">حفظ الذاكرة والتدريب كملف</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="new">
-                    <div class="menu-icon">＋</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">محادثة جديدة</span>
-                        <span class="menu-item-description">بدء جلسة جديدة</span>
-                    </div>
-                </button>
-                <button class="menu-item" data-action="logout">
-                    <div class="menu-icon">🚪</div>
-                    <div class="menu-item-text">
-                        <span class="menu-item-title">خروج</span>
-                        <span class="menu-item-description">تسجيل الخروج من الحساب</span>
-                    </div>
-                </button>
+
+            <!-- SEARCH -->
+
+            <input
+                class="panel-search"
+                id="conversationSearch"
+                placeholder="ابحث في محادثاتك...">
+
+
+            <!-- NEW CHAT -->
+
+            <button
+                class="panel-item"
+                id="newChatButton">
+
+                <div class="panel-item-icon">
+                    +
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        محادثة جديدة
+                    </span>
+
+                    <span class="panel-item-desc">
+                        ابدأ مساحة جديدة مع JOKAL
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <!-- CONVERSATIONS -->
+
+            <div class="panel-section-title">
+                المحادثات
             </div>
 
-            <div style="margin-top:35px; padding:15px; border:1px solid rgba(255,255,255,.06); border-radius:16px; color:rgba(255,255,255,.25); font-size:10px; text-align:center;">
-                JOKAL<br>Private Intelligence Interface<br>
-                <span style="font-size:9px; opacity:.6;">جاهز لـ PWA & Android WebView</span>
+            <div
+                class="conversation-list"
+                id="conversationList">
             </div>
+
+
+            <!-- WORKSPACE -->
+
+            <div class="panel-section-title">
+                مساحة JOKAL
+            </div>
+
+
+            <button
+                class="panel-item"
+                data-page="images">
+
+                <div class="panel-item-icon">
+                    ✦
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        الصور
+                    </span>
+
+                    <span class="panel-item-desc">
+                        صورك وإنشاءاتك
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="library">
+
+                <div class="panel-item-icon">
+                    ◫
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        المكتبة
+                    </span>
+
+                    <span class="panel-item-desc">
+                        ملفاتك ومستنداتك
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="projects">
+
+                <div class="panel-item-icon">
+                    ◇
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        المشاريع
+                    </span>
+
+                    <span class="panel-item-desc">
+                        نظم مشاريعك ومحادثاتك
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="tools">
+
+                <div class="panel-item-icon">
+                    ⚡
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        الأدوات
+                    </span>
+
+                    <span class="panel-item-desc">
+                        قدرات JOKAL
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="memory">
+
+                <div class="panel-item-icon">
+                    ◎
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        الذاكرة
+                    </span>
+
+                    <span class="panel-item-desc">
+                        معلوماتك المحفوظة
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="tasks">
+
+                <div class="panel-item-icon">
+                    ✓
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        المهام
+                    </span>
+
+                    <span class="panel-item-desc">
+                        خططك ومهامك
+                    </span>
+
+                </div>
+
+            </button>
+
+
+            <button
+                class="panel-item"
+                data-page="settings">
+
+                <div class="panel-item-icon">
+                    ⚙
+                </div>
+
+                <div class="panel-item-info">
+
+                    <span class="panel-item-title">
+                        الإعدادات
+                    </span>
+
+                    <span class="panel-item-desc">
+                        تخصيص JOKAL
+                    </span>
+
+                </div>
+
+            </button>
+
         </aside>
+
     </div>
 
 </div>
+
 
 <script>
 "use strict";
 
-/* ========== PWA MANIFEST (INLINE) ========== */
-const manifestObj = {
-    name: "JOKAL",
-    short_name: "JOKAL",
-    description: "مساعدك الذكي الخاص",
-    start_url: "/",
-    display: "standalone",
-    background_color: "#060609",
-    theme_color: "#07070a",
-    orientation: "portrait",
-    icons: [
-        { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192'%3E%3Crect fill='%23060609' width='192' height='192'/%3E%3Ccircle cx='96' cy='96' r='40' fill='%238b9cf6'/%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" },
-        { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512'%3E%3Crect fill='%23060609' width='512' height='512'/%3E%3Ccircle cx='256' cy='256' r='120' fill='%238b9cf6'/%3E%3C/svg%3E", sizes: "512x512", type: "image/svg+xml" }
-    ]
-};
-const manifestBlob = new Blob([JSON.stringify(manifestObj)], {type: 'application/json'});
-const manifestURL = URL.createObjectURL(manifestBlob);
-const manifestLink = document.createElement('link');
-manifestLink.rel = 'manifest';
-manifestLink.href = manifestURL;
-document.head.appendChild(manifestLink);
+/* =========================================================
+   CONFIG
+========================================================= */
 
-/* ========== SERVICE WORKER (INLINE) ========== */
-const swCode = `
-self.addEventListener('install', e => self.skipWaiting());
-self.addEventListener('activate', e => e.waitUntil(clients.claim()));
-self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
-`;
-const swBlob = new Blob([swCode], {type: 'application/javascript'});
-const swURL = URL.createObjectURL(swBlob);
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(swURL).catch(() => {});
-}
+const API_URL =
+    "https://ai-jokal.vercel.app/api/chat";
 
-/* ========== CONFIG ========== */
-const API_URL = 'https://ai-jokal.vercel.app/api/chat';
-let conversationHistory = [];
+
+/* =========================================================
+   STATE
+========================================================= */
+
 let currentUser = null;
+
+let conversations = [];
+
+let currentConversationId = null;
+
 let userMemory = [];
-let ttsEnabled = false;
-let liveSession = null;
-let liveStream = null;
-let liveInterval = null;
-let lastScreenCapture = null;
+
 let recognition = null;
 
-/* ========== DOM ========== */
-const loginOverlay = document.getElementById("loginOverlay");
-const loginUsername = document.getElementById("loginUsername");
-const loginPassword = document.getElementById("loginPassword");
-const loginButton = document.getElementById("loginButton");
-const loginError = document.getElementById("loginError");
-const appEl = document.getElementById("app");
-const chat = document.getElementById("chat");
-const messages = document.getElementById("messages");
-const welcome = document.getElementById("welcome");
-const input = document.getElementById("commandInput");
-const sendBtn = document.getElementById("sendButton");
-const statusEl = document.getElementById("status");
-const statusText = document.getElementById("statusText");
-const menuOverlay = document.getElementById("menuOverlay");
-const openMenuBtn = document.getElementById("openMenu");
-const closeMenuBtn = document.getElementById("closeMenu");
-const micBtn = document.getElementById("micBtn");
-const ttsToggle = document.getElementById("ttsToggle");
-const liveScreenBtn = document.getElementById("liveScreenBtn");
-const memoryList = document.getElementById("memoryList");
-const userBadgeName = document.getElementById("userBadgeName");
+let isRecording = false;
 
-/* ========== LOGIN SYSTEM ========== */
-function initLogin() {
-    const saved = localStorage.getItem('jokal_auth');
-    if (saved) {
-        try {
-            const auth = JSON.parse(saved);
-            if (auth.username && auth.password) {
-                currentUser = auth;
-                showApp();
-                return;
-            }
-        } catch(e) {}
-    }
-    loginOverlay.style.display = 'flex';
-    appEl.style.display = 'none';
+let liveStream = null;
+
+let liveSession = false;
+
+
+/* =========================================================
+   DOM
+========================================================= */
+
+const loginOverlay =
+    document.getElementById("loginOverlay");
+
+const loginUsername =
+    document.getElementById("loginUsername");
+
+const loginPassword =
+    document.getElementById("loginPassword");
+
+const loginButton =
+    document.getElementById("loginButton");
+
+const loginError =
+    document.getElementById("loginError");
+
+const app =
+    document.getElementById("app");
+
+const chat =
+    document.getElementById("chat");
+
+const messages =
+    document.getElementById("messages");
+
+const welcome =
+    document.getElementById("welcome");
+
+const input =
+    document.getElementById("commandInput");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const micButton =
+    document.getElementById("micBtn");
+
+const plusButton =
+    document.getElementById("plusButton");
+
+const actionDock =
+    document.getElementById("actionDock");
+
+const openPanel =
+    document.getElementById("openPanel");
+
+const closePanel =
+    document.getElementById("closePanel");
+
+const panelOverlay =
+    document.getElementById("panelOverlay");
+
+const conversationList =
+    document.getElementById("conversationList");
+
+const conversationSearch =
+    document.getElementById("conversationSearch");
+
+const newChatButton =
+    document.getElementById("newChatButton");
+
+const userName =
+    document.getElementById("userName");
+
+const statusText =
+    document.getElementById("statusText");
+
+const workspacePage =
+    document.getElementById("workspacePage");
+
+const chatWorkspace =
+    document.getElementById("chatWorkspace");
+
+const pageTitle =
+    document.getElementById("pageTitle");
+
+const pageSubtitle =
+    document.getElementById("pageSubtitle");
+
+const pageGrid =
+    document.getElementById("pageGrid");
+
+const screenPreview =
+    document.getElementById("screenPreview");
+
+const stopScreen =
+    document.getElementById("stopScreen");
+
+
+/* =========================================================
+   USER STORAGE
+========================================================= */
+
+function storageKey(name){
+
+    return "jokal_" +
+        name +
+        "_" +
+        (
+            currentUser
+            ? currentUser.username
+            : "guest"
+        );
+
 }
 
-function showApp() {
-    loginOverlay.style.display = 'none';
-    appEl.style.display = 'flex';
-    userBadgeName.textContent = currentUser.username;
-    loadUserMemory();
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function initLogin(){
+
+    const saved =
+        localStorage.getItem("jokal_auth");
+
+    if(saved){
+
+        try{
+
+            currentUser =
+                JSON.parse(saved);
+
+            showApp();
+
+            return;
+
+        }catch(e){}
+
+    }
+
+    loginOverlay.style.display =
+        "flex";
+
+}
+
+
+loginButton.addEventListener(
+    "click",
+    login
+);
+
+
+function login(){
+
+    const username =
+        loginUsername.value.trim();
+
+    const password =
+        loginPassword.value.trim();
+
+    if(!username || !password){
+
+        loginError.textContent =
+            "دخل الاسم والرمز السري";
+
+        return;
+    }
+
+    /*
+      ملاحظة:
+      هاد التخزين مؤقت للـ prototype.
+      من بعد غادي نحيدو password من localStorage
+      ونربطو authentication بالـ backend.
+    */
+
+    currentUser = {
+        username,
+        password,
+        timestamp:Date.now()
+    };
+
+    localStorage.setItem(
+        "jokal_auth",
+        JSON.stringify(currentUser)
+    );
+
+    showApp();
+}
+
+
+function showApp(){
+
+    loginOverlay.style.display =
+        "none";
+
+    app.style.display =
+        "flex";
+
+    userName.textContent =
+        currentUser.username;
+
+    loadMemory();
+
+    loadConversations();
+
+    if(conversations.length === 0){
+
+        createConversation();
+
+    }else{
+
+        openConversation(
+            conversations[0].id
+        );
+
+    }
+
     input.focus();
 }
 
-loginButton.addEventListener('click', () => {
-    const u = loginUsername.value.trim();
-    const p = loginPassword.value.trim();
-    if (!u || !p) {
-        loginError.textContent = 'دخل الاسم والرمز السري';
-        return;
-    }
-    currentUser = { username: u, password: p, timestamp: Date.now() };
-    localStorage.setItem('jokal_auth', JSON.stringify(currentUser));
-    loginError.textContent = '';
-    showApp();
-});
 
-loginUsername.addEventListener('keydown', e => { if (e.key === 'Enter') loginPassword.focus(); });
-loginPassword.addEventListener('keydown', e => { if (e.key === 'Enter') loginButton.click(); });
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-function logout() {
-    localStorage.removeItem('jokal_auth');
+function logout(){
+
+    localStorage.removeItem(
+        "jokal_auth"
+    );
+
     currentUser = null;
-    userMemory = [];
-    conversationHistory = [];
-    messages.innerHTML = '';
-    if (welcome) welcome.style.display = 'flex';
-    loginOverlay.style.display = 'flex';
-    appEl.style.display = 'none';
-    loginUsername.value = '';
-    loginPassword.value = '';
-    stopLiveSession();
+
+    conversations = [];
+
+    currentConversationId = null;
+
+    messages.innerHTML = "";
+
+    app.style.display = "none";
+
+    loginOverlay.style.display =
+        "flex";
+
 }
 
-/* ========== MEMORY SYSTEM ========== */
-function getMemoryKey() {
-    return 'jokal_memory_' + (currentUser ? currentUser.username : 'guest');
-}
 
-function loadUserMemory() {
-    const saved = localStorage.getItem(getMemoryKey());
-    if (saved) {
-        try { userMemory = JSON.parse(saved); } catch(e) { userMemory = []; }
-    } else {
-        userMemory = [];
-    }
-    renderMemoryList();
-}
+/* =========================================================
+   CONVERSATION SYSTEM
+========================================================= */
 
-function saveUserMemory() {
-    localStorage.setItem(getMemoryKey(), JSON.stringify(userMemory));
-    renderMemoryList();
-}
+function loadConversations(){
 
-function renderMemoryList() {
-    if (!memoryList) return;
-    if (userMemory.length === 0) {
-        memoryList.innerHTML = '<div class="memory-empty">ما كاين والو فالذاكرة دابا</div>';
+    const saved =
+        localStorage.getItem(
+            storageKey("conversations")
+        );
+
+    if(!saved){
+
+        conversations = [];
+
         return;
+
     }
-    memoryList.innerHTML = userMemory.map(m => `<div class="memory-item">${escapeHtml(m)}</div>`).join('');
+
+    try{
+
+        conversations =
+            JSON.parse(saved);
+
+    }catch(e){
+
+        conversations = [];
+
+    }
+
 }
 
-function checkExplicitMemory(text) {
-    const triggers = ['عقل على هذه:', 'خزن هذه في الذاكرة:', 'احفظ:', 'تذكر:'];
-    for (const trigger of triggers) {
-        if (text.includes(trigger)) {
-            const idx = text.indexOf(trigger);
-            const memoryText = text.substring(idx + trigger.length).trim();
-            if (memoryText) {
-                userMemory.push(memoryText);
-                saveUserMemory();
-                return { isMemory: true, memoryText: memoryText, cleanText: text.substring(0, idx).trim() || 'حفظتها فالذاكرة' };
+
+function saveConversations(){
+
+    localStorage.setItem(
+        storageKey("conversations"),
+        JSON.stringify(conversations)
+    );
+
+    renderConversationList();
+
+}
+
+
+function createConversation(){
+
+    const id =
+        "chat_" +
+        Date.now() +
+        "_" +
+        Math.random()
+            .toString(36)
+            .slice(2,8);
+
+    const conversation = {
+
+        id,
+
+        title:
+            "محادثة جديدة",
+
+        createdAt:
+            Date.now(),
+
+        updatedAt:
+            Date.now(),
+
+        messages:[]
+
+    };
+
+    conversations.unshift(
+        conversation
+    );
+
+    currentConversationId =
+        id;
+
+    saveConversations();
+
+    renderCurrentConversation();
+
+    closeSidePanel();
+
+}
+
+
+function getCurrentConversation(){
+
+    return conversations.find(
+        c =>
+            c.id === currentConversationId
+    );
+
+}
+
+
+function openConversation(id){
+
+    const conversation =
+        conversations.find(
+            c => c.id === id
+        );
+
+    if(!conversation) return;
+
+    currentConversationId =
+        id;
+
+    renderCurrentConversation();
+
+    closeSidePanel();
+
+}
+
+
+function renderCurrentConversation(){
+
+    const conversation =
+        getCurrentConversation();
+
+    if(!conversation) return;
+
+    messages.innerHTML = "";
+
+    welcome.style.display =
+        conversation.messages.length
+        ? "none"
+        : "flex";
+
+    conversation.messages.forEach(
+        message => {
+
+            addMessage(
+                message.content,
+                message.role === "user"
+                ? "user"
+                : "ai",
+                message.role === "model"
+            );
+
+        }
+    );
+
+    renderConversationList();
+
+    setTimeout(
+        scrollToBottom,
+        50
+    );
+
+}
+
+
+function renderConversationList(){
+
+    const query =
+        conversationSearch.value
+            .trim()
+            .toLowerCase();
+
+    const filtered =
+        conversations.filter(
+            c =>
+                c.title
+                    .toLowerCase()
+                    .includes(query)
+        );
+
+    if(filtered.length === 0){
+
+        conversationList.innerHTML =
+            `
+            <div style="
+                padding:15px;
+                text-align:center;
+                color:var(--text4);
+                font-size:10px;
+            ">
+                ما كايناش محادثات
+            </div>
+            `;
+
+        return;
+
+    }
+
+    conversationList.innerHTML =
+        filtered.map(
+            c => {
+
+                const active =
+                    c.id === currentConversationId
+                    ? "active"
+                    : "";
+
+                const date =
+                    new Date(
+                        c.updatedAt
+                    ).toLocaleDateString(
+                        "ar-MA",
+                        {
+                            day:"numeric",
+                            month:"short"
+                        }
+                    );
+
+                return `
+                <div
+                    class="conversation ${active}"
+                    data-id="${c.id}">
+
+                    <span
+                        class="conversation-dot">
+                    </span>
+
+                    <div
+                        class="conversation-info">
+
+                        <div
+                            class="conversation-title">
+                            ${escapeHTML(c.title)}
+                        </div>
+
+                        <div
+                            class="conversation-date">
+                            ${date}
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="conversation-delete"
+                        data-delete="${c.id}">
+                        ×
+                    </button>
+
+                </div>
+                `;
+
             }
+        ).join("");
+
+    document
+        .querySelectorAll(
+            ".conversation"
+        )
+        .forEach(
+            el => {
+
+                el.addEventListener(
+                    "click",
+                    e => {
+
+                        if(
+                            e.target
+                            .dataset
+                            .delete
+                        ) return;
+
+                        openConversation(
+                            el.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    document
+        .querySelectorAll(
+            "[data-delete]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    e => {
+
+                        e.stopPropagation();
+
+                        deleteConversation(
+                            button.dataset.delete
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+function deleteConversation(id){
+
+    const conversation =
+        conversations.find(
+            c => c.id === id
+        );
+
+    if(!conversation) return;
+
+    conversations =
+        conversations.filter(
+            c => c.id !== id
+        );
+
+    if(
+        currentConversationId === id
+    ){
+
+        currentConversationId =
+            null;
+
+        if(
+            conversations.length
+        ){
+
+            currentConversationId =
+                conversations[0].id;
+
+        }else{
+
+            createConversation();
+
+            return;
+
         }
+
     }
-    return { isMemory: false, cleanText: text };
+
+    saveConversations();
+
+    renderCurrentConversation();
+
 }
 
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+
+/* =========================================================
+   MESSAGE STORAGE
+========================================================= */
+
+function saveMessage(
+    role,
+    content
+){
+
+    const conversation =
+        getCurrentConversation();
+
+    if(!conversation) return;
+
+    conversation.messages.push({
+
+        role,
+
+        content,
+
+        timestamp:Date.now()
+
+    });
+
+    conversation.updatedAt =
+        Date.now();
+
+    if(
+        conversation.title ===
+        "محادثة جديدة"
+        &&
+        role === "user"
+    ){
+
+        conversation.title =
+            makeConversationTitle(
+                content
+            );
+
+    }
+
+    saveConversations();
+
 }
 
-/* ========== VOICE INPUT (STT) ========== */
-function initSpeechRecognition() {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        micBtn.style.display = 'none';
-        return;
+
+function makeConversationTitle(text){
+
+    let title =
+        text
+            .replace(/\s+/g," ")
+            .trim();
+
+    if(title.length > 38){
+
+        title =
+            title.slice(0,38) +
+            "…";
+
     }
-    recognition = new SpeechRecognition();
-    recognition.lang = 'ar-MA';
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    
-    recognition.onstart = () => {
-        micBtn.classList.add('recording');
-        setStatus('listening');
-    };
-    recognition.onend = () => {
-        micBtn.classList.remove('recording');
-        setStatus('ready');
-    };
-    recognition.onresult = (e) => {
-        const transcript = e.results[0][0].transcript;
-        input.value = (input.value ? input.value + ' ' : '') + transcript;
-        input.style.height = 'auto';
-        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
-        if (input.value.trim()) {
-            sendBtn.classList.add('active');
-        }
-    };
-    recognition.onerror = () => {
-        micBtn.classList.remove('recording');
-        setStatus('ready');
-    };
+
+    return title ||
+        "محادثة جديدة";
+
 }
 
-micBtn.addEventListener('click', () => {
-    if (!recognition) return;
-    if (micBtn.classList.contains('recording')) {
-        recognition.stop();
-    } else {
-        try { recognition.start(); } catch(e) {}
-    }
-});
 
-/* ========== VOICE OUTPUT (TTS) ========== */
-function speak(text) {
-    if (!window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'ar-MA';
-    utter.rate = 1;
-    utter.pitch = 1;
-    
-    const voices = window.speechSynthesis.getVoices();
-    const arVoice = voices.find(v => v.lang.includes('ar') || v.lang.includes('MA'));
-    if (arVoice) utter.voice = arVoice;
-    
-    window.speechSynthesis.speak(utter);
-}
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
 
-ttsToggle.addEventListener('click', () => {
-    ttsEnabled = !ttsEnabled;
-    ttsToggle.classList.toggle('active', ttsEnabled);
-    ttsToggle.title = ttsEnabled ? 'الصوت التلقائي مفعل' : 'تشغيل الصوت التلقائي';
-});
+async function sendMessage(){
 
-/* ========== LIVE SCREEN SESSION ========== */
-async function toggleLiveSession() {
-    if (liveSession) {
-        stopLiveSession();
-        return;
-    }
-    try {
-        liveStream = await navigator.mediaDevices.getDisplayMedia({ video: { cursor: 'always' }, audio: false });
-        const video = document.createElement('video');
-        video.srcObject = liveStream;
-        video.play();
-        
-        liveSession = { video: video, active: true };
-        liveScreenBtn.classList.add('active');
-        statusEl.classList.add('live');
-        setStatus('live');
-        addMessage('🔴 جلسة البث المباشر بدات. كنشارك الشاشة ديالك معيا. قول لي شنو بغيتي ندير.', 'ai', true);
-        
-        liveInterval = setInterval(() => {
-            if (!liveSession || !liveSession.active) return;
-            captureScreenFrame();
-        }, 4000);
-        
-        liveStream.getVideoTracks()[0].onended = () => {
-            stopLiveSession();
-        };
-    } catch (err) {
-        addMessage('⚠️ ما قدرتش نبدأ جلسة الشاشة. تأكد من إذن المشاركة.', 'ai', false, true);
-    }
-}
+    const text =
+        input.value.trim();
 
-function captureScreenFrame() {
-    if (!liveSession || !liveSession.video) return;
-    const canvas = document.createElement('canvas');
-    const video = liveSession.video;
-    canvas.width = 640;
-    canvas.height = 360;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    lastScreenCapture = canvas.toDataURL('image/jpeg', 0.3);
-}
+    if(!text) return;
 
-function stopLiveSession() {
-    if (liveInterval) clearInterval(liveInterval);
-    if (liveStream) {
-        liveStream.getTracks().forEach(t => t.stop());
-    }
-    liveSession = null;
-    liveStream = null;
-    liveInterval = null;
-    lastScreenCapture = null;
-    liveScreenBtn.classList.remove('active');
-    statusEl.classList.remove('live');
-    setStatus('ready');
-}
+    let conversation =
+        getCurrentConversation();
 
-liveScreenBtn.addEventListener('click', toggleLiveSession);
+    if(!conversation){
 
-/* ========== STATUS ========== */
-function setStatus(value) {
-    statusEl.classList.remove("thinking", "listening", "live");
-    if (value === "thinking") {
-        statusEl.classList.add("thinking");
-        statusText.textContent = "يفكر...";
-    } else if (value === "listening") {
-        statusEl.classList.add("listening");
-        statusText.textContent = "يستمع...";
-    } else if (value === "live") {
-        statusEl.classList.add("live");
-        statusText.textContent = "بث مباشر";
-    } else {
-        statusText.textContent = "جاهز";
-    }
-}
+        createConversation();
 
-/* ========== INPUT ========== */
-input.addEventListener("input", () => {
-    input.style.height = "auto";
-    input.style.height = Math.min(input.scrollHeight, 120) + "px";
-    if (input.value.trim()) {
-        sendBtn.classList.add("active");
-        if (!statusEl.classList.contains("thinking")) setStatus("listening");
-    } else {
-        sendBtn.classList.remove("active");
-        setStatus("ready");
-    }
-});
+        conversation =
+            getCurrentConversation();
 
-input.addEventListener("keydown", e => {
-    if (e.key === "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-    }
-});
-
-sendBtn.addEventListener("click", sendMessage);
-
-/* ========== SEND MESSAGE ========== */
-async function sendMessage() {
-    let text = input.value.trim();
-    if (!text) return;
-
-    // فحص الأمر الصريح للذاكرة
-    const memoryCheck = checkExplicitMemory(text);
-    if (memoryCheck.isMemory) {
-        addMessage(text, "user");
-        addMessage(`✅ حفظت فالذاكرة: "${memoryCheck.memoryText}"`, "ai", true);
-        input.value = "";
-        input.style.height = "auto";
-        sendBtn.classList.remove("active");
-        return;
     }
 
-    if (welcome) welcome.style.display = "none";
+    welcome.style.display =
+        "none";
 
-    addMessage(text, "user");
-    conversationHistory.push({ role: "user", content: text });
+    addMessage(
+        text,
+        "user"
+    );
+
+    saveMessage(
+        "user",
+        text
+    );
 
     input.value = "";
-    input.style.height = "auto";
-    sendBtn.classList.remove("active");
-    setStatus("thinking");
+
+    resizeInput();
+
+    sendButton.classList.remove(
+        "active"
+    );
+
+    setStatus(
+        "thinking"
+    );
+
     showTyping();
 
-    try {
+    try{
+
+        /*
+          نفس Backend الحالي ديالك.
+        */
+
+        const history =
+            conversation.messages
+                .slice(0,-1)
+                .map(m => ({
+                    role:m.role,
+                    content:m.content
+                }));
+
         const payload = {
-            message: text,
-            history: conversationHistory.slice(0, -1),
-            username: currentUser ? currentUser.username : null,
-            password: currentUser ? currentUser.password : null,
-            memory: userMemory
+
+            message:text,
+
+            history,
+
+            username:
+                currentUser
+                ? currentUser.username
+                : null,
+
+            /*
+              password موجود مؤقتاً فقط
+              باش ما نكسرش API الحالي.
+              المرحلة القادمة نحيدوه.
+            */
+
+            password:
+                currentUser
+                ? currentUser.password
+                : null,
+
+            memory:userMemory,
+
+            conversationId:
+                conversation.id
+
         };
-        
-        // إرسال لقطة الشاشة إذا كانت الجلسة نشطة
-        if (lastScreenCapture) {
-            payload.screenImage = lastScreenCapture;
-        }
 
-        const res = await fetch(API_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        });
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method:"POST",
 
-        const data = await res.json();
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(payload)
+                }
+            );
+
+        const data =
+            await response.json();
+
         removeTyping();
 
-        if (data.error) {
-            addMessage("⚠️ " + data.error, "ai", false, true);
-        } else {
-            const reply = data.response;
-            addMessage(reply, "ai", true);
-            conversationHistory.push({ role: "model", content: reply });
-            
-            // TTS تلقائي إذا مفعل
-            if (ttsEnabled) {
-                speak(reply);
+        if(data.error){
+
+            addMessage(
+                "⚠️ " +
+                data.error,
+                "ai"
+            );
+
+            saveMessage(
+                "model",
+                "⚠️ " +
+                data.error
+            );
+
+        }else{
+
+            const reply =
+                data.response ||
+                "ما وصلني حتى جواب.";
+
+            addMessage(
+                reply,
+                "ai",
+                true
+            );
+
+            saveMessage(
+                "model",
+                reply
+            );
+
+        }
+
+    }catch(error){
+
+        console.error(error);
+
+        removeTyping();
+
+        const errorText =
+            `⚠️ ما قدرتش نتواصل مع السيرفر.
+
+تأكد من:
+
+1. API_URL صحيح
+2. Backend خدام
+3. CORS مفعل
+4. API Key مربوط فالـ Backend`;
+
+        addMessage(
+            errorText,
+            "ai"
+        );
+
+    }
+
+    setStatus(
+        "ready"
+    );
+
+}
+
+
+/* =========================================================
+   ADD MESSAGE
+========================================================= */
+
+function addMessage(
+    text,
+    type,
+    markdown=false
+){
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        "message " +
+        type;
+
+    if(type === "ai"){
+
+        const avatar =
+            document.createElement(
+                "div"
+            );
+
+        avatar.className =
+            "ai-avatar";
+
+        avatar.textContent =
+            "J";
+
+        row.appendChild(
+            avatar
+        );
+
+    }
+
+    const content =
+        document.createElement(
+            "div"
+        );
+
+    const bubble =
+        document.createElement(
+            "div"
+        );
+
+    bubble.className =
+        "bubble";
+
+    if(
+        markdown &&
+        type === "ai" &&
+        window.marked
+    ){
+
+        bubble.innerHTML =
+            marked.parse(
+                text
+            );
+
+    }else{
+
+        bubble.textContent =
+            text;
+
+    }
+
+    const meta =
+        document.createElement(
+            "div"
+        );
+
+    meta.className =
+        "message-meta";
+
+    meta.textContent =
+        new Date()
+            .toLocaleTimeString(
+                "ar-MA",
+                {
+                    hour:"2-digit",
+                    minute:"2-digit"
+                }
+            );
+
+    content.appendChild(
+        bubble
+    );
+
+    content.appendChild(
+        meta
+    );
+
+    row.appendChild(
+        content
+    );
+
+    messages.appendChild(
+        row
+    );
+
+    scrollToBottom();
+
+}
+
+
+/* =========================================================
+   TYPING
+========================================================= */
+
+function showTyping(){
+
+    removeTyping();
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.id =
+        "typingMessage";
+
+    row.className =
+        "message ai";
+
+    const avatar =
+        document.createElement(
+            "div"
+        );
+
+    avatar.className =
+        "ai-avatar";
+
+    avatar.textContent =
+        "J";
+
+    const box =
+        document.createElement(
+            "div"
+        );
+
+    box.className =
+        "bubble typing";
+
+    box.innerHTML =
+        "<span></span><span></span><span></span>";
+
+    row.appendChild(
+        avatar
+    );
+
+    row.appendChild(
+        box
+    );
+
+    messages.appendChild(
+        row
+    );
+
+    scrollToBottom();
+
+}
+
+
+function removeTyping(){
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+    if(typing){
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+function setStatus(status){
+
+    if(status === "thinking"){
+
+        statusText.textContent =
+            "يفكر...";
+
+    }else if(
+        status === "listening"
+    ){
+
+        statusText.textContent =
+            "يستمع...";
+
+    }else if(
+        status === "live"
+    ){
+
+        statusText.textContent =
+            "الشاشة متصلة";
+
+    }else{
+
+        statusText.textContent =
+            "جاهز";
+
+    }
+
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+input.addEventListener(
+    "input",
+    () => {
+
+        resizeInput();
+
+        if(
+            input.value.trim()
+        ){
+
+            sendButton.classList.add(
+                "active"
+            );
+
+        }else{
+
+            sendButton.classList.remove(
+                "active"
+            );
+
+        }
+
+    }
+);
+
+
+input.addEventListener(
+    "keydown",
+    e => {
+
+        if(
+            e.key === "Enter" &&
+            !e.shiftKey
+        ){
+
+            e.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+sendButton.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+function resizeInput(){
+
+    input.style.height =
+        "auto";
+
+    input.style.height =
+        Math.min(
+            input.scrollHeight,
+            120
+        ) + "px";
+
+}
+
+
+/* =========================================================
+   VOICE
+========================================================= */
+
+function initVoice(){
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+    if(!SpeechRecognition){
+
+        micButton.style.display =
+            "none";
+
+        return;
+
+    }
+
+    recognition =
+        new SpeechRecognition();
+
+    recognition.lang =
+        "ar-MA";
+
+    recognition.continuous =
+        false;
+
+    recognition.interimResults =
+        false;
+
+    recognition.onstart =
+        () => {
+
+            isRecording =
+                true;
+
+            micButton.classList.add(
+                "recording"
+            );
+
+            setStatus(
+                "listening"
+            );
+
+        };
+
+    recognition.onend =
+        () => {
+
+            isRecording =
+                false;
+
+            micButton.classList.remove(
+                "recording"
+            );
+
+            setStatus(
+                "ready"
+            );
+
+        };
+
+    recognition.onresult =
+        e => {
+
+            const text =
+                e.results[0][0]
+                    .transcript;
+
+            input.value =
+                (
+                    input.value
+                    ? input.value + " "
+                    : ""
+                ) + text;
+
+            resizeInput();
+
+            sendButton.classList.add(
+                "active"
+            );
+
+        };
+
+    recognition.onerror =
+        () => {
+
+            isRecording =
+                false;
+
+            micButton.classList.remove(
+                "recording"
+            );
+
+            setStatus(
+                "ready"
+            );
+
+        };
+
+}
+
+
+micButton.addEventListener(
+    "click",
+    () => {
+
+        if(!recognition) return;
+
+        try{
+
+            if(isRecording){
+
+                recognition.stop();
+
+            }else{
+
+                recognition.start();
+
             }
+
+        }catch(e){}
+
+    }
+);
+
+
+/* =========================================================
+   PLUS DOCK
+========================================================= */
+
+plusButton.addEventListener(
+    "click",
+    () => {
+
+        const open =
+            actionDock.classList.toggle(
+                "open"
+            );
+
+        plusButton.classList.toggle(
+            "active",
+            open
+        );
+
+    }
+);
+
+
+document
+    .querySelectorAll(
+        ".action-item"
+    )
+    .forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    const action =
+                        item.dataset.action;
+
+                    actionDock.classList.remove(
+                        "open"
+                    );
+
+                    plusButton.classList.remove(
+                        "active"
+                    );
+
+                    handleAction(
+                        action
+                    );
+
+                }
+            );
+
         }
-    } catch (err) {
-        removeTyping();
-        addMessage("⚠️ ما قدرتش نتواصل مع السيرفر. تأكد من:\n\n1. الرابط ديال API صحيح\n2. CORS مفعل فـ Vercel\n3. API Key مربوط\n\nجرب ت刷新 الصفحة.", "ai", true, true);
-        console.error(err);
+    );
+
+
+function handleAction(action){
+
+    if(action === "file"){
+
+        openFilePicker();
+
     }
 
-    setStatus("ready");
-}
+    if(action === "image"){
 
-/* ========== ADD MESSAGE ========== */
-function addMessage(text, type, isMarkdown = false, isError = false) {
-    const row = document.createElement("div");
-    row.className = "message " + type;
+        openFilePicker(
+            "image/*"
+        );
 
-    if (type === "ai") {
-        const avatar = document.createElement("div");
-        avatar.className = "ai-avatar";
-        avatar.textContent = "J";
-        row.appendChild(avatar);
     }
 
-    const content = document.createElement("div");
-    const bubble = document.createElement("div");
-    bubble.className = "bubble";
-    if (isError) bubble.classList.add("error-bubble");
+    if(action === "camera"){
 
-    if (isMarkdown && type === "ai") {
-        bubble.innerHTML = marked.parse(text);
-    } else {
-        bubble.textContent = text;
+        openCameraPicker();
+
     }
 
-    const meta = document.createElement("div");
-    meta.className = "message-meta";
-    meta.textContent = new Date().toLocaleTimeString("ar-MA", { hour: "2-digit", minute: "2-digit" });
-    
-    // زر استماع للرسائل AI
-    if (type === "ai" && window.speechSynthesis) {
-        const listenBtn = document.createElement("span");
-        listenBtn.className = "tts-btn";
-        listenBtn.textContent = "▶ استمع";
-        listenBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            speak(text);
-        });
-        meta.appendChild(listenBtn);
+    if(action === "screen"){
+
+        startScreenShare();
+
     }
 
-    content.appendChild(bubble);
-    content.appendChild(meta);
-    row.appendChild(content);
-    messages.appendChild(row);
-    scrollToBottom();
 }
 
-/* ========== TYPING ========== */
-function showTyping() {
-    const row = document.createElement("div");
-    row.className = "message ai";
-    row.id = "typingMessage";
 
-    const avatar = document.createElement("div");
-    avatar.className = "ai-avatar";
-    avatar.textContent = "J";
+/* =========================================================
+   FILE
+========================================================= */
 
-    const box = document.createElement("div");
-    box.className = "bubble typing";
-    box.innerHTML = "<span></span><span></span><span></span>";
+function openFilePicker(
+    accept="*/*"
+){
 
-    row.appendChild(avatar);
-    row.appendChild(box);
-    messages.appendChild(row);
-    scrollToBottom();
-}
+    const inputFile =
+        document.createElement(
+            "input"
+        );
 
-function removeTyping() {
-    const t = document.getElementById("typingMessage");
-    if (t) t.remove();
-}
+    inputFile.type =
+        "file";
 
-/* ========== SCROLL ========== */
-function scrollToBottom() {
-    requestAnimationFrame(() => {
-        chat.scrollTo({ top: chat.scrollHeight, behavior: "smooth" });
-    });
-}
+    inputFile.accept =
+        accept;
 
-/* ========== MENU ========== */
-openMenuBtn.addEventListener("click", () => menuOverlay.classList.add("open"));
-closeMenuBtn.addEventListener("click", () => menuOverlay.classList.remove("open"));
-menuOverlay.addEventListener("click", e => { if (e.target === menuOverlay) menuOverlay.classList.remove("open"); });
+    inputFile.click();
 
-/* ========== MENU COMMANDS ========== */
-document.querySelectorAll(".menu-item[data-command]").forEach(item => {
-    item.addEventListener("click", () => {
-        const cmd = item.dataset.command;
-        menuOverlay.classList.remove("open");
-        if (welcome) welcome.style.display = "none";
+    inputFile.onchange =
+        () => {
 
-        const prompts = {
-            think: "🧠 وضع التفكير مفعل. شنو المشكلة لي بغيتي نحللها بعمق؟",
-            build: "🏗️ وضع البناء مفعل. شنو المشروع لي بغيتي نبرمجو أو نبنيه؟",
-            find: "🔎 وضع البحث مفعل. شنو المعلومة لي بغيتي نلقى ليك؟",
-            plan: "📋 وضع التخطيط مفعل. شنو الهدف ديالك ونقسملك الخطوات؟",
-            create: "✦ وضع الإنشاء مفعل. شنو بغيتي نصمم أو نكتب ليك؟",
-            learn: "📚 وضع التعلم مفعل. شنو الموضوع لي بغيتي نشرح ليك؟"
+            const file =
+                inputFile.files[0];
+
+            if(!file) return;
+
+            addMessage(
+                "📎 أضفت الملف: " +
+                file.name,
+                "user"
+            );
+
+            addMessage(
+                "الملف واجد. المرحلة القادمة غادي نربط Library بالـ Backend باش JOKAL يقدر يقرأ ويحلل الملفات.",
+                "ai",
+                true
+            );
+
         };
 
-        addMessage(item.querySelector(".menu-item-title").textContent, "user");
-        setStatus("thinking");
-        showTyping();
-
-        setTimeout(() => {
-            removeTyping();
-            addMessage(prompts[cmd] || "فهمتك. كيفاش نقدر نساعدك؟", "ai");
-            setStatus("ready");
-        }, 600);
-    });
-});
-
-/* ========== NEW CHAT / MEMORY / TASKS / EXPORT / LOGOUT ========== */
-document.querySelector('[data-action="new"]').addEventListener("click", () => {
-    messages.innerHTML = "";
-    conversationHistory = [];
-    if (welcome) welcome.style.display = "flex";
-    menuOverlay.classList.remove("open");
-    input.focus();
-});
-
-document.querySelector('[data-action="memory"]').addEventListener("click", () => {
-    menuOverlay.classList.remove("open");
-    addMessage("الذاكرة", "user");
-    setTimeout(() => {
-        if (userMemory.length > 0) {
-            const list = userMemory.map((m, i) => `${i + 1}. ${m}`).join('\n');
-            addMessage(`🧠 عندك ${userMemory.length} معلومة فالذاكرة:\n\n${list}\n\nبغيتي تزيد شي حاجة أخرى؟ قول: "عقل على هذه: ..."`, "ai", true);
-        } else {
-            addMessage("💾 الذاكرة ديالك فارغة دابا.\n\nبغيتي تزيد شي معلومة؟ قول: \"عقل على هذه: ...\" ولا \"خزن هذه في الذاكرة: ...\"", "ai", true);
-        }
-    }, 400);
-});
-
-document.querySelector('[data-action="tasks"]').addEventListener("click", () => {
-    menuOverlay.classList.remove("open");
-    addMessage("مهام اليوم", "user");
-    setTimeout(() => addMessage("📋 يمكن نزيد نظام مهام حقيقي:\n- إضافة مهام\n- تحديد الأولوية\n- تتبع التقدم\n\nبغيتي نبرمجو؟", "ai", true), 400);
-});
-
-document.querySelector('[data-action="clearMemory"]').addEventListener("click", () => {
-    userMemory = [];
-    saveUserMemory();
-    menuOverlay.classList.remove("open");
-    addMessage("مسح الذاكرة", "user");
-    setTimeout(() => addMessage("🗑️ تم مسح الذاكرة الشخصية. بدايت جديدة!", "ai", true), 300);
-});
-
-document.querySelector('[data-action="export"]').addEventListener("click", () => {
-    menuOverlay.classList.remove("open");
-    exportUserData();
-});
-
-document.querySelector('[data-action="logout"]').addEventListener("click", () => {
-    menuOverlay.classList.remove("open");
-    logout();
-});
-
-/* ========== EXPORT DATA ========== */
-function exportUserData() {
-    if (!currentUser) return;
-    const exportData = {
-        app: "JOKAL",
-        version: "2.0",
-        exportedAt: new Date().toISOString(),
-        user: { username: currentUser.username },
-        memory: userMemory,
-        conversationHistory: conversationHistory,
-        settings: { ttsEnabled: ttsEnabled }
-    };
-    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `jokal_backup_${currentUser.username}_${new Date().toISOString().slice(0,10)}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    addMessage("⬇️ تصدير البيانات", "user");
-    setTimeout(() => addMessage("✅ تم تحميل ملف التصدير. فيه جميع الذاكرة والمحادثة والإعدادات ديالك.", "ai", true), 300);
 }
 
-/* ========== INIT ========== */
-initSpeechRecognition();
-initLogin();
-setStatus("ready");
-input.focus();
+
+function openCameraPicker(){
+
+    const camera =
+        document.createElement(
+            "input"
+        );
+
+    camera.type =
+        "file";
+
+    camera.accept =
+        "image/*";
+
+    camera.capture =
+        "environment";
+
+    camera.click();
+
+}
+
+
+/* =========================================================
+   SCREEN SHARE
+========================================================= */
+
+async function startScreenShare(){
+
+    if(!navigator.mediaDevices ||
+       !navigator.mediaDevices.getDisplayMedia){
+
+        addMessage(
+            "⚠️ المتصفح ديالك ما كيدعمش مشاركة الشاشة.",
+            "ai"
+        );
+
+        return;
+
+    }
+
+    try{
+
+        liveStream =
+            await navigator.mediaDevices
+                .getDisplayMedia({
+                    video:true,
+                    audio:false
+                });
+
+        liveSession =
+            true;
+
+        screenPreview.classList.add(
+            "active"
+        );
+
+        setStatus(
+            "live"
+        );
+
+        const track =
+            liveStream
+                .getVideoTracks()[0];
+
+        track.onended =
+            stopScreenShare;
+
+        addMessage(
+            "▣ مشاركة الشاشة بدات. JOKAL يقدر يستقبل لقطات الشاشة من بعد عبر الـ Backend.",
+            "ai"
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+
+function stopScreenShare(){
+
+    if(liveStream){
+
+        liveStream
+            .getTracks()
+            .forEach(
+                track =>
+                    track.stop()
+            );
+
+    }
+
+    liveStream =
+        null;
+
+    liveSession =
+        false;
+
+    screenPreview.classList.remove(
+        "active"
+    );
+
+    setStatus(
+        "ready"
+    );
+
+}
+
+
+stopScreen.addEventListener(
+    "click",
+    stopScreenShare
+);
+
+
+/* =========================================================
+   SIDE PANEL
+========================================================= */
+
+openPanel.addEventListener(
+    "click",
+    () => {
+
+        panelOverlay.classList.add(
+            "open"
+        );
+
+        renderConversationList();
+
+    }
+);
+
+
+closePanel.addEventListener(
+    "click",
+    closeSidePanel
+);
+
+
+panelOverlay.addEventListener(
+    "click",
+    e => {
+
+        if(
+            e.target === panelOverlay
+        ){
+
+            closeSidePanel();
+
+        }
+
+    }
+);
+
+
+function closeSidePanel(){
+
+    panelOverlay.classList.remove(
+        "open"
+    );
+
+}
+
+
+/* =========================================================
+   NEW CHAT
+========================================================= */
+
+newChatButton.addEventListener(
+    "click",
+    () => {
+
+        createConversation();
+
+    }
+);
+
+
+/* =========================================================
+   SEARCH CHATS
+========================================================= */
+
+conversationSearch.addEventListener(
+    "input",
+    renderConversationList
+);
+
+
+/* =========================================================
+   INTERNAL PAGES
+========================================================= */
+
+const pageData = {
+
+    images:{
+
+        title:"الصور",
+
+        subtitle:
+            "مساحة الصور الخاصة بك",
+
+        cards:[
+            [
+                "✦",
+                "إنشاء صورة",
+                "من بعد نربط Image Generation."
+            ],
+            [
+                "▧",
+                "صور المحادثات",
+                "الصور المرتبطة بالمحادثات."
+            ],
+            [
+                "◉",
+                "رفع صورة",
+                "أضف صورك إلى مكتبة JOKAL."
+            ],
+            [
+                "◇",
+                "المفضلة",
+                "احتفظ بالصور المهمة."
+            ]
+        ]
+
+    },
+
+    library:{
+
+        title:"المكتبة",
+
+        subtitle:
+            "ملفاتك ومستنداتك في مكان واحد",
+
+        cards:[
+            [
+                "◫",
+                "المستندات",
+                "PDF وملفات النص."
+            ],
+            [
+                "⌁",
+                "الصور",
+                "كل الصور المضافة."
+            ],
+            [
+                "</>",
+                "الكود",
+                "ملفات ومشاريع البرمجة."
+            ],
+            [
+                "＋",
+                "إضافة ملف",
+                "أضف ملف جديد."
+            ]
+        ]
+
+    },
+
+    projects:{
+
+        title:"المشاريع",
+
+        subtitle:
+            "نظم JOKAL حسب كل مشروع",
+
+        cards:[
+            [
+                "◇",
+                "JOKAL AI",
+                "مشروع المساعد الذكي."
+            ],
+            [
+                "◇",
+                "YOUSSEF NFC",
+                "مشروع NFC."
+            ],
+            [
+                "◇",
+                "مشروع جديد",
+                "أنشئ مساحة جديدة."
+            ],
+            [
+                "＋",
+                "إضافة مشروع",
+                "مشروع جديد في المستقبل."
+            ]
+        ]
+
+    },
+
+    tools:{
+
+        title:"الأدوات",
+
+        subtitle:
+            "قدرات JOKAL",
+
+        cards:[
+            [
+                "⌕",
+                "البحث",
+                "البحث عن المعلومات."
+            ],
+            [
+                "◎",
+                "التفكير",
+                "تحليل المشاكل."
+            ],
+            [
+                "</>",
+                "البرمجة",
+                "بناء الأنظمة والكود."
+            ],
+            [
+                "▣",
+                "الشاشة",
+                "تحليل الشاشة."
+            ],
+            [
+                "🎙",
+                "الصوت",
+                "التحدث مع JOKAL."
+            ],
+            [
+                "◫",
+                "الملفات",
+                "قراءة وتحليل الملفات."
+            ]
+        ]
+
+    },
+
+    memory:{
+
+        title:"الذاكرة",
+
+        subtitle:
+            "المعلومات التي سمحت لـ JOKAL يحفظها",
+
+        cards:[
+            [
+                "◎",
+                "الذاكرة الشخصية",
+                userMemory.length +
+                " معلومة محفوظة."
+            ],
+            [
+                "＋",
+                "إضافة ذاكرة",
+                "قول لـ JOKAL: عقل على هذه..."
+            ],
+            [
+                "×",
+                "مسح الذاكرة",
+                "حذف المعلومات المحفوظة."
+            ]
+        ]
+
+    },
+
+    tasks:{
+
+        title:"المهام",
+
+        subtitle:
+            "خطط وأهدافك",
+
+        cards:[
+            [
+                "✓",
+                "مهام اليوم",
+                "المهام الحالية."
+            ],
+            [
+                "◷",
+                "المجدولة",
+                "المهام القادمة."
+            ],
+            [
+                "✓",
+                "المكتملة",
+                "المهام التي أنجزتها."
+            ],
+            [
+                "＋",
+                "مهمة جديدة",
+                "إضافة مهمة."
+            ]
+        ]
+
+    },
+
+    settings:{
+
+        title:"الإعدادات",
+
+        subtitle:
+            "تحكم في تجربة JOKAL",
+
+        cards:[
+            [
+                "◉",
+                "الواجهة",
+                "إعدادات التصميم والمظهر."
+            ],
+            [
+                "🎙",
+                "الصوت",
+                "إعدادات الصوت."
+            ],
+            [
+                "🧠",
+                "الذكاء",
+                "إعدادات المساعد."
+            ],
+            [
+                "⇩",
+                "تصدير البيانات",
+                "نسخة احتياطية من بياناتك."
+            ],
+            [
+                "↪",
+                "تسجيل الخروج",
+                "الخروج من الحساب."
+            ]
+        ]
+
+    }
+
+};
+
+
+document
+    .querySelectorAll(
+        "[data-page]"
+    )
+    .forEach(
+        item => {
+
+            item.addEventListener(
+                "click",
+                () => {
+
+                    openPage(
+                        item.dataset.page
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+function openPage(name){
+
+    const page =
+        pageData[name];
+
+    if(!page) return;
+
+    closeSidePanel();
+
+    chatWorkspace.style.display =
+        "none";
+
+    workspacePage.classList.add(
+        "active"
+    );
+
+    pageTitle.textContent =
+        page.title;
+
+    pageSubtitle.textContent =
+        page.subtitle;
+
+    pageGrid.innerHTML =
+        page.cards.map(
+            card => {
+
+                return `
+                <div class="page-card">
+
+                    <div class="page-card-icon">
+                        ${card[0]}
+                    </div>
+
+                    <div class="page-card-title">
+                        ${card[1]}
+                    </div>
+
+                    <div class="page-card-desc">
+                        ${card[2]}
+                    </div>
+
+                </div>
+                `;
+
+            }
+        ).join("");
+
+}
+
+
+/* =========================================================
+   BACK TO CHAT
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e => {
+
+        if(e.key === "Escape"){
+
+            workspacePage.classList.remove(
+                "active"
+            );
+
+            chatWorkspace.style.display =
+                "block";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   MEMORY
+========================================================= */
+
+function loadMemory(){
+
+    const saved =
+        localStorage.getItem(
+            storageKey("memory")
+        );
+
+    if(saved){
+
+        try{
+
+            userMemory =
+                JSON.parse(saved);
+
+        }catch(e){
+
+            userMemory = [];
+
+        }
+
+    }else{
+
+        userMemory = [];
+
+    }
+
+}
+
+
+function saveMemory(){
+
+    localStorage.setItem(
+        storageKey("memory"),
+        JSON.stringify(userMemory)
+    );
+
+}
+
+
+/* =========================================================
+   UTILITIES
+========================================================= */
+
+function escapeHTML(text){
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text;
+
+    return div.innerHTML;
+
+}
+
+
+function scrollToBottom(){
+
+    requestAnimationFrame(
+        () => {
+
+            chat.scrollTo({
+                top:
+                    chat.scrollHeight,
+                behavior:"smooth"
+            });
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   INIT
+========================================================= */
+
+initVoice();
+
+if(
+    localStorage.getItem(
+        "jokal_auth"
+    )
+){
+
+    try{
+
+        currentUser =
+            JSON.parse(
+                localStorage.getItem(
+                    "jokal_auth"
+                )
+            );
+
+        showApp();
+
+    }catch(e){
+
+        loginOverlay.style.display =
+            "flex";
+
+    }
+
+}
+
 </script>
 
 </body>
