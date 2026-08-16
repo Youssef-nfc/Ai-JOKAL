@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // 1. إعدادات الأمان والتراخيص (CORS)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-User-Id, Authorization');
@@ -9,36 +8,25 @@ export default async function handler(req, res) {
 
   try {
     const { message, history = [], user } = req.body;
-    
-    // 2. التأكد من وجود هويّة المستخدم والرسالة
     const userId = req.headers['x-user-id'] || user?.id || 'guest';
     const userName = user?.name || 'صديق JOKAL';
 
-    if (!message) {
-      return res.status(400).json({ error: 'المحتوى مطلوب (Message Required)' });
-    }
+    if (!message) return res.status(400).json({ error: 'Message Required' });
 
     const API_KEY = process.env.GEMINI_API_KEY;
-    if (!API_KEY) {
-      return res.status(500).json({ error: 'مفتاح Gemini غير متوفر فالسيرفر.' });
-    }
+    if (!API_KEY) return res.status(500).json({ error: 'API key missing on server' });
 
-    // 3. بناء الـ System Prompt مخصص لكل مستخدم على حدة
-    const contents = [];
+    const contents = [
+      {
+        role: 'user',
+        parts: [{ text: `أنت JOKAL، مساعد ذكي متطور. تتحدث بالدارجة المغربية بأسلوب سلس ومحترف. أنت تتحدث الآن مع المستخدم "${userName}" (ID: ${userId}).` }]
+      },
+      {
+        role: 'model',
+        parts: [{ text: `مرحباً ${userName}! أنا JOKAL جاهز لمساعدتك.` }]
+      }
+    ];
 
-    contents.push({
-      role: 'user',
-      parts: [{ 
-        text: `أنت JOKAL، مساعد ذكي ومخصص. تتكلم بالدارجة المغربية السلسة. تجيب بدقة وبإيجاز. أنت تتحدث الآن مع المستخدم "${userName}" (المعرف: ${userId}). رحب به بأسلوب مخصص واحتفظ بخصائصه.` 
-      }]
-    });
-
-    contents.push({
-      role: 'model',
-      parts: [{ text: `مرحباً ${userName}! أنا JOKAL جاهز لمساعدتك.` }]
-    });
-
-    // إضافة السجل (History)
     history.forEach(msg => {
       contents.push({
         role: msg.role === 'user' ? 'user' : 'model',
@@ -46,10 +34,8 @@ export default async function handler(req, res) {
       });
     });
 
-    // إضافة الرسالة الحالية
     contents.push({ role: 'user', parts: [{ text: message }] });
 
-    // 4. إرسال الطلب لـ Gemini Model بشكل Streaming (SSE)
     const geminiRes = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${API_KEY}`,
       {
@@ -57,22 +43,16 @@ export default async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents,
-          generationConfig: { 
-            temperature: 0.7, 
-            maxOutputTokens: 1024 
-          }
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
         })
       }
     );
 
     if (!geminiRes.ok) {
       const errData = await geminiRes.json().catch(() => ({}));
-      return res.status(geminiRes.status).json({ 
-        error: errData.error?.message || 'خطأ أثناء الاتصال بالذكاء الاصطناعي.' 
-      });
+      return res.status(geminiRes.status).json({ error: errData.error?.message || 'Gemini API Error' });
     }
 
-    // 5. إرجاع النتيجة للـ Frontend عبر Stream
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
@@ -86,7 +66,7 @@ export default async function handler(req, res) {
     res.end();
 
   } catch (err) {
-    console.error('API Error:', err);
-    res.status(500).json({ error: 'مشكل داخلي في السيرفر.' });
+    console.error(err);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 }
