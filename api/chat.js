@@ -7,29 +7,27 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST only' });
 
   try {
-    const { message, history = [], username, password, memory = [], screenContext = null, screenImage = null, image = null, file = null } = req.body;
+    const { message, history = [], username, memory = [], screenContext = null, screenImage = null, image = null, file = null } = req.body;
     if (!message && !screenImage && !image && !file) return res.status(400).json({ error: 'Message required' });
 
     const API_KEY = process.env.GEMINI_API_KEY;
     if (!API_KEY) return res.status(500).json({ error: 'API key missing' });
 
-    const contents = [];
-
-    // شخصية JOKAL (التدريب)
-    contents.push({
-      role: 'user',
-      parts: [{ text: `أنت JOKAL، مساعد ذكي خاص وشخصي. قواعدك:
+    // ========== systemInstruction منفصلة (مهمة بزاف!) ==========
+    const systemInstruction = {
+      parts: [{
+        text: `أنت JOKAL، مساعد ذكي خاص وشخصي. قواعدك:
 - تتحدث بالعربية الدارجة المغربية بشكل طبيعي وودود
 - أنت صديق مخلص وذكي وعملي
 - تساعد في البرمجة، التخطيط، البحث، الإبداع، والتعلم
 - تجيب بإجابات واضحة ومختصرة مع التفصيل إذا طُلب
 - تستخدم الإيموجي بشكل متوازن
-- اسم صاحبك هو يوسف` }]
-    });
-    contents.push({
-      role: 'model',
-      parts: [{ text: 'فهمت يا صاحبي! أنا JOKAL جاهز نساعدك في أي حاجة.' }]
-    });
+- اسم صاحبك هو يوسف
+- يمكنك تحليل الصور والملفات التي يرفعها المستخدم`
+      }]
+    };
+
+    const contents = [];
 
     // إضافة الذاكرة الطويلة الأمد إذا وجدت
     if (memory && Array.isArray(memory) && memory.length > 0) {
@@ -43,7 +41,7 @@ export default async function handler(req, res) {
       });
     }
 
-    // إضافة سياق الشاشة (وصف نصي) إذا وجد
+    // إضافة سياق الشاشة إذا وجد
     if (screenContext && typeof screenContext === 'string') {
       contents.push({
         role: 'user',
@@ -55,53 +53,88 @@ export default async function handler(req, res) {
       });
     }
 
-    // History
+    // History مع دعم الصور
     history.forEach(msg => {
-      contents.push({
-        role: msg.role === 'user' ? 'user' : 'model',
-        parts: [{ text: msg.content }]
-      });
+      const parts = [];
+      if (msg.content) parts.push({ text: msg.content });
+      if (msg.image && typeof msg.image === 'string' && msg.image.includes('base64')) {
+        const base64Data = msg.image.split(',')[1];
+        const mimeMatch = msg.image.match(/data:([^;]+);/);
+        const mimeType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+        if (base64Data && base64Data.length > 100) {
+          parts.push({ inlineData: { mimeType, data: base64Data } });
+        }
+      }
+      if (parts.length > 0) {
+        contents.push({ role: msg.role === 'user' ? 'user' : 'model', parts });
+      }
     });
 
-    // الرسالة الحالية مع دعم الصورة
+    // الرسالة الحالية + الصورة
     const currentParts = [];
-    if (message) {
-      currentParts.push({ text: message });
-    }
+    if (message) currentParts.push({ text: message });
 
-    // التقاط البيانات ديال الصورة من أي خيار مرسول
     const rawImage = screenImage || image || file;
-    if (rawImage && typeof rawImage === 'string' && rawImage.includes('base64')) {
-      const base64Data = rawImage.split(',')[1];
-      const mimeMatch = rawImage.match(/data:([^;]+);/);
-      const mimeType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+    if (rawImage && typeof rawImage === 'string') {
+      let base64Data = null;
+      let mimeType = 'image/jpeg';
+
+      if (rawImage.includes('base64')) {
+        base64Data = rawImage.split(',')[1];
+        const mimeMatch = rawImage.match(/data:([^;]+);/);
+        mimeType = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+      } else if (rawImage.length > 100) {
+        base64Data = rawImage;
+      }
+
       if (base64Data && base64Data.length > 100) {
-        currentParts.push({
-          inlineData: {
-            mimeType: mimeType,
-            data: base64Data
-          }
-        });
+        currentParts.push({ inlineData: { mimeType, data: base64Data } });
       }
     }
 
     contents.push({ role: 'user', parts: currentParts });
 
-    // نفس الموديل ديالك 3.6
-    const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6:generateContent?key=${API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents,
-          generationConfig: { temperature: 0.8, maxOutputTokens: 2048 }
-        })
-      }
-    );
+    // ========== استدعاء API مع fallback ==========
+    const models = ['gemini-3.6', 'gemini-3.6-flash'];
+    let data = null;
+    let lastErr = null;
 
-    const data = await response.json();
-    if (data.error) return res.status(500).json({ error: data.error.message });
+    for (const modelName of models) {
+      try {
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${API_KEY}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents,
+              systemInstruction,
+              generationConfig: { maxOutputTokens: 2048 },
+              safetySettings: [
+                { category: 'HARM_CATEGORY_HARASSMENT', threshold: 'BLOCK_ONLY_HIGH' },
+                { category: 'HARM_CATEGORY_HATE_SPEECH', threshold: 'BLOCK_ONLY_HIGH' },
+                { category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT', threshold: 'BLOCK_ONLY_HIGH' },
+                { category: 'HARM_CATEGORY_DANGEROUS_CONTENT', threshold: 'BLOCK_ONLY_HIGH' }
+              ]
+            })
+          }
+        );
+
+        data = await response.json();
+        if (!response.ok || data.error) {
+          lastErr = data.error?.message;
+          continue;
+        }
+        break; // نجاح!
+
+      } catch (e) {
+        lastErr = e.message;
+      }
+    }
+
+    if (!data || data.error) {
+      return res.status(500).json({ error: lastErr || 'API error' });
+    }
 
     const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'ما قدرتش نجاوب.';
 
