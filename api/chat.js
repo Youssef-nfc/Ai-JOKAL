@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  // إعدادات CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -24,11 +23,9 @@ export default async function handler(req, res) {
     }
 
     const API_KEY = process.env.GEMINI_API_KEY;
-    if (!API_KEY) {
-      return res.status(500).json({ error: 'API key missing' });
-    }
+    if (!API_KEY) return res.status(500).json({ error: 'API key missing' });
 
-    // ========== System Instruction ==========
+    // ========== systemInstruction ==========
     const systemInstruction = {
       parts: [{
         text: `أنت JOKAL، مساعد ذكي خاص وشخصي. قواعدك:
@@ -45,7 +42,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
 
     const contents = [];
 
-    // 1. إضافة الذاكرة الطويلة الأمد
+    // إضافة الذاكرة الطويلة الأمد
     if (memory && Array.isArray(memory) && memory.length > 0) {
       contents.push({
         role: 'user',
@@ -57,7 +54,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
       });
     }
 
-    // 2. إضافة سياق الشاشة
+    // إضافة سياق الشاشة
     if (screenContext && typeof screenContext === 'string') {
       contents.push({
         role: 'user',
@@ -69,7 +66,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
       });
     }
 
-    // 3. معالجة الـ History
+    // معالجة history
     history.forEach(msg => {
       const parts = [];
       if (msg.content) parts.push({ text: msg.content });
@@ -89,7 +86,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
       }
     });
 
-    // 4. الرسالة الحالية + المرفقات
+    // معالجة الرسالة الحالية والصورة/الملف
     const currentParts = [];
     if (message) currentParts.push({ text: message });
 
@@ -113,7 +110,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
 
     contents.push({ role: 'user', parts: currentParts });
 
-    // ========== الموديلات المحددة من طرفك فقط ==========
+    // ========== استدعاء الموديلات المحددة ==========
     const models = ['gemini-3.6', 'gemini-3.6-flash'];
     let data = null;
     let lastErr = null;
@@ -144,7 +141,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
           lastErr = data.error?.message;
           continue;
         }
-        break; // نجاح!
+        break;
 
       } catch (e) {
         lastErr = e.message;
