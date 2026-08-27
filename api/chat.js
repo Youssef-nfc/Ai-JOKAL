@@ -111,7 +111,7 @@ _وا تفعيل مشاركة الشاشة وا تكلم معه مباشرة`
     contents.push({ role: 'user', parts: currentParts });
 
     // ========== استدعاء الموديلات المحددة ==========
-    const models = ['gemini-3.6', 'gemini-3.6-flash'];
+    const models = ['gemini-3.7', 'gemini-3.7-flash'];
     let data = null;
     let lastErr = null;
 
